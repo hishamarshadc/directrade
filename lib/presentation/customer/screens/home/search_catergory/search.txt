@@ -1,0 +1,34 @@
+1.search bar
+2.filter list view of drop down
+3.product Listtile view
+4.gridview product tile
+const Text(
+              'Filters',
+              style: TextStyle(
+                fontSize: 60,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(
+            width: 10,
+            height: 20,
+            child: DropdownButtonFormField<String>(
+              decoration: InputDecoration(
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(100),
+                    borderSide:const BorderSide(
+                      width: 3,
+                      color: Colors.black,
+                    ),
+                    ),
+              ),
+              hint: Text('Category'),
+              onChanged: (value) {},
+              items: _catList.map((item) {
+                return DropdownMenuItem<String>(
+                  value: item,
+                  child: Text(item,style: TextStyle(fontSize: 30),),
+                );
+              }).toList(),
+            ),
+    ),

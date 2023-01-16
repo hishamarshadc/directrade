@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "993092613400",
+    "project_id": "directrade-temp1",
+    "storage_bucket": "directrade-temp1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:993092613400:android:56335ac812adf371131a6d",
+        "android_client_info": {
+          "package_name": "com.example.sample_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "993092613400-7qvsilbc9sge3okf3lvpgv2nb9lcheat.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfR8z5tMmxwouvUk42ZJ2lzzqKdkaBoGg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "993092613400-7qvsilbc9sge3okf3lvpgv2nb9lcheat.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
