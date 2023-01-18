@@ -30,7 +30,7 @@ class _SellerHomePageState extends State<SellerHomePage> {
             IconButton(
               iconSize: 35,
               onPressed: () {
-                Navigator.pushNamed(context, 'custprofile');
+                Navigator.pushNamed(context, 'sellerprofile');
               },
               icon: const Icon(
                 Icons.account_circle_outlined,
