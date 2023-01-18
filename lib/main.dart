@@ -6,6 +6,7 @@ import 'package:sample_project/presentation/customer/authentification/register.d
 import 'package:sample_project/core/colors/Colors.dart';
 import 'package:sample_project/presentation/customer/screens/home_page.dart';
 import 'package:sample_project/presentation/customer/screens/user%20profile/customer_profile.dart';
+import 'package:sample_project/presentation/login.dart';
 import 'package:sample_project/presentation/seller/screens/seller_home.dart';
 import 'package:sample_project/presentation/seller/screens/seller_profile/seller_prof.dart';
 void main() {
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: primaryWhite,
       ),
-      home: CustLoginPage(),
+      home: LoginPage(),
       routes: {
         'reg':(context) => const RegisterPage(),
         'login':(context) => CustLoginPage(),

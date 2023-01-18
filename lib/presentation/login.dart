@@ -93,7 +93,7 @@ class LoginPage extends StatelessWidget {
                                 for(int i=0;i<users.length;i++){
                                   if(kemail.text==users[i]['email']){
                                     if(users[i]['type']=='s'){
- Navigator.pushNamed(context, 'sellerhome');
+                                      Navigator.pushNamed(context, 'sellerhome');
                                     }else if(users[i]['type']=='p'){
                                        Navigator.pushNamed(context, 'home');
                                     }else if(users[i]['type']=='c'){
