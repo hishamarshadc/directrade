@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sample_project/presentation/customer/screens/home/chat/chat_message_page.dart';
+import 'package:sample_project/presentation/customer/screens/chat/chat_message_page.dart';
 
 class ChatListPage extends StatelessWidget {
   const ChatListPage({super.key});

@@ -44,6 +44,11 @@ class _SearchAndCategoryPageState extends State<SearchAndCategoryPage> {
 
   @override
   Widget build(BuildContext context) {
+
+
+final size=MediaQuery.of( context).size;
+
+
     return Column(
         children: [
           Padding(
@@ -118,8 +123,8 @@ class _SearchAndCategoryPageState extends State<SearchAndCategoryPage> {
                           
                           margin: EdgeInsets.only(
                               right: 8, left: 8, top: 0, bottom: 0),
-                          width: 135,
-                          height: 135,
+                          width: size.width*.3,
+                          height: size.width*.3,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(20)),
                             color: Colors.blue.shade200,

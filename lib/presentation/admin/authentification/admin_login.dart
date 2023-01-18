@@ -90,7 +90,7 @@ class AdminLoginPage extends StatelessWidget {
                           height: 60.0,
                           child: TextButton(
                             onPressed: () {
-                              Navigator.popAndPushNamed(context, 'home');
+                              Navigator.pushNamed(context, 'adminhome');
                             },
                             child: const Text(
                               'Login',

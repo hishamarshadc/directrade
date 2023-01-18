@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:sample_project/presentation/customer/screens/home/products/product_page.dart';
-import 'package:sample_project/presentation/customer/screens/home/chat/chat_list.dart';
-import 'package:sample_project/presentation/customer/screens/home/order/orders_list.dart';
-import 'package:sample_project/presentation/customer/screens/home/search_catergory/search_category.dart';
-// import 'package:sample_project/screens/product.dart';
+import 'package:sample_project/presentation/admin/screens/admin_feedbacks/admin_feedback.dart';
+import 'package:sample_project/presentation/admin/screens/approvals/seller_approval.dart';
+import 'package:sample_project/presentation/admin/screens/view_customers/view_customers.dart';
+import 'package:sample_project/presentation/admin/screens/view_sellers/view_sellers.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class AdminHomePage extends StatefulWidget {
+  const AdminHomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<AdminHomePage> createState() => _AdminHomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _AdminHomePageState extends State<AdminHomePage> {
   final pages = [
-    ProductPage(),
-    const SearchAndCategoryPage(),
-    OrderListPage(),
-    const ChatListPage(),
+    SellerApprovalPage(),
+    ViewSellersPage(),
+    ViewCustPage(),
+    AdminFeedbackPage()
   ];
 
   int selectedIndex = 0;
@@ -27,10 +26,11 @@ class _HomePageState extends State<HomePage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: Colors.white,
           foregroundColor: Colors.black,
           title: const Text(
-            'DirecTrade',
+            'Admin Dashboard',
             style: TextStyle(
               fontSize: 27,
             ),
@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
             IconButton(
               iconSize: 35,
               onPressed: () {
-                Navigator.pushNamed(context, 'custprofile');
+                // Navigator.pushNamed(context, 'custprofile');
               },
               icon: const Icon(
                 Icons.account_circle_outlined,
@@ -52,21 +52,21 @@ class _HomePageState extends State<HomePage> {
           type: BottomNavigationBarType.fixed,
           items: const [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home, size: 35),
-              label: 'Home',
+              icon: Icon(Icons.verified_outlined, size: 35),
+              label: 'Approvals',
               
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.search, size: 35),
-              label: 'Search',
+              icon: Icon(Icons.currency_rupee_rounded, size: 35),
+              label: 'Sellers',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart, size: 35),
-              label: 'Orders',
+              icon: Icon(Icons.person_pin_rounded, size: 35),
+              label: 'Customers',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.chat, size: 35),
-              label: 'Chat',
+              label: 'Feedbacks',
             )
           ],
           currentIndex: selectedIndex,

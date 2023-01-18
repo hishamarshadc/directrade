@@ -1,8 +1,8 @@
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-class AdminLogin extends StatelessWidget {
-  const AdminLogin({super.key});
+class SellerProfilePage extends StatelessWidget {
+  const SellerProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {

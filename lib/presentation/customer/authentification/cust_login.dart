@@ -138,7 +138,10 @@ class CustLoginPage extends StatelessWidget {
                                 ),
                               ),
                             ],
-                          )
+                          ),
+                          ElevatedButton(onPressed:() {
+                            Navigator.pushNamed(context, 'sellerhome');
+                          }, child: Text('got to Seller'))
                         ],
                       ),
                     ),

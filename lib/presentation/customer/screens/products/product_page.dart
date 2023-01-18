@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:sample_project/presentation/customer/screens/home/products/product_full_view.dart';
+import 'package:sample_project/presentation/customer/screens/products/product_full_view.dart';
 import 'package:sample_project/presentation/customer/widgets/item.dart';
 
 class ProductPage extends StatelessWidget {
