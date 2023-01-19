@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sample_project/presentation/admin/authentification/admin_login.dart';
 import 'package:sample_project/presentation/admin/screens/admin_home.dart';
 import 'package:sample_project/presentation/authentication/login.dart';
 import 'package:sample_project/presentation/authentication/cust_register.dart';
@@ -29,7 +28,6 @@ class MyApp extends StatelessWidget {
         'custreg':(context) => const CustRegisterPage(),
         'sellreg' :(context) => const SellerRegisterPage(),
         'login':(context) => LoginPage(),
-        'admin':(context) => AdminLoginPage(),
         'home':(context) => const HomePage(),
         'custprofile':(context) =>  CustProfilePage(),
         'adminhome':(context) => const AdminHomePage(),
