@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sample_project/presentation/admin/screens/admin_feedbacks/admin_feedback.dart';
 import 'package:sample_project/presentation/admin/screens/approvals/seller_approval.dart';
-import 'package:sample_project/presentation/admin/screens/view_customers/view_customers.dart';
-import 'package:sample_project/presentation/admin/screens/view_sellers/view_sellers.dart';
+import 'package:sample_project/presentation/admin/screens/view_users/view_customers/view_customers.dart';
+import 'package:sample_project/presentation/admin/screens/view_users/view_sellers/view_sellers.dart';
 
 class AdminHomePage extends StatefulWidget {
   const AdminHomePage({super.key});
@@ -15,8 +14,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
   final pages = [
     SellerApprovalPage(),
     ViewSellersPage(),
-    ViewCustPage(),
-    AdminFeedbackPage()
+    ViewCustPage()
   ];
 
   int selectedIndex = 0;
@@ -64,10 +62,6 @@ class _AdminHomePageState extends State<AdminHomePage> {
               icon: Icon(Icons.person_pin_rounded, size: 35),
               label: 'Customers',
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.chat, size: 35),
-              label: 'Feedbacks',
-            )
           ],
           currentIndex: selectedIndex,
           onTap: (value) {
