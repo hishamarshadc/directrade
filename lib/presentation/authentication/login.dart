@@ -95,13 +95,13 @@ class LoginPage extends StatelessWidget {
                                     if(users[i]['type']=='s'){
                                       Navigator.pushNamed(context, 'sellerhome');
                                     }else if(users[i]['type']=='p'){
-                                       Navigator.pushNamed(context, 'home');
+                                       Navigator.pushNamed(context, 'promptpending');
                                     }else if(users[i]['type']=='c'){
-                                       Navigator.pushNamed(context, 'adminhome');
+                                       Navigator.pushNamed(context, 'home');
                                     }
                                   };
                                 }
-                                // Navigator.popAndPushNamed(context, 'home');
+                                
                               },
                               child: const Text(
                                 'Login',
@@ -110,9 +110,47 @@ class LoginPage extends StatelessWidget {
                               ),
                             ),
                           ),
-                          
-                          
-                          
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text('Not a User?'),
+                              const SizedBox(
+                                width: 1,
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(context, 'custreg');
+                                },
+                                child: const Text(
+                                  'Sign Up',
+                                  style: TextStyle(
+                                      color: Colors.indigo, fontSize: 16),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text('Go to'),
+                              const SizedBox(
+                                width: 1,
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(context, 'admin');
+                                },
+                                child: const Text(
+                                  'Admin Login',
+                                  style: TextStyle(
+                                      color: Colors.redAccent, fontSize: 16),
+                                ),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),

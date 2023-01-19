@@ -4,8 +4,9 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 class CustProfilePage extends StatelessWidget {
-  const CustProfilePage({super.key});
+   CustProfilePage({super.key});
 
+int _val=1;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -22,7 +23,22 @@ class CustProfilePage extends StatelessWidget {
             ),
         ),
         body:Column(
-          
+          children: [
+            Row(
+                            children: [
+                              Radio(
+                                  value: 1,
+                                  groupValue: _val,
+                                  onChanged: (value) {
+
+                                  }),
+                              Radio(
+                                  value: 2,
+                                  groupValue: _val,
+                                  onChanged: (value) {})
+                            ],
+                          ),
+          ],
         )
       ),
     );

@@ -87,7 +87,7 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
         leading: const CircleAvatar(
           backgroundImage: AssetImage('assets/images/seller.jpg'),
         ),
-        title: Text('Seller Name'),
+        title:const Text('Seller Name'),
       ),
       body: Column(
         children: [

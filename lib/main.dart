@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:sample_project/presentation/admin/authentification/admin_login.dart';
 import 'package:sample_project/presentation/admin/screens/admin_home.dart';
-import 'package:sample_project/presentation/customer/authentification/cust_login.dart';
-import 'package:sample_project/presentation/customer/authentification/register.dart';
+import 'package:sample_project/presentation/authentication/login.dart';
+import 'package:sample_project/presentation/authentication/cust_register.dart';
 import 'package:sample_project/core/colors/Colors.dart';
+import 'package:sample_project/presentation/authentication/seller_register.dart';
 import 'package:sample_project/presentation/customer/screens/home_page.dart';
 import 'package:sample_project/presentation/customer/screens/user%20profile/customer_profile.dart';
-import 'package:sample_project/presentation/login.dart';
 import 'package:sample_project/presentation/seller/screens/seller_home.dart';
 import 'package:sample_project/presentation/seller/screens/seller_profile/seller_prof.dart';
 void main() {
@@ -26,11 +26,12 @@ class MyApp extends StatelessWidget {
       ),
       home: LoginPage(),
       routes: {
-        'reg':(context) => const RegisterPage(),
-        'login':(context) => CustLoginPage(),
+        'custreg':(context) => const CustRegisterPage(),
+        'sellreg' :(context) => const SellerRegisterPage(),
+        'login':(context) => LoginPage(),
         'admin':(context) => AdminLoginPage(),
         'home':(context) => const HomePage(),
-        'custprofile':(context) => const CustProfilePage(),
+        'custprofile':(context) =>  CustProfilePage(),
         'adminhome':(context) => const AdminHomePage(),
         'sellerhome':(context) => SellerHomePage(),
         'sellerprofile':(context) => SellerProfilePage()

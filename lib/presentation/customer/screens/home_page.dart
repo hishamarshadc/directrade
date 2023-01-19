@@ -14,7 +14,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final pages = [
-    ProductPage(),
     const SearchAndCategoryPage(),
     OrderListPage(),
     const ChatListPage(),
@@ -36,15 +35,19 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           actions: [
-            IconButton(
-              iconSize: 35,
-              onPressed: () {
-                Navigator.pushNamed(context, 'custprofile');
+            InkWell(
+              onTap: () => {
+                Navigator.pushNamed(context,'custprofile')
               },
-              icon: const Icon(
-                Icons.account_circle_outlined,
-              ),
+              child: CircleAvatar(
+                    radius: 20,
+                    backgroundColor: Colors.green,
+                    backgroundImage: AssetImage('assets/images/seller.jpg'),
+                  ),
             ),
+      SizedBox(
+        width: 10,
+      )
           ],
         ),
         body: pages[selectedIndex],
@@ -54,11 +57,6 @@ class _HomePageState extends State<HomePage> {
             BottomNavigationBarItem(
               icon: Icon(Icons.home, size: 35),
               label: 'Home',
-              
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search, size: 35),
-              label: 'Search',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.shopping_cart, size: 35),

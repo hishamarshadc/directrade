@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 
-class RegisterPage extends StatelessWidget {
-  const RegisterPage({super.key});
+class CustRegisterPage extends StatelessWidget {
+  const CustRegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    
+    const sizedBox = const SizedBox(
+      height: 30,
+    );
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -21,9 +25,7 @@ class RegisterPage extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const SizedBox(
-                            height: 30,
-                          ),
+                          sizedBox,
                           const Center(
                             child: CircleAvatar(
                               radius: 50,
@@ -35,9 +37,7 @@ class RegisterPage extends StatelessWidget {
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            height: 30,
-                          ),
+                          sizedBox,
                           const Text(
                             'Register as a Customer',
                             style: TextStyle(
@@ -45,9 +45,7 @@ class RegisterPage extends StatelessWidget {
                                 color: Colors.black,
                                 fontSize: 30),
                           ),
-                          const SizedBox(
-                            height: 30,
-                          ),
+                          sizedBox,
                           TextFormField(
                             keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
@@ -59,9 +57,7 @@ class RegisterPage extends StatelessWidget {
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            height: 30,
-                          ),
+                          sizedBox,
                           TextFormField(
                             keyboardType: TextInputType.name,
                             decoration: InputDecoration(
@@ -73,23 +69,19 @@ class RegisterPage extends StatelessWidget {
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            height: 30,
-                          ),
+                          sizedBox,
                           TextFormField(
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
-                              prefixIcon:
-                                  const Icon(Icons.location_on_sharp, color: Colors.black),
-                              label: const Text('PIN Code'),
+                              prefixIcon: const Icon(Icons.phone,
+                                  color: Colors.black),
+                              label: const Text('Phone Number'),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(100),
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            height: 30,
-                          ),
+                          sizedBox,
                           TextFormField(
                             obscureText: true,
                             decoration: InputDecoration(
@@ -103,9 +95,7 @@ class RegisterPage extends StatelessWidget {
                               ),
                             ),
                           ),
-                         const SizedBox(
-                            height: 30,
-                          ),
+                          sizedBox,
                           TextFormField(
                             obscureText: true,
                             decoration: InputDecoration(
@@ -119,9 +109,57 @@ class RegisterPage extends StatelessWidget {
                               ),
                             ),
                           ),
-                         const SizedBox(
-                            height: 30,
+                          sizedBox,
+                          TextFormField(
+                            keyboardType: TextInputType.emailAddress,
+                            decoration: InputDecoration(
+                              prefixIcon:
+                                  const Icon(Icons.location_on_sharp, color: Colors.black),
+                              label: const Text('Place'),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(100),
+                              ),
+                            ),
                           ),
+                          sizedBox,
+                           TextFormField(
+                            keyboardType: TextInputType.emailAddress,
+                            decoration: InputDecoration(
+                              prefixIcon:
+                                  const Icon(Icons.location_city, color: Colors.black),
+                              label: const Text('District'),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(100),
+                              ),
+                            ),
+                          ),
+
+                          sizedBox,
+                          
+                          TextFormField(
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              prefixIcon: const Icon(Icons.numbers,
+                                  color: Colors.black),
+                              label: const Text('PIN Code'),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(100),
+                              ),
+                            ),
+                          ),
+                          sizedBox,
+                          TextFormField(
+                            keyboardType: TextInputType.emailAddress,
+                            decoration: InputDecoration(
+                              prefixIcon:
+                                  const Icon(Icons.home_filled, color: Colors.black),
+                              label: const Text('Address'),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(100),
+                              ),
+                            ),
+                          ),
+                          sizedBox,
                           Container(
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(100),
@@ -145,7 +183,7 @@ class RegisterPage extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Text('Not an Admin?'),
+                              const Text('Already a User?'),
                               const SizedBox(
                                 width: 1,
                               ),
@@ -158,6 +196,28 @@ class RegisterPage extends StatelessWidget {
                                 ),
                               ),
                             ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text('Go to'),
+                              const SizedBox(
+                                width: 1,
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(context, 'sellreg');
+                                },
+                                child: const Text(
+                                  'Seller Register',
+                                  style: TextStyle(
+                                      color: Colors.redAccent, fontSize: 16),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 40,
                           )
                         ],
                       ),

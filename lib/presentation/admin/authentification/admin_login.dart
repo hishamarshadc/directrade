@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sample_project/presentation/customer/authentification/register.dart';
+import 'package:sample_project/presentation/authentication/cust_register.dart';
 
 class AdminLoginPage extends StatelessWidget {
   AdminLoginPage({super.key});
