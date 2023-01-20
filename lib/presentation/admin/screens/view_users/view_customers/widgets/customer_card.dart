@@ -22,9 +22,9 @@ class CustCard extends StatelessWidget {
             border: Border.all(color: Colors.black),
             borderRadius: BorderRadius.circular(20)),
         child: ExpansionTile(
-          leading: CircleAvatar(radius: 40, child: Icon(Icons.currency_rupee_outlined)),
-          title: Text('sellername'),
-          subtitle: Text('companyname'),
+          leading: const CircleAvatar(radius: 40, child: Icon(Icons.currency_rupee_outlined)),
+          title: const Text('sellername'),
+          subtitle: const Text('companyname'),
           children: [
             Column(
               children: [
@@ -43,8 +43,8 @@ class CustCard extends StatelessWidget {
                     backgroundColor:MaterialStateProperty.all(Colors.red),
                   ),
                     onPressed: () => {},
-                    icon: Icon(Icons.close),
-                    label: Text('Cancel')),
+                    icon: const Icon(Icons.close),
+                    label: const Text('Cancel')),
               ],
             ),
           ],

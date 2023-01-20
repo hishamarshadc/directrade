@@ -27,7 +27,7 @@ class ProductTile extends StatelessWidget {
             width: size.width * .4,
             height: size.width * .4,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
               color: Colors.blue.shade200,
               image: DecorationImage(
                 image: AssetImage(imageUrl),
@@ -38,7 +38,7 @@ class ProductTile extends StatelessWidget {
           Text(
             productname,
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -52,8 +52,8 @@ class ProductTile extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('$rating',style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500),),
-                    Icon(
+                    Text('$rating',style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w500),),
+                    const Icon(
                       Icons.star_sharp,
                       size: 17,
                       color: Colors.yellow,
@@ -63,7 +63,7 @@ class ProductTile extends StatelessWidget {
               ),
               Text(
                 'Rs.${price.toInt()}/-',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
                 ),
