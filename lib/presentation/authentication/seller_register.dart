@@ -212,7 +212,7 @@ class SellerRegisterPage extends StatelessWidget {
                                 width: 1,
                               ),
                               TextButton(
-                                onPressed: () => Navigator.pop(context),
+                                onPressed: () => Navigator.popAndPushNamed(context, 'login'),
                                 child: const Text(
                                   'User Login',
                                   style: TextStyle(

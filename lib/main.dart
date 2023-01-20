@@ -5,7 +5,7 @@ import 'package:sample_project/presentation/authentication/login.dart';
 import 'package:sample_project/presentation/authentication/cust_register.dart';
 import 'package:sample_project/core/colors/Colors.dart';
 import 'package:sample_project/presentation/authentication/seller_register.dart';
-import 'package:sample_project/presentation/customer/screens/home_page.dart';
+import 'package:sample_project/presentation/customer/screens/cust_botton_nav.dart';
 import 'package:sample_project/presentation/customer/screens/user%20profile/customer_profile.dart';
 import 'package:sample_project/presentation/seller/screens/seller_home.dart';
 import 'package:sample_project/presentation/seller/screens/seller_profile/seller_prof.dart';

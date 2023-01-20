@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sample_project/presentation/customer/screens/search_catergory/widgets/product_full_view.dart';
 import 'package:sample_project/presentation/customer/screens/search_catergory/widgets/product_tile.dart';
 
 class SearchAndCategoryPage extends StatefulWidget {
@@ -15,7 +16,42 @@ class _SearchAndCategoryPageState extends State<SearchAndCategoryPage> {
 
   final _priceList = ['Any Price', '< 500', '< 750', '< 1000', '> 1000'];
 
-
+  final _productNameList = [
+    'Paper Bags',
+    'Gift Wrappings',
+    'Embroidary Threads',
+    'Paper Bags',
+    'Gift Wrappings',
+    'Embroidary Threads',
+    'Paper Bags',
+    'Gift Wrappings',
+    'Embroidary Threads',
+    'Penholder Paper Craft'
+  ];
+  final _imageUrlList = [
+    'assets/images/decorators.jpeg',
+    'assets/images/gift wrappings.jpeg',
+    'assets/images/color threads.jpeg',
+    'assets/images/decorators.jpeg',
+    'assets/images/gift wrappings.jpeg',
+    'assets/images/color threads.jpeg',
+    'assets/images/decorators.jpeg',
+    'assets/images/gift wrappings.jpeg',
+    'assets/images/color threads.jpeg',
+    'assets/images/pencilholder.jpeg'
+  ];
+final _productPriceList=[
+  50,
+  40,
+  99,
+  50,
+  40,
+  99,
+  50,
+  40,
+  99,
+  55
+];
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -29,8 +65,8 @@ class _SearchAndCategoryPageState extends State<SearchAndCategoryPage> {
             decoration: InputDecoration(
               suffixIcon: const Icon(Icons.search, color: Colors.black),
               label: const Text(
-                'Search Products Here',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                'Search Products',
+                style: TextStyle(fontWeight: FontWeight.w500),
               ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(60),
@@ -85,11 +121,31 @@ class _SearchAndCategoryPageState extends State<SearchAndCategoryPage> {
           ),
         ),
         Expanded(
-          child: GridView.count(
-            crossAxisCount: 2,
-            children: List.generate(10, (index) {
-              return ProductTile();
-            })
+          child: Padding(
+            padding: const EdgeInsets.only(left: 10, right: 10),
+            child: GridView.count(
+                crossAxisCount: 2,
+                childAspectRatio: 3 / 4,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
+                children: List.generate(10, (index) {
+                  return InkWell(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ProductFullViewPage(
+                          title: _productNameList[index],
+                          imageUrl: _imageUrlList[index],
+                        ),
+                      ),
+                    ),
+                    child: ProductTile(
+                      price: _productPriceList[index],
+                      productname: _productNameList[index],
+                      imageUrl: _imageUrlList[index],
+                    ),
+                  );
+                })),
           ),
         ),
       ],

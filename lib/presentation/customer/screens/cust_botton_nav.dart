@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sample_project/presentation/customer/screens/products/product_page.dart';
+import 'package:sample_project/presentation/customer/screens/homepage/customer_home.dart';
 import 'package:sample_project/presentation/customer/screens/chat/chat_list.dart';
 import 'package:sample_project/presentation/customer/screens/order/orders_list.dart';
 import 'package:sample_project/presentation/customer/screens/search_catergory/search_category.dart';
@@ -26,6 +26,7 @@ class _HomePageState extends State<HomePage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          elevation: 0,
           backgroundColor: Colors.white,
           foregroundColor: Colors.black,
           title: const Text(
