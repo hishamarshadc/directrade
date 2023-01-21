@@ -12,9 +12,9 @@ class SellerHomePage extends StatefulWidget {
 
 class _SellerHomePageState extends State<SellerHomePage> {
   final pages = [
-    SellerProductPage(),
+    const SellerProductPage(),
     SellerOrderListPage(),
-    SellerChatPage()
+    const SellerChatPage()
   ];
 
   int selectedIndex = 0;

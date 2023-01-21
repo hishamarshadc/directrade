@@ -97,7 +97,7 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
               onPressed: () {
                 Navigator.pushNamed(context, 'chatsellerdetails');
               },
-              icon: CircleAvatar(
+              icon: const CircleAvatar(
                 backgroundImage: AssetImage('assets/images/seller.jpg'),
               ),
             ),

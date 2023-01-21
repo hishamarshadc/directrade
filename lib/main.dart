@@ -36,8 +36,8 @@ class MyApp extends StatelessWidget {
         'adminhome':(context) => const AdminHomePage(),
         'sellerhome':(context) => const SellerHomePage(),
         'sellerprofile':(context) => const SellerProfilePage(),
-        'editcust':(context) => const CustEdit(),
-        'editseller':(context) => const EditSeller(),
+        'editcust':(context) =>  CustEdit(),
+        'editseller':(context) =>  const EditSeller(),
         'sellerorderpage':(context) =>  SellerOrderListPage()
       },
       debugShowCheckedModeBanner: false,// This trailing comma makes auto-formatting nicer for build methods.
