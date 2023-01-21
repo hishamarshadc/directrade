@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sample_project/presentation/seller/screens/seller_chat/seller_chat.dart';
+import 'package:sample_project/presentation/seller/screens/seller_orders/seller_orders.dart';
+import 'package:sample_project/presentation/seller/screens/seller_products/seller_product.dart';
 
 class SellerHomePage extends StatefulWidget {
   const SellerHomePage({super.key});
@@ -8,8 +11,11 @@ class SellerHomePage extends StatefulWidget {
 }
 
 class _SellerHomePageState extends State<SellerHomePage> {
-  // final pages = [
-  // ];
+  final pages = [
+    SellerProductPage(),
+    SellerOrderListPage(),
+    SellerChatPage()
+  ];
 
   int selectedIndex = 0;
 
@@ -38,7 +44,7 @@ class _SellerHomePageState extends State<SellerHomePage> {
             ),
           ],
         ),
-        // body: pages[selectedIndex],
+        body: pages[selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           items: const [
@@ -55,12 +61,12 @@ class _SellerHomePageState extends State<SellerHomePage> {
               label: 'Chat',
             )
           ],
-          // currentIndex: selectedIndex,
-          // onTap: (value) {
-          //   setState(() {
-          //     selectedIndex = value;
-          //   });
-          // },
+          currentIndex: selectedIndex,
+          onTap: (value) {
+            setState(() {
+              selectedIndex = value;
+            });
+          },
         ),
       ),
     );

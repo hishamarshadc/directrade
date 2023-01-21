@@ -1,15 +1,11 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class CustHomePage extends StatelessWidget {
   const CustHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child:Text('Directrade LOGO with slogan and a basic overview links will be present here'),
-    );
+    return const Text('Directrade LOGO with slogan and a basic overview links will be present here');
   }
 }
 

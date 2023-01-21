@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sample_project/presentation/customer/screens/homepage/customer_home.dart';
 import 'package:sample_project/presentation/customer/screens/chat/chat_list.dart';
 import 'package:sample_project/presentation/customer/screens/order/orders_list.dart';
 import 'package:sample_project/presentation/customer/screens/search_catergory/search_category.dart';
@@ -40,13 +39,13 @@ class _HomePageState extends State<HomePage> {
               onTap: () => {
                 Navigator.pushNamed(context,'custprofile')
               },
-              child: CircleAvatar(
+              child: const CircleAvatar(
                     radius: 20,
                     backgroundColor: Colors.green,
                     backgroundImage: AssetImage('assets/images/seller.jpg'),
                   ),
             ),
-      SizedBox(
+      const SizedBox(
         width: 10,
       )
           ],

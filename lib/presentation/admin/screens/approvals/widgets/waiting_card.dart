@@ -14,9 +14,9 @@ class WaitingCard extends StatelessWidget {
             border: Border.all(color: Colors.black),
             borderRadius: BorderRadius.circular(20)),
         child: ExpansionTile(
-          leading: CircleAvatar(radius: 40, child: Icon(Icons.person)),
-          title: Text('sellername'),
-          subtitle: Text('companyname'),
+          leading: const CircleAvatar(radius: 40, child: Icon(Icons.person)),
+          title: const Text('sellername'),
+          subtitle: const Text('companyname'),
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -26,16 +26,16 @@ class WaitingCard extends StatelessWidget {
                     backgroundColor:MaterialStateProperty.all(Colors.green),
                   ),
                     onPressed: () => {},
-                    icon: Icon(Icons.done),
-                    label: Text('Approve')),
-                    SizedBox(width: 10),
+                    icon: const Icon(Icons.done),
+                    label: const Text('Approve')),
+                    const SizedBox(width: 10),
                 ElevatedButton.icon(
                   style: ButtonStyle(
                     backgroundColor:MaterialStateProperty.all(Colors.red),
                   ),
                     onPressed: () => {},
-                    icon: Icon(Icons.close),
-                    label: Text('Cancel')),
+                    icon: const Icon(Icons.close),
+                    label: const Text('Cancel')),
               ],
             ),
           ],

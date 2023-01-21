@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ProductFullViewPage extends StatelessWidget {
-  ProductFullViewPage({required this.title,required this.imageUrl});
+  ProductFullViewPage({super.key, required this.title,required this.imageUrl});
 
   String title;
   String imageUrl;

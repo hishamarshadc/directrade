@@ -6,7 +6,10 @@ import 'package:sample_project/core/colors/Colors.dart';
 import 'package:sample_project/presentation/authentication/seller_register.dart';
 import 'package:sample_project/presentation/customer/screens/cust_botton_nav.dart';
 import 'package:sample_project/presentation/customer/screens/user%20profile/customer_profile.dart';
+import 'package:sample_project/presentation/customer/screens/user%20profile/edit_profile/edit_customer_profile.dart';
 import 'package:sample_project/presentation/seller/screens/seller_home.dart';
+import 'package:sample_project/presentation/seller/screens/seller_orders/seller_orders.dart';
+import 'package:sample_project/presentation/seller/screens/seller_profile/edit_seller_profile/edit_seller_profile.dart';
 import 'package:sample_project/presentation/seller/screens/seller_profile/seller_prof.dart';
 void main() {
   runApp(const MyApp());
@@ -29,10 +32,13 @@ class MyApp extends StatelessWidget {
         'sellreg' :(context) => const SellerRegisterPage(),
         'login':(context) => LoginPage(),
         'home':(context) => const HomePage(),
-        'custprofile':(context) =>  CustProfilePage(),
+        'custprofile':(context) =>  const CustProfilePage(),
         'adminhome':(context) => const AdminHomePage(),
-        'sellerhome':(context) => SellerHomePage(),
-        'sellerprofile':(context) => SellerProfilePage()
+        'sellerhome':(context) => const SellerHomePage(),
+        'sellerprofile':(context) => const SellerProfilePage(),
+        'editcust':(context) => const CustEdit(),
+        'editseller':(context) => const EditSeller(),
+        'sellerorderpage':(context) =>  SellerOrderListPage()
       },
       debugShowCheckedModeBanner: false,// This trailing comma makes auto-formatting nicer for build methods.
     );

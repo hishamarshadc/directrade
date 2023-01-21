@@ -12,9 +12,9 @@ class AdminHomePage extends StatefulWidget {
 
 class _AdminHomePageState extends State<AdminHomePage> {
   final pages = [
-    SellerApprovalPage(),
-    ViewSellersPage(),
-    ViewCustPage()
+    const SellerApprovalPage(),
+    const ViewSellersPage(),
+    const ViewCustPage()
   ];
 
   int selectedIndex = 0;

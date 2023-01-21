@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-class SellerRegisterPage extends StatelessWidget {
-  const SellerRegisterPage({super.key});
-
-  @override
+class EditSeller extends StatelessWidget {
+  const EditSeller({super.key});
+ @override
   Widget build(BuildContext context) {
     const sizedBox = SizedBox(
       height: 30,
@@ -23,25 +22,35 @@ class SellerRegisterPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         sizedBox,
-                        const Center(
-                          child: CircleAvatar(
-                            radius: 50,
-                            backgroundColor: Colors.black,
-                            child: Icon(
-                              Icons.person_add_alt_outlined,
-                              color: Colors.white,
-                              size: 50,
-                            ),
-                          ),
-                        ),
-                        sizedBox,
                         const Text(
-                          'Register as a Seller',
+                          'Edit Profile',
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               color: Colors.black,
                               fontSize: 30),
                         ),
+                        sizedBox,
+                        Center(
+                          child: Column(
+                            children: [
+                              const CircleAvatar(
+                                radius: 50,
+                                backgroundColor: Colors.black,
+                                child: Icon(
+                                  Icons.person_add_alt_outlined,
+                                  color: Colors.white,
+                                  size: 50,
+                                ),
+                              ),
+                              SizedBox(height: 10,),
+                              ElevatedButton.icon(
+                                  onPressed: () {},
+                                  icon: const Icon(Icons.edit),
+                                  label: const Text('edit image'))
+                            ],
+                          ),
+                        ),
+                        sizedBox,
                         sizedBox,
                         TextFormField(
                           keyboardType: TextInputType.emailAddress,
@@ -70,8 +79,8 @@ class SellerRegisterPage extends StatelessWidget {
                         TextFormField(
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
-                            prefixIcon: const Icon(Icons.phone,
-                                color: Colors.black),
+                            prefixIcon:
+                                const Icon(Icons.phone, color: Colors.black),
                             label: const Text('Phone Number'),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(100),
@@ -110,8 +119,8 @@ class SellerRegisterPage extends StatelessWidget {
                         TextFormField(
                           keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
-                            prefixIcon:
-                                const Icon(Icons.location_on_sharp, color: Colors.black),
+                            prefixIcon: const Icon(Icons.location_on_sharp,
+                                color: Colors.black),
                             label: const Text('Place'),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(100),
@@ -119,26 +128,36 @@ class SellerRegisterPage extends StatelessWidget {
                           ),
                         ),
                         sizedBox,
-                         TextFormField(
+                        TextFormField(
                           keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
-                            prefixIcon:
-                                const Icon(Icons.location_city, color: Colors.black),
+                            prefixIcon: const Icon(Icons.location_city,
+                                color: Colors.black),
                             label: const Text('District'),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(100),
                             ),
                           ),
                         ),
-
                         sizedBox,
-                        
                         TextFormField(
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
-                            prefixIcon: const Icon(Icons.numbers,
-                                color: Colors.black),
+                            prefixIcon:
+                                const Icon(Icons.numbers, color: Colors.black),
                             label: const Text('PIN Code'),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(100),
+                            ),
+                          ),
+                        ),
+                        sizedBox,
+                        TextFormField(
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: InputDecoration(
+                            prefixIcon: const Icon(Icons.home_filled,
+                                color: Colors.black),
+                            label: const Text('Address'),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(100),
                             ),
@@ -189,54 +208,14 @@ class SellerRegisterPage extends StatelessWidget {
                           height: 60.0,
                           child: TextButton(
                             onPressed: () {
-                              
-                              Navigator.popAndPushNamed(context, 'home');
+                              Navigator.pop(context, 'sellerprofile');
                             },
                             child: const Text(
-                              'Register',
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: 20),
+                              'Save',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
                             ),
                           ),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text('Already a User?'),
-                            const SizedBox(
-                              width: 1,
-                            ),
-                            TextButton(
-                              onPressed: () => Navigator.popAndPushNamed(context, 'login'),
-                              child: const Text(
-                                'User Login',
-                                style: TextStyle(
-                                    color: Colors.indigo, fontSize: 16),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text('Go to'),
-                            const SizedBox(
-                              width: 1,
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pushNamed(context, 'custreg');
-                              },
-                              child: const Text(
-                                'Customer Register',
-                                style: TextStyle(
-                                    color: Colors.redAccent, fontSize: 16),
-                              ),
-                            ),
-                          ],
                         ),
                         const SizedBox(
                           height: 40,
