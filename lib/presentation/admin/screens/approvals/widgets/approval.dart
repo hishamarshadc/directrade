@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'package:sample_project/presentation/admin/screens/approvals/widgets/waiting_card.dart';
 
-class ViewUsers extends StatelessWidget {
-  const ViewUsers({super.key});
+class Approvals extends StatelessWidget {
+  const Approvals({super.key});
 
   @override
   Widget build(BuildContext context) {
