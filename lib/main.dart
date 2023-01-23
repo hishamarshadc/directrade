@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:sample_project/presentation/admin/screens/admin_home.dart';
 import 'package:sample_project/presentation/authentication/login.dart';
@@ -11,7 +12,9 @@ import 'package:sample_project/presentation/seller/screens/seller_home.dart';
 import 'package:sample_project/presentation/seller/screens/seller_orders/seller_orders.dart';
 import 'package:sample_project/presentation/seller/screens/seller_profile/edit_seller_profile/edit_seller_profile.dart';
 import 'package:sample_project/presentation/seller/screens/seller_profile/seller_prof.dart';
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -28,7 +31,7 @@ class MyApp extends StatelessWidget {
       ),
       home: LoginPage(),
       routes: {
-        'custreg':(context) => const CustRegisterPage(),
+        'custreg':(context) => CustRegisterPage(),
         'sellreg' :(context) => const SellerRegisterPage(),
         'login':(context) => LoginPage(),
         'home':(context) => const HomePage(),

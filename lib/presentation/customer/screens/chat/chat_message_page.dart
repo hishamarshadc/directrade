@@ -3,14 +3,15 @@ import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 
 class ChatMessagePage extends StatefulWidget {
-  const ChatMessagePage({super.key});
+  const ChatMessagePage({super.key, required this.personName});
+  final String personName;
 
   @override
   State<ChatMessagePage> createState() => _ChatMessagePageState();
 }
 
 class _ChatMessagePageState extends State<ChatMessagePage> {
-  // final String name;
+ 
 
   List<Message> messages = [
     Message(
@@ -85,9 +86,8 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
       appBar: AppBar(
           backgroundColor: Colors.white,
           foregroundColor: Colors.black,
-          title: const Text(
-            'DirecTrade',
-            style: TextStyle(
+          title: Text(widget.personName,
+            style: const TextStyle(
               fontSize: 27,
             ),
           ),
@@ -97,7 +97,7 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
               onPressed: () {
                 Navigator.pushNamed(context, 'chatsellerdetails');
               },
-              icon: CircleAvatar(
+              icon: const CircleAvatar(
                 backgroundImage: AssetImage('assets/images/seller.jpg'),
               ),
             ),

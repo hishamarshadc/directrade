@@ -9,7 +9,7 @@ class ViewSellersPage extends StatelessWidget {
    return ListView.separated(
       itemBuilder: (context, index) => SellerCard(index: index,),
       separatorBuilder: (context, index) => const Divider(),
-      itemCount: 2000,
+      itemCount: 20,
     );
   }
 }

@@ -42,7 +42,7 @@ class EditSeller extends StatelessWidget {
                                   size: 50,
                                 ),
                               ),
-                              SizedBox(height: 10,),
+                              const SizedBox(height: 10,),
                               ElevatedButton.icon(
                                   onPressed: () {},
                                   icon: const Icon(Icons.edit),

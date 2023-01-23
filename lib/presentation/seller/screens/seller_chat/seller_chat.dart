@@ -9,15 +9,16 @@ class SellerChatPage extends StatelessWidget {
     return ListView.separated(
       itemBuilder: ((ctx, index) {
     return ListTile(
-      title: Text('Seller $index'),
+      title: Text('Customer $index'),
       onTap: (){
-        Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>const ChatMessagePage()));
+        Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>ChatMessagePage(personName: 'Customer $index',)));
       },
       subtitle: const Text('Last Message Goes here'),
       leading: const CircleAvatar(
         radius: 25,
-        backgroundColor: Colors.green,
-        backgroundImage: AssetImage('assets/images/seller.jpg'),
+        backgroundColor: Colors.black,
+        // backgroundImage: AssetImage('assets/images/seller.jpg'),
+        child: Icon(Icons.person),
       ),
       trailing: Text('1$index:00 PM'),
     );

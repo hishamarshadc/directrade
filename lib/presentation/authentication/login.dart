@@ -1,10 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sample_project/presentation/user_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
   TextEditingController kemail = TextEditingController();
   TextEditingController kpass = TextEditingController();
+  final auth=FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,19 +96,33 @@ class LoginPage extends StatelessWidget {
                           width: double.infinity,
                           height: 60.0,
                           child: TextButton(
-                            onPressed: () {
-                              for(int i=0;i<users.length;i++){
-                                if(kemail.text==users[i]['email']&&kpass.text==users[i]['password']){
-                                  if(users[i]['type']=='s'){
-                                    Navigator.pushNamed(context, 'sellerhome');
-                                  }else if(users[i]['type']=='p'){
-                                     Navigator.pushNamed(context, 'promptpending');
-                                  }else if(users[i]['type']=='c'){
-                                     Navigator.pushNamed(context, 'home');
+                            onPressed: () async{
+                              // for(int i=0;i<users.length;i++){
+                              //   if(kemail.text==users[i]['email']&&kpass.text==users[i]['password']){
+                              //     if(users[i]['type']=='s'){
+                              //       Navigator.pushNamed(context, 'sellerhome');
+                              //     }else if(users[i]['type']=='p'){
+                              //        Navigator.pushNamed(context, 'promptpending');
+                              //     }else if(users[i]['type']=='c'){
+                              //        Navigator.pushNamed(context, 'home');
+                              //     }
+                              //     else if(users[i]['type']=='a'){
+                              //        Navigator.pushNamed(context, 'adminhome');
+                              //     }
+                              //   }
+                              // }
+                              SharedPreferences pref= await SharedPreferences.getInstance();
+                              if(kemail.text.isNotEmpty&&kpass.text.isNotEmpty){
+                                try{
+                                  await auth.signInWithEmailAndPassword(email: kemail.text, password: kpass.text);
+                                  final user=FirebaseAuth.instance.currentUser;
+                                  if(user!=null){
+                                    pref.setString('email', kemail.text);
+                                  Navigator.popAndPushNamed(context, 'home');
                                   }
-                                  else if(users[i]['type']=='a'){
-                                     Navigator.pushNamed(context, 'adminhome');
-                                  }
+                                }
+                                catch(e){
+                                  print(e.toString());
                                 }
                               }
                               

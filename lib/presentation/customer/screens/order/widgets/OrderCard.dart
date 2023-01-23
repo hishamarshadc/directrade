@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:sample_project/presentation/customer/screens/search_catergory/widgets/product_full_view.dart';
+import 'package:sample_project/presentation/user_model.dart';
 
 class OrderCard extends StatelessWidget {
   const OrderCard(
@@ -42,7 +43,9 @@ class OrderCard extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (context) => ProductFullViewPage(
                         title: "Product Title",
-                        imageUrl: "assets/images/biscuts.jpeg"),
+                        imageUrl: "assets/images/biscuts.jpeg",
+                        productPrice:products[0]['productPrice']!),
+                        
                   ));
             },
             child: SizedBox(

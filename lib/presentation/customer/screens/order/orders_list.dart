@@ -3,31 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:sample_project/presentation/customer/screens/order/widgets/OrderCard.dart';
 
 class OrderListPage extends StatelessWidget {
-  OrderListPage({super.key});
-
-  List<Order> orders = [
-    Order(
-        productName: "Apple",
-        quantity: 2,
-        totalPrice: 4.5,
-        statusText: "Pending"),
-    Order(
-        productName: "Hand Bag Crafted",
-        quantity: 5,
-        totalPrice: 3.5,
-        statusText: "Succussful"),
-    Order(
-        productName: "Pickled Mango",
-        quantity: 2,
-        totalPrice: 180,
-        statusText: "Pending"),
-  ];
+  const OrderListPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView.builder(
-          itemBuilder: (context, index) => const OrderCard(), itemCount: 2000 ),
+          itemBuilder: (context, index) => const OrderCard(), itemCount: 20 ),
     );
   }
 }

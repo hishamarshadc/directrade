@@ -18,7 +18,7 @@ class SellerProfilePage extends StatelessWidget {
                   radius: 50.0,
                   backgroundImage: AssetImage('assets/images/seller.jpg'),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Text(

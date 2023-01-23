@@ -1,8 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CustRegisterPage extends StatelessWidget {
-  const CustRegisterPage({super.key});
-
+  CustRegisterPage({super.key});
+  final kemail=TextEditingController();
+  final kpass=TextEditingController();
+  final auth=FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     
@@ -57,6 +61,7 @@ class CustRegisterPage extends StatelessWidget {
                         ),
                         sizedBox,
                         TextFormField(
+                          controller: kemail,
                           keyboardType: TextInputType.name,
                           decoration: InputDecoration(
                             prefixIcon:
@@ -81,6 +86,7 @@ class CustRegisterPage extends StatelessWidget {
                         ),
                         sizedBox,
                         TextFormField(
+                          controller: kpass,
                           obscureText: true,
                           decoration: InputDecoration(
                             prefixIcon: const Icon(
@@ -165,8 +171,24 @@ class CustRegisterPage extends StatelessWidget {
                           width: double.infinity,
                           height: 60.0,
                           child: TextButton(
-                            onPressed: () {
-                              Navigator.popAndPushNamed(context, 'home');
+                            onPressed: () async {
+                              SharedPreferences pref=await SharedPreferences.getInstance();
+                              if(kemail.text.isNotEmpty&&kpass.text.isNotEmpty)
+                              {
+                                try{
+                                 await auth.createUserWithEmailAndPassword(email: kemail.text, password: kpass.text);
+                                 final user=FirebaseAuth.instance.currentUser;
+                                 if(user!=null){
+                                  pref.setString('email', kemail.text);
+                                  Navigator.popAndPushNamed(context, 'home');
+                                 }
+                                
+                                }
+                                catch(e){
+                                  print(e.toString());
+                                }
+                              }
+                              
                             },
                             child: const Text(
                               'Register',

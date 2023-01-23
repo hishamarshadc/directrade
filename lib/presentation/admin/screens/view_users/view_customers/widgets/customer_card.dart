@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 
 class CustCard extends StatelessWidget {
-  int index;
-   CustCard({
-    Key? key,required this.index
-  }) : super(key: key);
-
+  
+   const CustCard({ Key? key,required this.index}) : super(key: key);
+    final int index;
 //  List<String> sellerList=[
 //       'Anshid O',
 //       'Acee'

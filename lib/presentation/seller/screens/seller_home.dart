@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:sample_project/presentation/seller/screens/seller_chat/seller_chat.dart';
 import 'package:sample_project/presentation/seller/screens/seller_orders/seller_orders.dart';
 import 'package:sample_project/presentation/seller/screens/seller_products/seller_product.dart';
@@ -14,7 +15,7 @@ class _SellerHomePageState extends State<SellerHomePage> {
   final pages = [
     SellerProductPage(),
     SellerOrderListPage(),
-    SellerChatPage()
+    const SellerChatPage()
   ];
 
   int selectedIndex = 0;
@@ -24,6 +25,8 @@ class _SellerHomePageState extends State<SellerHomePage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          elevation: 0,
+          automaticallyImplyLeading: false,
           backgroundColor: Colors.white,
           foregroundColor: Colors.black,
           title: const Text(
@@ -49,11 +52,11 @@ class _SellerHomePageState extends State<SellerHomePage> {
           type: BottomNavigationBarType.fixed,
           items: const [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home, size: 35),
+              icon: Icon(LineAwesomeIcons.boxes, size: 35),
               label: 'My Products', 
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart, size: 35),
+              icon: Icon(Icons.inventory_outlined, size: 35),
               label: 'My Orders',
             ),
             BottomNavigationBarItem(

@@ -27,7 +27,7 @@ class SellerOrderListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView.builder(
-          itemBuilder: (context, index) => const OrderCard(), itemCount: 2000 ),
+          itemBuilder: (context, index) => const OrderCard(), itemCount: orders.length ),
     );
   }
 }

@@ -16,6 +16,8 @@ import 'package:flutter/material.dart';
   },
 );
 
+const textColor= Colors.black;
+
 const int _blackPrimaryValue = 0xFF000000;
 
 const MaterialColor primaryWhite = MaterialColor(

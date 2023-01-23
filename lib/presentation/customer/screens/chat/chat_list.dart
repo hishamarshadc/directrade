@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sample_project/presentation/customer/screens/chat/chat_message_page.dart';
 
 class ChatListPage extends StatelessWidget {
-  const ChatListPage({super.key});
+  ChatListPage({super.key});
+  final myController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +12,7 @@ class ChatListPage extends StatelessWidget {
     return ListTile(
       title: Text('Seller $index'),
       onTap: (){
-        Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>const ChatMessagePage()));
+        Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=> ChatMessagePage(personName: 'Seller $index',)));
       },
       subtitle: const Text('Last Message Goes here'),
       leading: const CircleAvatar(

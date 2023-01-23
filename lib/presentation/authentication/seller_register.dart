@@ -228,7 +228,7 @@ class SellerRegisterPage extends StatelessWidget {
                             ),
                             TextButton(
                               onPressed: () {
-                                Navigator.pushNamed(context, 'custreg');
+                                Navigator.pop(context);
                               },
                               child: const Text(
                                 'Customer Register',

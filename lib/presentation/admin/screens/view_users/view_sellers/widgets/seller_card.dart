@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class SellerCard extends StatelessWidget {
-  int index;
-   SellerCard({
+  
+   const SellerCard({
     Key? key,required this.index
   }) : super(key: key);
-
+  final int index;
 //  List<String> sellerList=[
 //       'Anshid O',
 //       'Acee'

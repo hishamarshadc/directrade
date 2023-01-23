@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sample_project/presentation/customer/screens/search_catergory/widgets/product_full_view.dart';
 import 'package:sample_project/presentation/customer/screens/search_catergory/widgets/product_tile.dart';
+import 'package:sample_project/presentation/user_model.dart';
 
 class SearchAndCategoryPage extends StatefulWidget {
   const SearchAndCategoryPage({super.key});
-
+  
   @override
   State<SearchAndCategoryPage> createState() => _SearchAndCategoryPageState();
 }
@@ -135,6 +136,7 @@ final _productPriceList=[
                         builder: (context) => ProductFullViewPage(
                           title: _productNameList[index],
                           imageUrl: _imageUrlList[index],
+                          productPrice: products[index]['productPrice']!,
                         ),
                       ),
                     ),

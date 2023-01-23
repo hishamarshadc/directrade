@@ -14,8 +14,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final pages = [
     const SearchAndCategoryPage(),
-    OrderListPage(),
-    const ChatListPage(),
+    const OrderListPage(),
+    ChatListPage(),
   ];
 
   int selectedIndex = 0;
