@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sample_project/presentation/authentication/login.dart';
 
 class SellerProfilePage extends StatelessWidget {
   const SellerProfilePage({super.key});
@@ -10,266 +11,215 @@ class SellerProfilePage extends StatelessWidget {
       home: Scaffold(
         backgroundColor: Colors.cyan.shade900,
         body: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const CircleAvatar(
-                  radius: 50.0,
-                  backgroundImage: AssetImage('assets/images/seller.jpg'),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              const Spacer(flex: 1),
+              const CircleAvatar(
+                radius: 50.0,
+                backgroundImage: AssetImage('assets/images/seller.jpg'),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                'Full Name'.toUpperCase(),
+                style: const TextStyle(
+                  fontSize: 30.0,
+                  fontFamily: 'Pacifico',
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
                 ),
-                const SizedBox(
-                  height: 10,
+              ),
+              SizedBox(
+                height: 20.0,
+                width: 150,
+                child: Divider(
+                  color: Colors.teal.shade100,
                 ),
-                Text(
-                  'Full Name'.toUpperCase(),
-                  style: const TextStyle(
-                    fontSize: 30.0,
-                    fontFamily: 'Pacifico',
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-                SizedBox(
-                  height: 20.0,
-                  width: 150,
-                  child: Divider(
-                    color: Colors.teal.shade100,
-                  ),
-                ),
-                InkWell(
-                    child: Card(
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 25.0),
-                      child: ListTile(
-                        leading: const Icon(
-                          Icons.phone,
-                          color: Colors.teal,
-                        ),
-                        title: Text(
-                          'Phone Number',
-                          style: TextStyle(
-                              fontFamily: 'SourceSansPro',
-                              fontSize: 20,
-                              color: Colors.teal.shade900),
-                        ),
-                      ),
-                    ),
-                    onTap: () {
-                      ('');
-                    }),
-                InkWell(
+              ),
+              InkWell(
                   child: Card(
                     margin: const EdgeInsets.symmetric(
                         vertical: 10.0, horizontal: 25.0),
                     child: ListTile(
-                      leading: const Icon(
-                        Icons.email,
-                        color: Colors.teal,
-                      ),
-                      title: Text(
-                        'Email@email.com',
-                        style: TextStyle(
-                            fontFamily: 'SourceSansPro',
-                            fontSize: 20,
-                            color: Colors.teal.shade900),
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Spacer(
+                            flex: 3,
+                          ),
+                          Icon(
+                            Icons.edit,
+                            color: Colors.red,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            'Edit Profile',
+                            style: TextStyle(
+                                fontFamily: 'SourceSansPro',
+                                fontSize: 20,
+                                color: Colors.red),
+                          ),
+                          Spacer(flex: 3),
+                        ],
                       ),
                     ),
                   ),
                   onTap: () {
-                    ('');
-                  },
-                ),
-                InkWell(
-                    child: Card(
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 25.0),
-                      child: ListTile(
-                        leading: const Icon(
-                          Icons.location_on_sharp,
-                          color: Colors.teal,
-                        ),
-                        title: Text(
-                          'Place',
-                          style: TextStyle(
+                    Navigator.pushNamed(context, 'editseller');
+                  }),
+              const SizedBox(
+                height: 10.0,
+                width: 150,
+              ),
+              InkWell(
+                  child: Card(
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 25.0),
+                    child: ListTile(
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Spacer(
+                            flex: 3,
+                          ),
+                          Icon(
+                            Icons.phone,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            'Contact Us',
+                            style: TextStyle(
                               fontFamily: 'SourceSansPro',
                               fontSize: 20,
-                              color: Colors.teal.shade900),
-                        ),
+                            ),
+                          ),
+                          Spacer(flex: 3),
+                        ],
                       ),
                     ),
-                    onTap: () {
-                      ('');
-                    }),
-                InkWell(
-                    child: Card(
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 25.0),
-                      child: ListTile(
-                        leading: const Icon(
-                          Icons.location_city,
-                          color: Colors.teal,
+                  ),
+                  onTap: () {
+                    Navigator.pushNamed(context, '');
+                  }),
+              const SizedBox(
+                height: 10.0,
+                width: 150,
+              ),
+              // InkWell(
+              //     child: Card(
+              //       margin: const EdgeInsets.symmetric(
+              //           vertical: 10.0, horizontal: 25.0),
+              //       child: ListTile(
+              //         title: Row(
+              //           mainAxisAlignment: MainAxisAlignment.center,
+              //           children: const [
+              //             Spacer(
+              //               flex: 3,
+              //             ),
+              //             Icon(
+              //               Icons.feedback_outlined,
+              //             ),
+              //             SizedBox(
+              //               width: 10,
+              //             ),
+              //             Text(
+              //               'FeedBack',
+              //               style: TextStyle(
+              //                 fontFamily: 'SourceSansPro',
+              //                 fontSize: 20,
+              //               ),
+              //             ),
+              //             Spacer(flex: 3),
+              //           ],
+              //         ),
+              //       ),
+              //     ),
+              //     onTap: () {
+              //       Navigator.pushNamed(context, '');
+              //     }),
+              // SizedBox(
+              //   height: 10.0,
+              //   width: 150,
+              // ),
+              InkWell(
+                child: Card(
+                  margin: const EdgeInsets.symmetric(
+                      vertical: 10.0, horizontal: 25.0),
+                  child: ListTile(
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Spacer(
+                          flex: 3,
                         ),
-                        title: Text(
-                          'District',
+                        Icon(
+                          Icons.logout_outlined,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          'Logout',
                           style: TextStyle(
-                              fontFamily: 'SourceSansPro',
-                              fontSize: 20,
-                              color: Colors.teal.shade900),
+                            fontFamily: 'SourceSansPro',
+                            fontSize: 20,
+                          ),
                         ),
-                      ),
+                        Spacer(flex: 3),
+                      ],
                     ),
-                    onTap: () {
-                      ('');
-                    }),
-                InkWell(
-                    child: Card(
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 25.0),
-                      child: ListTile(
-                        leading: const Icon(
-                          Icons.numbers,
-                          color: Colors.teal,
-                        ),
-                        title: Text(
-                          'Pin Code',
-                          style: TextStyle(
-                              fontFamily: 'SourceSansPro',
-                              fontSize: 20,
-                              color: Colors.teal.shade900),
-                        ),
-                      ),
-                    ),
-                    onTap: () {
-                      ('');
-                    }),
-                InkWell(
-                    child: Card(
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 25.0),
-                      child: ListTile(
-                        leading: const Icon(
-                          Icons.home_filled,
-                          color: Colors.teal,
-                        ),
-                        title: Text(
-                          'Address',
-                          style: TextStyle(
-                              fontFamily: 'SourceSansPro',
-                              fontSize: 20,
-                              color: Colors.teal.shade900),
-                        ),
-                      ),
-                    ),
-                    onTap: () {
-                      ('');
-                    }),
-                
-                InkWell(
-                    child: Card(
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 25.0),
-                      child: ListTile(
-                        leading: const Icon(
-                          Icons.list_alt_rounded,
-                          color: Colors.teal,
-                        ),
-                        title: Text(
-                          'Personal Address',
-                          style: TextStyle(
-                              fontFamily: 'SourceSansPro',
-                              fontSize: 20,
-                              color: Colors.teal.shade900),
-                        ),
-                      ),
-                    ),
-                    onTap: () {
-                      ('');
-                    }),
-                InkWell(
-                    child: Card(
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 25.0),
-                      child: ListTile(
-                        leading: const Icon(
-                          Icons.store_mall_directory,
-                          color: Colors.teal,
-                        ),
-                        title: Text(
-                          'Company Name',
-                          style: TextStyle(
-                              fontFamily: 'SourceSansPro',
-                              fontSize: 20,
-                              color: Colors.teal.shade900),
-                        ),
-                      ),
-                    ),
-                    onTap: () {
-                      ('');
-                    }),
-                InkWell(
-                    child: Card(
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 25.0),
-                      child: ListTile(
-                        leading: const Icon(
-                          Icons.list_alt_rounded,
-                          color: Colors.teal,
-                        ),
-                        title: Text(
-                          'Company Address',
-                          style: TextStyle(
-                              fontFamily: 'SourceSansPro',
-                              fontSize: 20,
-                              color: Colors.teal.shade900),
-                        ),
-                      ),
-                    ),
-                    onTap: () {
-                      ('');
-                    }),
-                SizedBox(
-                  height: 20.0,
-                  width: 150,
-                  child: Divider(
-                    color: Colors.teal.shade100,
                   ),
                 ),
-                InkWell(
-                    child: Card(
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 25.0),
-                      child: ListTile(
-                        title: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Spacer(
-                              flex: 3,
-                            ),
-                            Icon(
-                              Icons.edit,
-                              color: Colors.red,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              'Edit Profile',
-                              style: TextStyle(
-                                  fontFamily: 'SourceSansPro',
-                                  fontSize: 20,
-                                  color: Colors.red),
-                            ),
-                            Spacer(flex: 3),
-                          ],
-                        ),
-                      ),
-                    ),
-                    onTap: () {
-                      Navigator.pushNamed(context, 'editseller');
-                    }),
-              ],
-            ),
+                onTap: () {
+                  Navigator.pushAndRemoveUntil<void>(
+                      context,
+                      MaterialPageRoute<void>(
+                          builder: (BuildContext context) => LoginPage()),
+                      ModalRoute.withName('/'));
+                },
+              ),
+              const Spacer(flex: 2),
+              SizedBox(
+                height: 5,
+                width: 150,
+              ),
+              TextButton(onPressed: () {
+                Navigator.pushNamed(context,'aboutus');
+              }, child: Text('About Us'),style: TextButton.styleFrom(
+                foregroundColor: Colors.white
+              ),),
+              SizedBox(
+                height: 20.0,
+                width: 150,
+                child: Divider(
+                  color: Colors.teal.shade100,
+                ),
+              ),
+              Text(
+                'Logined as a seller'.toUpperCase(),
+                style: const TextStyle(
+                  fontSize: 20.0,
+                  fontFamily: 'Pacifico',
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              
+              SizedBox(
+                height: 20.0,
+                width: 150,
+                child: Divider(
+                  color: Colors.teal.shade100,
+                ),
+              ),
+            ],
           ),
         ),
       ),

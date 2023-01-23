@@ -7,7 +7,7 @@ class LoginPage extends StatelessWidget {
   LoginPage({super.key});
   TextEditingController kemail = TextEditingController();
   TextEditingController kpass = TextEditingController();
-  final auth=FirebaseAuth.instance;
+  final auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,11 +76,11 @@ class LoginPage extends StatelessWidget {
                           //   }
                           // },
                           decoration: InputDecoration(
-                            prefixIcon:const Icon(
+                            prefixIcon: const Icon(
                               Icons.lock_rounded,
                               color: Colors.black,
                             ),
-                            label:const Text('Password'),
+                            label: const Text('Password'),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(100),
                             ),
@@ -96,41 +96,50 @@ class LoginPage extends StatelessWidget {
                           width: double.infinity,
                           height: 60.0,
                           child: TextButton(
-                            onPressed: () async{
-                              // for(int i=0;i<users.length;i++){
-                              //   if(kemail.text==users[i]['email']&&kpass.text==users[i]['password']){
-                              //     if(users[i]['type']=='s'){
-                              //       Navigator.pushNamed(context, 'sellerhome');
-                              //     }else if(users[i]['type']=='p'){
-                              //        Navigator.pushNamed(context, 'promptpending');
-                              //     }else if(users[i]['type']=='c'){
-                              //        Navigator.pushNamed(context, 'home');
-                              //     }
-                              //     else if(users[i]['type']=='a'){
-                              //        Navigator.pushNamed(context, 'adminhome');
-                              //     }
-                              //   }
-                              // }
-                              SharedPreferences pref= await SharedPreferences.getInstance();
-                              if(kemail.text.isNotEmpty&&kpass.text.isNotEmpty){
-                                try{
-                                  await auth.signInWithEmailAndPassword(email: kemail.text, password: kpass.text);
-                                  final user=FirebaseAuth.instance.currentUser;
-                                  if(user!=null){
-                                    pref.setString('email', kemail.text);
-                                  Navigator.popAndPushNamed(context, 'home');
+                            onPressed: () async {
+                              if (kemail.text == users[0]['email']||kemail.text == users[1]['email']||kemail.text == users[2]['email']||kemail.text == users[3]['email']) {
+                                for (int i = 0; i < users.length; i++) {
+                                  if (kemail.text == users[i]['email'] &&
+                                      kpass.text == users[i]['password']) {
+                                    if (users[i]['type'] == 's') {
+                                      Navigator.pushNamed(
+                                          context, 'sellerhome');
+                                    } else if (users[i]['type'] == 'p') {
+                                      Navigator.pushNamed(
+                                          context, 'promptpending');
+                                    } else if (users[i]['type'] == 'c') {
+                                      Navigator.pushNamed(context, 'home');
+                                    } else if (users[i]['type'] == 'a') {
+                                      Navigator.pushNamed(context, 'adminhome');
+                                    }
                                   }
                                 }
-                                catch(e){
-                                  print(e.toString());
+                              } else {
+                                SharedPreferences pref =
+                                    await SharedPreferences.getInstance();
+                                if (kemail.text.isNotEmpty &&
+                                    kpass.text.isNotEmpty) {
+                                  try {
+                                    await auth.signInWithEmailAndPassword(
+                                        email: kemail.text,
+                                        password: kpass.text);
+                                    final user =
+                                        FirebaseAuth.instance.currentUser;
+                                    if (user != null) {
+                                      pref.setString('email', kemail.text);
+                                      Navigator.popAndPushNamed(
+                                          context, 'home');
+                                    }
+                                  } catch (e) {
+                                    print(e.toString());
+                                  }
                                 }
                               }
-                              
                             },
                             child: const Text(
                               'Login',
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: 20),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
                             ),
                           ),
                         ),
