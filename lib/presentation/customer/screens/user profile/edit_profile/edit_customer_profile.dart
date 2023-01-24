@@ -94,8 +94,6 @@ class _CustEditState extends State<CustEdit> {
               buildTextField("Full Name", "Full name", false),
               buildTextField("E-mail", "Email@email.com", false),
               buildTextField("Password", "********", true),
-              buildTextField("Place", "Place", false),
-              buildTextField("District", "District", false),
               buildTextField("PinCode", "PinCode", false),
               buildTextField("Address", "Address", false),
               const SizedBox(
