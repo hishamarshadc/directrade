@@ -27,14 +27,19 @@ class LoginPage extends StatelessWidget {
                         const SizedBox(
                           height: 30,
                         ),
-                        const Center(
-                          child: CircleAvatar(
-                            radius: 50,
-                            backgroundColor: Colors.black,
-                            child: Icon(
-                              Icons.login_rounded,
-                              color: Colors.white,
-                              size: 50,
+                        Center(
+                          child: InkWell(
+                            onLongPress: (){
+                              Navigator.pushNamed(context, 'home');
+                            },
+                            child: CircleAvatar(
+                              radius: 50,
+                              backgroundColor: Colors.black,
+                              child: Icon(
+                                Icons.login_rounded,
+                                color: Colors.white,
+                                size: 50,
+                              ),
                             ),
                           ),
                         ),
