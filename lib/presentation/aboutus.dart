@@ -31,7 +31,7 @@ class AboutPage extends StatelessWidget {
                     image: "https://randomuser.me/api/portraits/men/1.jpg"),
                 _buildCard(
                     name: "Henna",
-                    image: "https://randomuser.me/api/portraits/men/3.jpg"),
+                    image: "https://randomuser.me/api/portraits/men/1.jpg"),
                 _buildCard(
                     name: "hisham",
                     image: "https://randomuser.me/api/portraits/men/1.jpg"),
