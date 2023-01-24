@@ -10,6 +10,7 @@ class LoginPage extends StatelessWidget {
   final auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
+    final size=MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -24,171 +25,178 @@ class LoginPage extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        Center(
-                          child: InkWell(
-                            onLongPress: (){
-                              Navigator.pushNamed(context, 'home');
-                            },
-                            child: CircleAvatar(
-                              radius: 50,
-                              backgroundColor: Colors.black,
-                              child: Icon(
-                                Icons.login_rounded,
-                                color: Colors.white,
-                                size: 50,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        const Text(
-                          'Login to DirecTrade',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black,
-                              fontSize: 30),
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        TextFormField(
-                          controller: kemail,
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: InputDecoration(
-                            prefixIcon:
-                                const Icon(Icons.email, color: Colors.black),
-                            label: const Text('Email'),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(100),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        TextFormField(
-                          controller: kpass,
-                          obscureText: true,
-                          // validator: (value){
-                          //   if(!kemail.text.contains('@'))
-                          //   {
-                          //     return 'Type a valid e-mail!';
-                          //   }
-                          // },
-                          decoration: InputDecoration(
-                            prefixIcon: const Icon(
-                              Icons.lock_rounded,
-                              color: Colors.black,
-                            ),
-                            label: const Text('Password'),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(100),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
                         Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100),
-                              color: Colors.black),
-                          width: double.infinity,
-                          height: 60.0,
-                          child: TextButton(
-                            onPressed: () async {
-                              if (kemail.text == users[0]['email']||kemail.text == users[1]['email']||kemail.text == users[2]['email']||kemail.text == users[3]['email']) {
-                                for (int i = 0; i < users.length; i++) {
-                                  if (kemail.text == users[i]['email'] &&
-                                      kpass.text == users[i]['password']) {
-                                    if (users[i]['type'] == 's') {
-                                      Navigator.pushNamed(
-                                          context, 'sellerhome');
-                                    } else if (users[i]['type'] == 'p') {
-                                      Navigator.pushNamed(
-                                          context, 'promptpending');
-                                    } else if (users[i]['type'] == 'c') {
-                                      Navigator.pushNamed(context, 'home');
-                                    } else if (users[i]['type'] == 'a') {
-                                      Navigator.pushNamed(context, 'adminhome');
+                          width: size.width*.85,
+                          child: Column(
+                            children: [
+                              const SizedBox(
+                                height: 30,
+                              ),
+                              Center(
+                                child: InkWell(
+                                  onLongPress: (){
+                                    Navigator.pushNamed(context, 'home');
+                                  },
+                                  child: CircleAvatar(
+                                    radius: 40,
+                                    backgroundColor: Colors.black,
+                                    child: Icon(
+                                      Icons.login_rounded,
+                                      color: Colors.white,
+                                      size: 30,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 30,
+                              ),
+                              const Text(
+                                'Login to DirecTrade',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black,
+                                    fontSize: 30),
+                              ),
+                              const SizedBox(
+                                height: 30,
+                              ),
+                              TextFormField(
+                                controller: kemail,
+                                keyboardType: TextInputType.emailAddress,
+                                decoration: InputDecoration(
+                                  prefixIcon:
+                                      const Icon(Icons.email, color: Colors.black),
+                                  label: const Text('Email'),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(100),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 30,
+                              ),
+                              TextFormField(
+                                controller: kpass,
+                                obscureText: true,
+                                // validator: (value){
+                                //   if(!kemail.text.contains('@'))
+                                //   {
+                                //     return 'Type a valid e-mail!';
+                                //   }
+                                // },
+                                decoration: InputDecoration(
+                                  prefixIcon: const Icon(
+                                    Icons.lock_rounded,
+                                    color: Colors.black,
+                                  ),
+                                  label: const Text('Password'),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(100),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 30,
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(100),
+                                    color: Colors.black),
+                                width: double.infinity,
+                                height: 60.0,
+                                child: TextButton(
+                                  onPressed: () async {
+                                    if (kemail.text == users[0]['email']||kemail.text == users[1]['email']||kemail.text == users[2]['email']||kemail.text == users[3]['email']) {
+                                      for (int i = 0; i < users.length; i++) {
+                                        if (kemail.text == users[i]['email'] &&
+                                            kpass.text == users[i]['password']) {
+                                          if (users[i]['type'] == 's') {
+                                            Navigator.pushNamed(
+                                                context, 'sellerhome');
+                                          } else if (users[i]['type'] == 'p') {
+                                            Navigator.pushNamed(
+                                                context, 'promptpending');
+                                          } else if (users[i]['type'] == 'c') {
+                                            Navigator.pushNamed(context, 'home');
+                                          } else if (users[i]['type'] == 'a') {
+                                            Navigator.pushNamed(context, 'adminhome');
+                                          }
+                                        }
+                                      }
+                                    } else {
+                                      SharedPreferences pref =
+                                          await SharedPreferences.getInstance();
+                                      if (kemail.text.isNotEmpty &&
+                                          kpass.text.isNotEmpty) {
+                                        try {
+                                          await auth.signInWithEmailAndPassword(
+                                              email: kemail.text,
+                                              password: kpass.text);
+                                          final user =
+                                              FirebaseAuth.instance.currentUser;
+                                          if (user != null) {
+                                            pref.setString('email', kemail.text);
+                                            Navigator.popAndPushNamed(
+                                                context, 'home');
+                                          }
+                                        } catch (e) {
+                                          print(e.toString());
+                                        }
+                                      }
                                     }
-                                  }
-                                }
-                              } else {
-                                SharedPreferences pref =
-                                    await SharedPreferences.getInstance();
-                                if (kemail.text.isNotEmpty &&
-                                    kpass.text.isNotEmpty) {
-                                  try {
-                                    await auth.signInWithEmailAndPassword(
-                                        email: kemail.text,
-                                        password: kpass.text);
-                                    final user =
-                                        FirebaseAuth.instance.currentUser;
-                                    if (user != null) {
-                                      pref.setString('email', kemail.text);
-                                      Navigator.popAndPushNamed(
-                                          context, 'home');
-                                    }
-                                  } catch (e) {
-                                    print(e.toString());
-                                  }
-                                }
-                              }
-                            },
-                            child: const Text(
-                              'Login',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 20),
-                            ),
+                                  },
+                                  child: const Text(
+                                    'Login',
+                                    style:
+                                        TextStyle(color: Colors.white, fontSize: 20),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Text('Not a User?'),
+                                  const SizedBox(
+                                    width: 1,
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pushNamed(context, 'custreg');
+                                    },
+                                    child: const Text(
+                                      'Sign Up',
+                                      style: TextStyle(
+                                          color: Colors.indigo, fontSize: 16),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              // Row(
+                              //   mainAxisAlignment: MainAxisAlignment.center,
+                              //   children: [
+                              //     const Text('Go to'),
+                              //     const SizedBox(
+                              //       width: 1,
+                              //     ),
+                              //     TextButton(
+                              //       onPressed: () {
+                              //         Navigator.pushNamed(context, 'admin');
+                              //       },
+                              //       child: const Text(
+                              //         'Admin Login',
+                              //         style: TextStyle(
+                              //             color: Colors.redAccent, fontSize: 16),
+                              //       ),
+                              //     ),
+                              //   ],
+                              // ),
+                            ],
                           ),
                         ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text('Not a User?'),
-                            const SizedBox(
-                              width: 1,
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pushNamed(context, 'custreg');
-                              },
-                              child: const Text(
-                                'Sign Up',
-                                style: TextStyle(
-                                    color: Colors.indigo, fontSize: 16),
-                              ),
-                            ),
-                          ],
-                        ),
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.center,
-                        //   children: [
-                        //     const Text('Go to'),
-                        //     const SizedBox(
-                        //       width: 1,
-                        //     ),
-                        //     TextButton(
-                        //       onPressed: () {
-                        //         Navigator.pushNamed(context, 'admin');
-                        //       },
-                        //       child: const Text(
-                        //         'Admin Login',
-                        //         style: TextStyle(
-                        //             color: Colors.redAccent, fontSize: 16),
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
                       ],
                     ),
                   ),

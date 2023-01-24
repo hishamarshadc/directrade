@@ -11,7 +11,7 @@ class CustRegisterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     
     const sizedBox = SizedBox(
-      height: 30,
+      height: 15,
     );
     return Scaffold(
       body: SafeArea(
@@ -30,12 +30,12 @@ class CustRegisterPage extends StatelessWidget {
                         sizedBox,
                         const Center(
                           child: CircleAvatar(
-                            radius: 50,
+                            radius: 40,
                             backgroundColor: Colors.black,
                             child: Icon(
                               Icons.person_add_alt_outlined,
                               color: Colors.white,
-                              size: 50,
+                              size: 30,
                             ),
                           ),
                         ),
@@ -93,59 +93,7 @@ class CustRegisterPage extends StatelessWidget {
                               Icons.lock_rounded,
                               color: Colors.black,
                             ),
-                            label: const Text('Create Password'),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(100),
-                            ),
-                          ),
-                        ),
-                        sizedBox,
-                        TextFormField(
-                          obscureText: true,
-                          decoration: InputDecoration(
-                            prefixIcon: const Icon(
-                              Icons.lock_rounded,
-                              color: Colors.black,
-                            ),
-                            label: const Text('Confirm Password'),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(100),
-                            ),
-                          ),
-                        ),
-                        sizedBox,
-                        TextFormField(
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: InputDecoration(
-                            prefixIcon:
-                                const Icon(Icons.location_on_sharp, color: Colors.black),
-                            label: const Text('Place'),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(100),
-                            ),
-                          ),
-                        ),
-                        sizedBox,
-                         TextFormField(
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: InputDecoration(
-                            prefixIcon:
-                                const Icon(Icons.location_city, color: Colors.black),
-                            label: const Text('District'),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(100),
-                            ),
-                          ),
-                        ),
-
-                        sizedBox,
-                        
-                        TextFormField(
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                            prefixIcon: const Icon(Icons.numbers,
-                                color: Colors.black),
-                            label: const Text('PIN Code'),
+                            label: const Text('Password'),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(100),
                             ),
@@ -157,7 +105,19 @@ class CustRegisterPage extends StatelessWidget {
                           decoration: InputDecoration(
                             prefixIcon:
                                 const Icon(Icons.home_filled, color: Colors.black),
-                            label: const Text('Address'),
+                            label: const Text('Full Address'),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(100),
+                            ),
+                          ),
+                        ),
+                        sizedBox,
+                        TextFormField(
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            prefixIcon: const Icon(Icons.location_on_sharp,
+                                color: Colors.black),
+                            label: const Text('PIN Code'),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(100),
                             ),
@@ -197,9 +157,7 @@ class CustRegisterPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          height: 15,
-                        ),
+                        // sizedBox,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -236,9 +194,7 @@ class CustRegisterPage extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 40,
-                        )
+                        sizedBox
                       ],
                     ),
                   ),
