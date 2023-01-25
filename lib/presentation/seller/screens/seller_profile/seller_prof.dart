@@ -9,7 +9,7 @@ class SellerProfilePage extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: Colors.cyan.shade900,
+        backgroundColor: Colors.white,
         body: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -29,18 +29,25 @@ class SellerProfilePage extends StatelessWidget {
                   fontSize: 30.0,
                   fontFamily: 'Pacifico',
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
               ),
               SizedBox(
                 height: 20.0,
                 width: 150,
                 child: Divider(
-                  color: Colors.teal.shade100,
+                  color: Colors.black,
                 ),
               ),
               InkWell(
                   child: Card(
+                    shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    side: BorderSide(
+                      color: Colors.black,
+                      
+                    )
+                  ),
                     margin: const EdgeInsets.symmetric(
                         vertical: 10.0, horizontal: 25.0),
                     child: ListTile(
@@ -78,6 +85,13 @@ class SellerProfilePage extends StatelessWidget {
               ),
               InkWell(
                   child: Card(
+                    shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    side: BorderSide(
+                      color: Colors.black,
+                      
+                    )
+                  ),
                     margin: const EdgeInsets.symmetric(
                         vertical: 10.0, horizontal: 25.0),
                     child: ListTile(
@@ -150,6 +164,13 @@ class SellerProfilePage extends StatelessWidget {
               // ),
               InkWell(
                 child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    side: BorderSide(
+                      color: Colors.black,
+                      
+                    )
+                  ),
                   margin: const EdgeInsets.symmetric(
                       vertical: 10.0, horizontal: 25.0),
                   child: ListTile(
@@ -193,13 +214,13 @@ class SellerProfilePage extends StatelessWidget {
               TextButton(onPressed: () {
                 Navigator.pushNamed(context,'aboutus');
               }, child: Text('About Us'),style: TextButton.styleFrom(
-                foregroundColor: Colors.white
+                foregroundColor: Colors.black
               ),),
               SizedBox(
                 height: 20.0,
                 width: 150,
                 child: Divider(
-                  color: Colors.teal.shade100,
+                  color: Colors.black,
                 ),
               ),
               Text(
@@ -208,7 +229,7 @@ class SellerProfilePage extends StatelessWidget {
                   fontSize: 20.0,
                   fontFamily: 'Pacifico',
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
               ),
               
@@ -216,7 +237,7 @@ class SellerProfilePage extends StatelessWidget {
                 height: 20.0,
                 width: 150,
                 child: Divider(
-                  color: Colors.teal.shade100,
+                  color: Colors.black,
                 ),
               ),
             ],
