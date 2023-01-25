@@ -113,10 +113,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               buildTextField("Full Name", "Full name", false),
               buildTextField("E-mail", "Email@email.com", false),
               buildTextField("Password", "", true),
-              buildTextField("Place", "Place", false),
-              buildTextField("District", "District", false),
               buildTextField("PinCode", "PinCode", false),
-              buildTextField("Personal Address", "Address", false),
               buildTextField("Company Name", "Company Name", false),
               buildTextField("Company Address", "Company address", false),
               const SizedBox(
