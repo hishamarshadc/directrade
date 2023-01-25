@@ -53,9 +53,11 @@ class _SellerProductPageState extends State<SellerProductPage> {
       floatingActionButton: OutlinedButton(
         style: OutlinedButton.styleFrom(
           backgroundColor: Colors.white,
+          foregroundColor: Colors.green,
+
           padding: const EdgeInsets.symmetric(horizontal: 50),
           shape: RoundedRectangleBorder(
-              side: BorderSide(
+              side: const BorderSide(
                 width: 4,
                 style: BorderStyle.solid,
                 
@@ -64,7 +66,33 @@ class _SellerProductPageState extends State<SellerProductPage> {
               ),
               borderRadius: BorderRadius.circular(20)),
         ),
-        onPressed: () {},
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            //background color for modal bottom screen
+            backgroundColor: Colors.yellow,
+            //elevates modal bottom screen
+            elevation: 20,
+            // gives rounded corner to modal bottom screen
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(30),topRight: Radius.circular(30)),
+            ),
+            builder: (BuildContext context) {
+              // UDE : SizedBox instead of Container for whitespaces
+              return SizedBox(
+                height: 200,
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const <Widget>[
+                      Text('Add Forms Here'),
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
+        },
         child: const Text("Add Product",
             style: TextStyle(
                 fontSize: 16, letterSpacing: 2.2, color: Colors.green)),
@@ -95,7 +123,7 @@ class _SellerProductPageState extends State<SellerProductPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  SizedBox(width: 20),
+                  const SizedBox(width: 20),
                   const Text(
                     'Filters : ',
                     style: TextStyle(
