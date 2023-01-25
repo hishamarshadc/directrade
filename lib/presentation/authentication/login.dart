@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
+  final formKey = GlobalKey<FormState>();
   TextEditingController kemail = TextEditingController();
   TextEditingController kpass = TextEditingController();
   final auth = FirebaseAuth.instance;
@@ -62,15 +63,27 @@ class LoginPage extends StatelessWidget {
                         const SizedBox(
                           height: 30,
                         ),
-                        TextFormField(
-                          controller: kemail,
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: InputDecoration(
-                            prefixIcon:
-                                const Icon(Icons.email, color: Colors.black),
-                            label: const Text('Email'),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(100),
+                        Form(
+                          key: formKey,
+                          child: TextFormField(
+                            validator: (value) {
+                              if (value!.isEmpty ||
+                                  !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                                      .hasMatch(value)) {
+                                return "Enter a valid Email Address";
+                              } else {
+                                return null;
+                              }
+                            },
+                            controller: kemail,
+                            keyboardType: TextInputType.emailAddress,
+                            decoration: InputDecoration(
+                              prefixIcon:
+                                  const Icon(Icons.email, color: Colors.black),
+                              label: const Text('Email'),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(100),
+                              ),
                             ),
                           ),
                         ),
@@ -111,81 +124,85 @@ class LoginPage extends StatelessWidget {
                                 overlayColor: MaterialStateProperty.all(
                                     Colors.transparent)),
                             onPressed: () async {
-                              if (kemail.text.isEmpty || kpass.text.isEmpty) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: customsnackbar(
-                                      errortext:
-                                          'Please enter your email/password',
+                              if (formKey.currentState!.validate()) {
+                                if (kemail.text.isEmpty || kpass.text.isEmpty) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: customsnackbar(
+                                        errortext:
+                                            'Please enter your email/password',
+                                      ),
+                                      elevation: 0,
+                                      behavior: SnackBarBehavior.floating,
+                                      backgroundColor: Colors.transparent,
                                     ),
-                                    elevation: 0,
-                                    behavior: SnackBarBehavior.floating,
-                                    backgroundColor: Colors.transparent,
-                                  ),
-                                );
-                              } else {
-                                if (kemail.text == users[0]['email'] ||
-                                    kemail.text == users[1]['email'] ||
-                                    kemail.text == users[2]['email'] ||
-                                    kemail.text == users[3]['email']) {
-                                  for (int i = 0; i < users.length; i++) {
-                                    if (kemail.text == users[i]['email'] &&
-                                        kpass.text == users[i]['password']) {
-                                      if (users[i]['type'] == 's') {
-                                        Navigator.pushNamed(
-                                            context, 'sellerhome');
-                                      } else if (users[i]['type'] == 'p') {
-                                        // Navigator.pushNamed(
-                                        //     context, 'promptpending');
+                                  );
+                                } else {
+                                  if (kemail.text == users[0]['email'] ||
+                                      kemail.text == users[1]['email'] ||
+                                      kemail.text == users[2]['email'] ||
+                                      kemail.text == users[3]['email']) {
+                                    for (int i = 0; i < users.length; i++) {
+                                      if (kemail.text == users[i]['email'] &&
+                                          kpass.text == users[i]['password']) {
+                                        if (users[i]['type'] == 's') {
+                                          Navigator.pushNamed(
+                                              context, 'sellerhome');
+                                        } else if (users[i]['type'] == 'p') {
+                                          // Navigator.pushNamed(
+                                          //     context, 'promptpending');
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            const SnackBar(
+                                              content: yellowSnackBar(
+                                                errortext:
+                                                    'You are waiting to be approved',
+                                              ),
+                                              elevation: 0,
+                                              behavior:
+                                                  SnackBarBehavior.floating,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                            ),
+                                          );
+                                        } else if (users[i]['type'] == 'c') {
+                                          Navigator.pushNamed(context, 'home');
+                                        } else if (users[i]['type'] == 'a') {
+                                          Navigator.pushNamed(
+                                              context, 'adminhome');
+                                        }
+                                      }
+                                    }
+                                  } else {
+                                    SharedPreferences pref =
+                                        await SharedPreferences.getInstance();
+                                    if (kemail.text.isNotEmpty &&
+                                        kpass.text.isNotEmpty) {
+                                      try {
+                                        await auth.signInWithEmailAndPassword(
+                                            email: kemail.text,
+                                            password: kpass.text);
+                                        final user =
+                                            FirebaseAuth.instance.currentUser;
+                                        if (user != null) {
+                                          pref.setString('email', kemail.text);
+                                          Navigator.popAndPushNamed(
+                                              context, 'home');
+                                        }
+                                      } catch (e) {
+                                        print(e.toString());
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           const SnackBar(
-                                            content: yellowSnackBar(
-                                              errortext:
-                                                  'You are waiting to be approved',
+                                            content: customsnackbar(
+                                              errortext: 'Wrong Email/Password',
                                             ),
                                             elevation: 0,
                                             behavior: SnackBarBehavior.floating,
                                             backgroundColor: Colors.transparent,
                                           ),
                                         );
-                                      } else if (users[i]['type'] == 'c') {
-                                        Navigator.pushNamed(context, 'home');
-                                      } else if (users[i]['type'] == 'a') {
-                                        Navigator.pushNamed(
-                                            context, 'adminhome');
                                       }
-                                    }
-                                  }
-                                } else {
-                                  SharedPreferences pref =
-                                      await SharedPreferences.getInstance();
-                                  if (kemail.text.isNotEmpty &&
-                                      kpass.text.isNotEmpty) {
-                                    try {
-                                      await auth.signInWithEmailAndPassword(
-                                          email: kemail.text,
-                                          password: kpass.text);
-                                      final user =
-                                          FirebaseAuth.instance.currentUser;
-                                      if (user != null) {
-                                        pref.setString('email', kemail.text);
-                                        Navigator.popAndPushNamed(
-                                            context, 'home');
-                                      }
-                                    } catch (e) {
-                                      print(e.toString());
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        const SnackBar(
-                                          content: customsnackbar(
-                                            errortext: 'Wrong Email/Password',
-                                          ),
-                                          elevation: 0,
-                                          behavior: SnackBarBehavior.floating,
-                                          backgroundColor: Colors.transparent,
-                                        ),
-                                      );
                                     }
                                   }
                                 }
