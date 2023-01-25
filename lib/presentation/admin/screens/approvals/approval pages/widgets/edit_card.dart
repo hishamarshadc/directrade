@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
-class WaitingCard extends StatelessWidget {
-  const WaitingCard({
-    Key? key,
-  }) : super(key: key);
+class SellerEditCard extends StatelessWidget {
+  const SellerEditCard({super.key});
 
   @override
   Widget build(BuildContext context) {
