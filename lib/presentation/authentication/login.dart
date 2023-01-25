@@ -49,7 +49,7 @@ class LoginPage extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                            ),
+                            ]
                           ),
                         ),
                         const SizedBox(
@@ -214,25 +214,6 @@ class LoginPage extends StatelessWidget {
                             ),
                           ],
                         ),
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.center,
-                        //   children: [
-                        //     const Text('Go to'),
-                        //     const SizedBox(
-                        //       width: 1,
-                        //     ),
-                        //     TextButton(
-                        //       onPressed: () {
-                        //         Navigator.pushNamed(context, 'admin');
-                        //       },
-                        //       child: const Text(
-                        //         'Admin Login',
-                        //         style: TextStyle(
-                        //             color: Colors.redAccent, fontSize: 16),
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
                       ],
                     ),
                   ),
