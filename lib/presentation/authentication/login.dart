@@ -11,6 +11,7 @@ class LoginPage extends StatelessWidget {
   final auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
+    final size=MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -25,18 +26,30 @@ class LoginPage extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        const Center(
-                          child: CircleAvatar(
-                            radius: 50,
-                            backgroundColor: Colors.black,
-                            child: Icon(
-                              Icons.login_rounded,
-                              color: Colors.white,
-                              size: 50,
-                            ),
+                        Container(
+                          width: size.width*.85,
+                          child: Column(
+                            children: [
+                              const SizedBox(
+                                height: 30,
+                              ),
+                              Center(
+                                child: InkWell(
+                                  onLongPress: (){
+                                    Navigator.pushNamed(context, 'home');
+                                  },
+                                  child: CircleAvatar(
+                                    radius: 40,
+                                    backgroundColor: Colors.black,
+                                    child: Icon(
+                                      Icons.login_rounded,
+                                      color: Colors.white,
+                                      size: 30,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ]
                           ),
                         ),
                         const SizedBox(
@@ -201,25 +214,6 @@ class LoginPage extends StatelessWidget {
                             ),
                           ],
                         ),
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.center,
-                        //   children: [
-                        //     const Text('Go to'),
-                        //     const SizedBox(
-                        //       width: 1,
-                        //     ),
-                        //     TextButton(
-                        //       onPressed: () {
-                        //         Navigator.pushNamed(context, 'admin');
-                        //       },
-                        //       child: const Text(
-                        //         'Admin Login',
-                        //         style: TextStyle(
-                        //             color: Colors.redAccent, fontSize: 16),
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
                       ],
                     ),
                   ),
