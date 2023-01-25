@@ -37,7 +37,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             color: Colors.black,
           ),
           onPressed: () {
-            Navigator.pushNamed(context,'sellerprofile');
+            Navigator.pushNamed(context, 'sellerprofile');
           },
         ),
       ),
@@ -110,23 +110,24 @@ class _EditProfilePageState extends State<EditProfilePage> {
               const SizedBox(
                 height: 35,
               ),
-              buildTextField("Full Name", "Full name", false),
-              buildTextField("E-mail", "Email@email.com", false),
-              buildTextField("Password", "", true),
-              buildTextField("PinCode", "PinCode", false),
-              buildTextField("Company Name", "Company Name", false),
-              buildTextField("Company Address", "Company address", false),
+              buildTextField("Full Name", "Full name", 2 ),
+              buildTextField("E-mail", "Email@email.com", 1),
+              buildTextField("Password", "", 0),
+              buildTextField("PinCode", "PinCode", 4),
+              buildTextField("Company Name", "Company Name", 2),
+              buildTextField("Company Address", "Company address", 5),
               const SizedBox(
                 height: 5,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  OutlinedButton(style: OutlinedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(horizontal: 50),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20)),
-                  ),
+                  OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(horizontal: 50),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                    ),
                     onPressed: () {},
                     child: const Text("CANCEL",
                         style: TextStyle(
@@ -134,12 +135,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             letterSpacing: 2.2,
                             color: Colors.black)),
                   ),
-                  ElevatedButton(style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
-                    padding: const EdgeInsets.symmetric(horizontal: 50),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20)),
-                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black,
+                      padding: const EdgeInsets.symmetric(horizontal: 50),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                    ),
                     onPressed: () {},
                     child: const Text(
                       " SAVE ",
@@ -161,27 +163,71 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
-  Widget buildTextField(
-      String labelText, String placeholder, bool isPasswordTextField) {
-    bool showPassword = isPasswordTextField;
+  Widget buildTextField(String labelText, String placeholder, int type) {
+    // 0=password
+    // 1=email
+    // 2=name
+    // 3=phone
+    // 4=pin
+    // 5=address/undefined
     return Padding(
       padding: const EdgeInsets.only(bottom: 35.0),
-      child: TextField(
-        obscureText: isPasswordTextField = true ? showPassword : false,
+      child: TextFormField(
+        validator: (value) {
+          switch (type) {
+            case 0:
+              break;
+            case 1:
+              {
+                if (value!.isEmpty ||
+                    !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                        .hasMatch(value)) {
+                  return "Enter Correct Email Address";
+                } else {
+                  return null;
+                }
+              }
+              break;
+            case 2:
+              {
+                if (value!.isEmpty ||
+                    !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
+                  //allow upper and lower case alphabets and space
+                  return "Enter Correct Name";
+                } else {
+                  return null;
+                }
+              }
+              break;
+            case 3:
+              {
+                if (value!.isNotEmpty ||
+                    !RegExp(r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$')
+                        .hasMatch(value)) {
+                  //  r'^[0-9]{10}$' pattern plain match number with length 10
+                  return "Enter Correct Phone Number";
+                } else {
+                  return null;
+                }
+              }
+              break;
+            case 4:
+              {
+                if (value!.isEmpty ||
+                    !RegExp(r'^[6][0-9]{5}$').hasMatch(value)) {
+                  //  r'^[0-9]{10}$' pattern plain match number with length 10
+                  return "Enter a valid PIN code";
+                } else {
+                  return null;
+                }
+              }
+              break;
+
+            default:
+              return null;
+          }
+        },
         decoration: InputDecoration(
-            suffixIcon: isPasswordTextField
-                ? IconButton(
-                    onPressed: () {
-                      setState(() {
-                        showPassword = !showPassword;
-                      });
-                    },
-                    icon: const Icon(
-                      Icons.remove_red_eye,
-                      color: Colors.grey,
-                    ),
-                  )
-                : null,
             contentPadding: const EdgeInsets.only(bottom: 3),
             labelText: labelText,
             floatingLabelBehavior: FloatingLabelBehavior.always,
