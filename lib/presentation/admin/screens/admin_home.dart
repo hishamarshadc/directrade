@@ -37,7 +37,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
             IconButton(
               iconSize: 35,
               onPressed: () {
-                // Navigator.pushNamed(context, 'custprofile');
+                Navigator.pushNamed(context, 'adminprofile');
               },
               icon: const Icon(
                 Icons.account_circle_outlined,
