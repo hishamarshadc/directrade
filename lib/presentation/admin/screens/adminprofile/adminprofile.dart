@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sample_project/presentation/authentication/login.dart';
 
-class SellerProfilePage extends StatelessWidget {
-  const SellerProfilePage({super.key});
+class AdminProfilePage extends StatelessWidget {
+  const AdminProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -58,50 +58,6 @@ class SellerProfilePage extends StatelessWidget {
                             flex: 3,
                           ),
                           Icon(
-                            Icons.edit,
-                            color: Colors.red,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'Edit Profile',
-                            style: TextStyle(
-                                fontFamily: 'SourceSansPro',
-                                fontSize: 20,
-                                color: Colors.red),
-                          ),
-                          Spacer(flex: 3),
-                        ],
-                      ),
-                    ),
-                  ),
-                  onTap: () {
-                    Navigator.pushNamed(context, 'editseller');
-                  }),
-              const SizedBox(
-                height: 10.0,
-                width: 150,
-              ),
-              InkWell(
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    side: BorderSide(
-                      color: Colors.black,
-                      
-                    )
-                  ),
-                    margin: const EdgeInsets.symmetric(
-                        vertical: 10.0, horizontal: 25.0),
-                    child: ListTile(
-                      title: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Spacer(
-                            flex: 3,
-                          ),
-                          Icon(
                             Icons.phone,
                           ),
                           SizedBox(
@@ -126,42 +82,6 @@ class SellerProfilePage extends StatelessWidget {
                 height: 10.0,
                 width: 150,
               ),
-              // InkWell(
-              //     child: Card(
-              //       margin: const EdgeInsets.symmetric(
-              //           vertical: 10.0, horizontal: 25.0),
-              //       child: ListTile(
-              //         title: Row(
-              //           mainAxisAlignment: MainAxisAlignment.center,
-              //           children: const [
-              //             Spacer(
-              //               flex: 3,
-              //             ),
-              //             Icon(
-              //               Icons.feedback_outlined,
-              //             ),
-              //             SizedBox(
-              //               width: 10,
-              //             ),
-              //             Text(
-              //               'FeedBack',
-              //               style: TextStyle(
-              //                 fontFamily: 'SourceSansPro',
-              //                 fontSize: 20,
-              //               ),
-              //             ),
-              //             Spacer(flex: 3),
-              //           ],
-              //         ),
-              //       ),
-              //     ),
-              //     onTap: () {
-              //       Navigator.pushNamed(context, '');
-              //     }),
-              // SizedBox(
-              //   height: 10.0,
-              //   width: 150,
-              // ),
               InkWell(
                 child: Card(
                   shape: RoundedRectangleBorder(
@@ -224,7 +144,7 @@ class SellerProfilePage extends StatelessWidget {
                 ),
               ),
               Text(
-                'Logined as a seller'.toUpperCase(),
+                'Logined as a Admin'.toUpperCase(),
                 style: const TextStyle(
                   fontSize: 20.0,
                   fontFamily: 'Pacifico',

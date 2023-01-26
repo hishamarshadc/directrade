@@ -24,6 +24,28 @@ class _AdminHomePageState extends State<AdminHomePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+          title: const Text(
+            'Admin Dashboard',
+            style: TextStyle(
+              fontSize: 27,
+            ),
+          ),
+          actions: [
+            IconButton(
+              iconSize: 35,
+              onPressed: () {
+                Navigator.pushNamed(context, 'adminprofile');
+              },
+              icon: const Icon(
+                Icons.account_circle_outlined,
+              ),
+            ),
+          ],
+        ),
         // appBar: AppBar(
         //   automaticallyImplyLeading: false,
         //   backgroundColor: Colors.white,
@@ -46,6 +68,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
         //     ),
         //   ],
         // ),
+
         body: pages[selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
