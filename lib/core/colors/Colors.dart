@@ -17,6 +17,9 @@ import 'package:flutter/material.dart';
 );
 
 const textColor= Colors.black;
+const textStyleHead=TextStyle(fontSize:18 );
+const textStyleSubhead=TextStyle(fontSize:15 );
+const subTextStyle = TextStyle(fontSize: 15,fontWeight: FontWeight.bold);
 
 const int _blackPrimaryValue = 0xFF000000;
 
