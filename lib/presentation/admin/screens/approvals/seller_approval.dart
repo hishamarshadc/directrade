@@ -1,7 +1,7 @@
 // import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:sample_project/presentation/admin/screens/approvals/approval%20pages/widgets/waiting_card.dart';
+import 'package:sample_project/presentation/admin/screens/approvals/widgets/waiting_card.dart';
 
 class SellerApprovalPage extends StatelessWidget {
   const SellerApprovalPage({super.key});

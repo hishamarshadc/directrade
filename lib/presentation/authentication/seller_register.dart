@@ -56,7 +56,7 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                           sizedBox,
                           TextFormField(
                             validator: (value) {
-                              if(value!.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(value)){
+                              if(value!.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(value!)){
                                 //allow upper and lower case alphabets and space
                                 return "Enter Correct Name";
                             }else{
@@ -184,7 +184,7 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                           sizedBox,
                           TextFormField(
                             validator: (value) {
-                              if(value!.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(value)){
+                              if(value!.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(value!)){
                                 //allow upper and lower case alphabets and space
                                 return "Enter Correct Name";
                             }else{

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sample_project/presentation/admin/screens/approvals/approval%20pages/seller_approval.dart';
-import 'package:sample_project/presentation/admin/screens/approvals/approval_tab_bar.dart';
+import 'package:sample_project/presentation/admin/screens/approvals/seller_approval.dart';
 import 'package:sample_project/presentation/admin/screens/view_users/view_customers/view_customers.dart';
 import 'package:sample_project/presentation/admin/screens/view_users/view_sellers/view_sellers.dart';
 
@@ -13,7 +12,7 @@ class AdminHomePage extends StatefulWidget {
 
 class _AdminHomePageState extends State<AdminHomePage> {
   final pages = [
-    const ApprovalTabBar(),
+    const SellerApprovalPage(),
     const ViewSellersPage(),
     const ViewCustPage()
   ];
@@ -46,6 +45,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
             ),
           ],
         ),
+
         // appBar: AppBar(
         //   automaticallyImplyLeading: false,
         //   backgroundColor: Colors.white,
@@ -68,6 +68,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
         //     ),
         //   ],
         // ),
+
 
         body: pages[selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
