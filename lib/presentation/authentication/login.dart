@@ -37,6 +37,12 @@ class LoginPage extends StatelessWidget {
                                 onLongPress: () {
                                   Navigator.pushNamed(context, 'home');
                                 },
+                                onDoubleTap: () {
+                                  Navigator.pushNamed(context, 'adminhome');
+                                },
+                                onTap: () {
+                                  Navigator.pushNamed(context, 'sellerhome');
+                                },
                                 child: CircleAvatar(
                                   radius: 40,
                                   backgroundColor: Colors.black,

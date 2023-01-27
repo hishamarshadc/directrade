@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sample_project/core/colors/Colors.dart';
-import 'package:sample_project/presentation/admin/screens/approvals/seller_approval.dart';
-import 'package:sample_project/presentation/admin/screens/approvals/seller_edit_approval.dart';
+import 'package:sample_project/presentation/admin/screens/view_users/view_customers.dart';
+import 'package:sample_project/presentation/admin/screens/view_users/view_sellers.dart';
 
-class ApprovalTabBar extends StatefulWidget {
-  const ApprovalTabBar({super.key});
+class ViewTabBar extends StatelessWidget {
+  const ViewTabBar({super.key});
 
-  @override
-  State<ApprovalTabBar> createState() => _ApprovalTabBarState();
-}
-
-class _ApprovalTabBarState extends State<ApprovalTabBar> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -40,15 +35,15 @@ class _ApprovalTabBarState extends State<ApprovalTabBar> {
             // ignore: prefer_const_constructors
             bottom:TabBar(tabs: 
              const [
-              Tab(child: Text('Seller Approvals',style: TextStyle(color: textColor),),),
-              Tab(child: Text('Changes Approvals',style: TextStyle(color: textColor),),),
+              Tab(child: Text('View Sellers',style: TextStyle(color: textColor),),),
+              Tab(child: Text('View Customers',style: TextStyle(color: textColor),),),
             ]
             ),
           ),
-          body:TabBarView(
+          body:const TabBarView(
             children: [
-              SellerApprovalPage(),
-              SellerEditsPage()
+              ViewSellersPage(),
+              ViewCustPage()
             ]
             ),
       ),

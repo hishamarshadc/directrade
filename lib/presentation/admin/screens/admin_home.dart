@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sample_project/presentation/admin/screens/approvals/approval_tab_bar.dart';
-import 'package:sample_project/presentation/admin/screens/view_users/view_customers/view_customers.dart';
-import 'package:sample_project/presentation/admin/screens/view_users/view_sellers/view_sellers.dart';
+import 'package:sample_project/presentation/admin/screens/feedbacks/feedback_home.dart';
+import 'package:sample_project/presentation/admin/screens/view_users/view_customers.dart';
+import 'package:sample_project/presentation/admin/screens/view_users/view_sellers.dart';
+import 'package:sample_project/presentation/admin/screens/view_users/view_tab_bar.dart';
 
 class AdminHomePage extends StatefulWidget {
   const AdminHomePage({super.key});
@@ -13,8 +15,8 @@ class AdminHomePage extends StatefulWidget {
 class _AdminHomePageState extends State<AdminHomePage> {
   final pages = [
     const ApprovalTabBar(),
-    const ViewSellersPage(),
-    const ViewCustPage()
+    const ViewTabBar(),
+    const FeedbackHome(),
   ];
 
   int selectedIndex = 0;
@@ -33,12 +35,12 @@ class _AdminHomePageState extends State<AdminHomePage> {
               
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.currency_rupee_rounded, size: 35),
-              label: 'Sellers',
+              icon: Icon(Icons.person_pin_rounded, size: 35),
+              label: 'View Users',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person_pin_rounded, size: 35),
-              label: 'Customers',
+              icon: Icon(Icons.feedback_outlined, size: 35),
+              label: 'Feedbacks',
             ),
           ],
           currentIndex: selectedIndex,

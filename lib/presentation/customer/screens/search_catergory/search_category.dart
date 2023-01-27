@@ -136,7 +136,7 @@ final _productPriceList=[
                         builder: (context) => ProductFullViewPage(
                           title: _productNameList[index],
                           imageUrl: _imageUrlList[index],
-                          productPrice: products[index]['productPrice']!,
+                          productPrice: products[0]['productPrice']!,
                         ),
                       ),
                     ),

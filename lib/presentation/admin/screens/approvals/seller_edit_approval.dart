@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:sample_project/presentation/admin/screens/approvals/approval%20pages/widgets/edit_card.dart';
+import 'package:sample_project/presentation/admin/screens/approvals/widgets/edit_card.dart';
 
 class SellerEditsPage extends StatelessWidget {
   const SellerEditsPage({super.key});

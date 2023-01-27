@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sample_project/presentation/admin/screens/view_users/view_sellers/widgets/seller_card.dart';
+import 'package:sample_project/presentation/admin/screens/view_users/widgets/seller_card.dart';
 
 class ViewSellersPage extends StatelessWidget {
   const ViewSellersPage({super.key});

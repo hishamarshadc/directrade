@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sample_project/presentation/admin/screens/view_users/view_customers/widgets/customer_card.dart';
+import 'package:sample_project/presentation/admin/screens/view_users/widgets/customer_card.dart';
 
 class ViewCustPage extends StatelessWidget {
   const ViewCustPage({super.key});
