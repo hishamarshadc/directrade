@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sample_project/presentation/admin/screens/approvals/approval%20pages/seller_approval.dart';
-import 'package:sample_project/presentation/admin/screens/approvals/approval_tab_bar.dart';
+import 'package:sample_project/presentation/admin/screens/approvals/seller_approval.dart';
 import 'package:sample_project/presentation/admin/screens/view_users/view_customers/view_customers.dart';
 import 'package:sample_project/presentation/admin/screens/view_users/view_sellers/view_sellers.dart';
 
@@ -13,7 +12,7 @@ class AdminHomePage extends StatefulWidget {
 
 class _AdminHomePageState extends State<AdminHomePage> {
   final pages = [
-    const ApprovalTabBar(),
+    const SellerApprovalPage(),
     const ViewSellersPage(),
     const ViewCustPage()
   ];
@@ -24,28 +23,28 @@ class _AdminHomePageState extends State<AdminHomePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        // appBar: AppBar(
-        //   automaticallyImplyLeading: false,
-        //   backgroundColor: Colors.white,
-        //   foregroundColor: Colors.black,
-        //   title: const Text(
-        //     'Admin Dashboard',
-        //     style: TextStyle(
-        //       fontSize: 27,
-        //     ),
-        //   ),
-        //   actions: [
-        //     IconButton(
-        //       iconSize: 35,
-        //       onPressed: () {
-        //         // Navigator.pushNamed(context, 'custprofile');
-        //       },
-        //       icon: const Icon(
-        //         Icons.account_circle_outlined,
-        //       ),
-        //     ),
-        //   ],
-        // ),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+          title: const Text(
+            'Admin Dashboard',
+            style: TextStyle(
+              fontSize: 27,
+            ),
+          ),
+          actions: [
+            IconButton(
+              iconSize: 35,
+              onPressed: () {
+                Navigator.pushNamed(context, 'adminprofile');
+              },
+              icon: const Icon(
+                Icons.account_circle_outlined,
+              ),
+            ),
+          ],
+        ),
         body: pages[selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,

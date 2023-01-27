@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:sample_project/presentation/aboutus.dart';
 import 'package:sample_project/presentation/admin/screens/admin_home.dart';
+import 'package:sample_project/presentation/admin/screens/adminprofile/adminprofile.dart';
 import 'package:sample_project/presentation/authentication/login.dart';
 import 'package:sample_project/presentation/authentication/cust_register.dart';
 import 'package:sample_project/core/colors/Colors.dart';
@@ -43,7 +44,8 @@ class MyApp extends StatelessWidget {
         'editcust':(context) => CustEdit(),
         'editseller':(context) => const EditSeller(),
         'sellerorderpage':(context) =>  SellerOrderListPage(),
-        'aboutus':(context) =>  AboutPage()
+        'aboutus':(context) =>  AboutPage(),
+        'adminprofile':(context) => const AdminProfilePage(),
       },
       debugShowCheckedModeBanner: false,// This trailing comma makes auto-formatting nicer for build methods.
     );
