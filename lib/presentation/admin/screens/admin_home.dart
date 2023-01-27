@@ -45,6 +45,31 @@ class _AdminHomePageState extends State<AdminHomePage> {
             ),
           ],
         ),
+
+        // appBar: AppBar(
+        //   automaticallyImplyLeading: false,
+        //   backgroundColor: Colors.white,
+        //   foregroundColor: Colors.black,
+        //   title: const Text(
+        //     'Admin Dashboard',
+        //     style: TextStyle(
+        //       fontSize: 27,
+        //     ),
+        //   ),
+        //   actions: [
+        //     IconButton(
+        //       iconSize: 35,
+        //       onPressed: () {
+        //         // Navigator.pushNamed(context, 'custprofile');
+        //       },
+        //       icon: const Icon(
+        //         Icons.account_circle_outlined,
+        //       ),
+        //     ),
+        //   ],
+        // ),
+
+
         body: pages[selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
