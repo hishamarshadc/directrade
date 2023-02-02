@@ -52,7 +52,7 @@ class ProductTile extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('$rating',style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w500),),
+                    Text('$rating',style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w400),),
                     const Icon(
                       Icons.star_sharp,
                       size: 17,

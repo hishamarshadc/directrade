@@ -104,7 +104,7 @@ class _CustRegisterPageState extends State<CustRegisterPage> {
                           sizedBox,
                           TextFormField(
                             validator: (value){
-                            if(value!.isNotEmpty || !RegExp(r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$').hasMatch(value)){
+                            if(value!.isEmpty || !RegExp(r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$').hasMatch(value)){
                                 //  r'^[0-9]{10}$' pattern plain match number with length 10
                                 return "Enter Correct Phone Number";
                             }else{

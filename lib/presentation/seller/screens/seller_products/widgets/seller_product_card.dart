@@ -47,7 +47,7 @@ class SellerProductCard extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Container(
+                  SizedBox(
                     width: size.width*.35,
                     child: Text(
                       products[index]['productName']!,
@@ -70,10 +70,14 @@ class SellerProductCard extends StatelessWidget {
                           size: 12,
                           color: Colors.yellow,
                         ),
-                        Text(
-                          '${products[index]['productRating']!} (${products[index]['productRatingCount']!})',
-                          style: const TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.w400),
+                        Expanded(
+                          child: Text(
+                            '${products[index]['productRating']!} (12345678})',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.w400),
+                          ),
                         ),
                       ],
                     ),

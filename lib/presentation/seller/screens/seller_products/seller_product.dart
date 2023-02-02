@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sample_project/presentation/seller/screens/seller_products/widgets/add_product_form.dart';
 import 'package:sample_project/presentation/seller/screens/seller_products/widgets/seller_product_card.dart';
 import 'package:sample_project/presentation/user_model.dart';
 
@@ -85,7 +86,7 @@ class _SellerProductPageState extends State<SellerProductPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const <Widget>[
-                      Text('Add Forms Here'),
+                      AddProduct(),
                     ],
                   ),
                 ),
@@ -170,7 +171,8 @@ class _SellerProductPageState extends State<SellerProductPage> {
                 itemCount: products.length,
               ),
             ),
-          )
+          ),
+          
           // Expanded(
           //   child: Padding(
           //     padding: const EdgeInsets.only(left: 10, right: 10),
