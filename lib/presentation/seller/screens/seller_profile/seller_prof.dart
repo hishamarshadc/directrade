@@ -32,7 +32,7 @@ class SellerProfilePage extends StatelessWidget {
                   color: Colors.black,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20.0,
                 width: 150,
                 child: Divider(
@@ -43,7 +43,7 @@ class SellerProfilePage extends StatelessWidget {
                   child: Card(
                     shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
-                    side: BorderSide(
+                    side: const BorderSide(
                       color: Colors.black,
                       
                     )
@@ -87,7 +87,7 @@ class SellerProfilePage extends StatelessWidget {
                   child: Card(
                     shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
-                    side: BorderSide(
+                    side: const BorderSide(
                       color: Colors.black,
                       
                     )
@@ -166,7 +166,7 @@ class SellerProfilePage extends StatelessWidget {
                 child: Card(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
-                    side: BorderSide(
+                    side: const BorderSide(
                       color: Colors.black,
                       
                     )
@@ -207,16 +207,16 @@ class SellerProfilePage extends StatelessWidget {
                 },
               ),
               const Spacer(flex: 2),
-              SizedBox(
+              const SizedBox(
                 height: 5,
                 width: 150,
               ),
               TextButton(onPressed: () {
                 Navigator.pushNamed(context,'aboutus');
-              }, child: Text('About Us'),style: TextButton.styleFrom(
+              }, child: const Text('About Us'),style: TextButton.styleFrom(
                 foregroundColor: Colors.black
               ),),
-              SizedBox(
+              const SizedBox(
                 height: 20.0,
                 width: 150,
                 child: Divider(
@@ -233,7 +233,7 @@ class SellerProfilePage extends StatelessWidget {
                 ),
               ),
               
-              SizedBox(
+              const SizedBox(
                 height: 20.0,
                 width: 150,
                 child: Divider(

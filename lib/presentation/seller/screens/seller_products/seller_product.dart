@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sample_project/presentation/seller/screens/seller_products/addproduct.dart';
 import 'package:sample_project/presentation/seller/screens/seller_products/widgets/add_product_form.dart';
 import 'package:sample_project/presentation/seller/screens/seller_products/widgets/seller_product_card.dart';
 import 'package:sample_project/presentation/user_model.dart';
@@ -55,44 +56,49 @@ class _SellerProductPageState extends State<SellerProductPage> {
         style: OutlinedButton.styleFrom(
           backgroundColor: Colors.white,
           foregroundColor: Colors.green,
-
           padding: const EdgeInsets.symmetric(horizontal: 50),
           shape: RoundedRectangleBorder(
               side: const BorderSide(
                 width: 4,
                 style: BorderStyle.solid,
-                
-
                 color: Colors.green,
               ),
               borderRadius: BorderRadius.circular(20)),
         ),
         onPressed: () {
           showModalBottomSheet(
-            context: context,
-            //background color for modal bottom screen
-            backgroundColor: Colors.yellow,
-            //elevates modal bottom screen
-            elevation: 20,
-            // gives rounded corner to modal bottom screen
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(30),topRight: Radius.circular(30)),
-            ),
-            builder: (BuildContext context) {
-              // UDE : SizedBox instead of Container for whitespaces
-              return SizedBox(
-                height: 200,
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const <Widget>[
-                      AddProduct(),
-                    ],
-                  ),
-                ),
+              context: context,
+              //background color for modal bottom screen
+              //elevates modal bottom screen
+              elevation: 20,
+              // gives rounded corner to modal bottom screen
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30)),
+              ),
+              builder: (BuildContext context) {
+                return Padding(
+                  padding: EdgeInsets.all(20),
+                  child: AddProductForm(),
+                );
+              }
+
+              //(BuildContext context) {
+              //   // UDE : SizedBox instead of Container for whitespaces
+              //   return SizedBox(
+              //     height: 200,
+              //     child: Center(
+              //       child: Column(
+              //         mainAxisAlignment: MainAxisAlignment.center,
+              //         children: const <Widget>[
+              //           AddProduct(),
+              //         ],
+              //       ),
+              //     ),
+              //   );
+              // },
               );
-            },
-          );
         },
         child: const Text("Add Product",
             style: TextStyle(
@@ -117,7 +123,6 @@ class _SellerProductPageState extends State<SellerProductPage> {
           //   ),
           // ),
           Container(
-            color: Colors.amber,
             width: double.infinity,
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -172,7 +177,7 @@ class _SellerProductPageState extends State<SellerProductPage> {
               ),
             ),
           ),
-          
+
           // Expanded(
           //   child: Padding(
           //     padding: const EdgeInsets.only(left: 10, right: 10),

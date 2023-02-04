@@ -15,7 +15,7 @@ class CustProfilePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Spacer(
+              const Spacer(
                 flex: 2,
               ),
               const CircleAvatar(
@@ -34,7 +34,7 @@ class CustProfilePage extends StatelessWidget {
                   color: Colors.black,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20.0,
                 width: 150,
                 child: Divider(
@@ -44,7 +44,7 @@ class CustProfilePage extends StatelessWidget {
               InkWell(
                   child: Card(shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
-                    side: BorderSide(
+                    side: const BorderSide(
                       color: Colors.black,
                       
                     )
@@ -87,7 +87,7 @@ class CustProfilePage extends StatelessWidget {
               InkWell(
                   child: Card(shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
-                    side: BorderSide(
+                    side: const BorderSide(
                       color: Colors.black,
                       
                     )
@@ -165,7 +165,7 @@ class CustProfilePage extends StatelessWidget {
               InkWell(
                 child: Card(shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
-                    side: BorderSide(
+                    side: const BorderSide(
                       color: Colors.black,
                       
                     )
@@ -205,19 +205,19 @@ class CustProfilePage extends StatelessWidget {
                       ModalRoute.withName('/'));
                 },
               ),
-              Spacer(
+              const Spacer(
                 flex: 3,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 5,
                 width: 150,
               ),
               TextButton(onPressed: () {
                 Navigator.pushNamed(context,'aboutus');
-              }, child: Text('About Us'),style: TextButton.styleFrom(
+              },style: TextButton.styleFrom(
                 foregroundColor: Colors.black
-              ),),
-              SizedBox(
+              ), child: const Text('About Us'),),
+              const SizedBox(
                 height: 20.0,
                 width: 150,
                 child: Divider(
@@ -233,7 +233,7 @@ class CustProfilePage extends StatelessWidget {
                   color: Colors.black,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20.0,
                 width: 150,
                 child: Divider(

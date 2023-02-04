@@ -43,7 +43,7 @@ class LoginPage extends StatelessWidget {
                                 onTap: () {
                                   Navigator.pushNamed(context, 'sellerhome');
                                 },
-                                child: CircleAvatar(
+                                child: const CircleAvatar(
                                   radius: 40,
                                   backgroundColor: Colors.black,
                                   child: Icon(
@@ -288,7 +288,7 @@ class customsnackbar extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Warning!'.toUpperCase(),
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 18,
                           fontFamily: 'roboto',
                           fontWeight: FontWeight.bold,
@@ -325,7 +325,7 @@ class customsnackbar extends StatelessWidget {
                     icon: Stack(
                       alignment: Alignment.center,
                       children: [
-                        CircleAvatar(
+                        const CircleAvatar(
                           backgroundColor: Colors.black,
                           radius: 30,
                         ),
@@ -373,7 +373,7 @@ class yellowSnackBar extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Please Wait!'.toUpperCase(),
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 18,
                           fontFamily: 'roboto',
                           fontWeight: FontWeight.bold,
@@ -410,7 +410,7 @@ class yellowSnackBar extends StatelessWidget {
                     icon: Stack(
                       alignment: Alignment.center,
                       children: [
-                        CircleAvatar(
+                        const CircleAvatar(
                           backgroundColor: Colors.black,
                           radius: 40,
                         ),

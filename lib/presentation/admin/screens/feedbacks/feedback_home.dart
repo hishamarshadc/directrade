@@ -5,6 +5,6 @@ class FeedbackHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text('Feedback List Goes Here'));
+    return const Center(child: Text('Feedback List Goes Here'));
   }
 }

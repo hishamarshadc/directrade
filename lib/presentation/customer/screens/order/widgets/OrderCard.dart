@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:sample_project/presentation/customer/screens/search_catergory/widgets/product_full_view.dart';
@@ -31,7 +30,7 @@ class OrderCard extends StatelessWidget {
             )
           ],
           
-          borderRadius: BorderRadius.all(Radius.circular(5)),
+          borderRadius: const BorderRadius.all(Radius.circular(5)),
           color: Colors.white,
         ),
         child: Padding(
@@ -79,7 +78,7 @@ class OrderCard extends StatelessWidget {
                               style: Theme.of(context).textTheme.bodyText1),
                           const Spacer(flex: 10),
                           ElevatedButton.icon(
-                            label: Text('REMOVE'),
+                            label: const Text('REMOVE'),
                             onPressed: () {},
                             icon: const Icon(
                               Icons.delete,

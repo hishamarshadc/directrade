@@ -45,7 +45,7 @@ class _ApprovalTabBarState extends State<ApprovalTabBar> {
             ]
             ),
           ),
-          body:TabBarView(
+          body:const TabBarView(
             children: [
               SellerApprovalPage(),
               SellerEditsPage()

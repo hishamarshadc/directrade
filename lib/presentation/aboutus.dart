@@ -1,27 +1,29 @@
 import 'package:flutter/material.dart';
 
 class AboutPage extends StatelessWidget {
+  const AboutPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("About Us"),
+        title: const Text("About Us"),
       ),
       body: Column(
         children: <Widget>[
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Container(
-            padding: EdgeInsets.all(20.0),
-            child: Text("Meet the team",
+            padding: const EdgeInsets.all(20.0),
+            child: const Text("Meet the team",
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                     decoration: TextDecoration.underline)),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Expanded(
             child: ListView(
-              padding: EdgeInsets.symmetric(vertical: 20,horizontal: 30),
+              padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 30),
               children: <Widget>[
                 _buildCard(
                     name: "Nijas",
@@ -70,7 +72,7 @@ class AboutPage extends StatelessWidget {
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15.0),
-          side: BorderSide(
+          side: const BorderSide(
             color: Colors.black,
             width: 2.0,
           ),
@@ -85,11 +87,11 @@ class AboutPage extends StatelessWidget {
                   image: DecorationImage(
                       image: NetworkImage(image), fit: BoxFit.fitHeight)),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Padding(
-              padding: EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(10.0),
               child: Text(name,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             ),
           ],
         ),

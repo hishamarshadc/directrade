@@ -53,7 +53,7 @@ class SellerProductCard extends StatelessWidget {
                       products[index]['productName']!,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
-                      style: TextStyle(fontSize: 18),
+                      style: const TextStyle(fontSize: 18),
                     ),
                   ),
                   Container(
@@ -92,7 +92,7 @@ class SellerProductCard extends StatelessWidget {
                     width: size.width*.35,
                     child: Text(
                       'Rs.${products[index]['productPrice']!}/unit',
-                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                     ),
                   ),
                   Container(

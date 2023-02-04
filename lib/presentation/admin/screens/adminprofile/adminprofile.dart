@@ -32,7 +32,7 @@ class AdminProfilePage extends StatelessWidget {
                   color: Colors.black,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20.0,
                 width: 150,
                 child: Divider(
@@ -43,7 +43,7 @@ class AdminProfilePage extends StatelessWidget {
                   child: Card(
                     shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
-                    side: BorderSide(
+                    side: const BorderSide(
                       color: Colors.black,
                       
                     )
@@ -86,7 +86,7 @@ class AdminProfilePage extends StatelessWidget {
                 child: Card(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
-                    side: BorderSide(
+                    side: const BorderSide(
                       color: Colors.black,
                       
                     )
@@ -127,16 +127,16 @@ class AdminProfilePage extends StatelessWidget {
                 },
               ),
               const Spacer(flex: 2),
-              SizedBox(
+              const SizedBox(
                 height: 5,
                 width: 150,
               ),
               TextButton(onPressed: () {
                 Navigator.pushNamed(context,'aboutus');
-              }, child: Text('About Us'),style: TextButton.styleFrom(
+              },style: TextButton.styleFrom(
                 foregroundColor: Colors.black
-              ),),
-              SizedBox(
+              ), child: const Text('About Us'),),
+              const SizedBox(
                 height: 20.0,
                 width: 150,
                 child: Divider(
@@ -153,7 +153,7 @@ class AdminProfilePage extends StatelessWidget {
                 ),
               ),
               
-              SizedBox(
+              const SizedBox(
                 height: 20.0,
                 width: 150,
                 child: Divider(

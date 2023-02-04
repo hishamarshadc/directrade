@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:sample_project/core/colors/Colors.dart';
-import 'package:sample_project/presentation/user_model.dart';
 
 class ProductFullViewPage extends StatelessWidget {
   ProductFullViewPage(
@@ -19,7 +17,7 @@ class ProductFullViewPage extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text('DirecTrade'),
+        title: const Text('DirecTrade'),
       ),
       body: Column(
         children: [
@@ -44,11 +42,11 @@ class ProductFullViewPage extends StatelessWidget {
                         //ProductName
                         Column(
                           children: [
-                            Text('Color Threads for Embroidary',),
-                            Text('Sold by Awesome Designers',),
+                            const Text('Color Threads for Embroidary',),
+                            const Text('Sold by Awesome Designers',),
                             //rating row
                             Row(
-                              children: [
+                              children: const [
                                 Icon(Icons.star,color: Colors.amber,),
                                 Text('4.5 ( 15 Ratings )'),
                               ],
@@ -58,7 +56,7 @@ class ProductFullViewPage extends StatelessWidget {
                         //Price
                         Column(
                          children: [
-                           Text('Rs.999 /-'),
+                           const Text('Rs.999 /-'),
                            Container(
                               width: size.width*.4,
                               height: size.width*.1,
@@ -85,7 +83,7 @@ class ProductFullViewPage extends StatelessWidget {
                         
                         children: [
                 Column(
-                  children: [
+                  children: const [
                     
                     Text('''
 Awesome Designers provide high quality stitching threads at a lower price,
@@ -110,7 +108,7 @@ Free Delivery Provided for Awesome Designer products
           Container(
             width: double.infinity,
             height: size.width*.2,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.amber,
             ),
             child: 
@@ -127,8 +125,8 @@ Free Delivery Provided for Awesome Designer products
                                 borderRadius: BorderRadius.circular(50))),
                         child:const Icon(LineAwesomeIcons.minus,color: Colors.black,), 
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8),
                           child: Text('15',style: TextStyle(color: textColor,fontSize:18)),
                         ),
                         ElevatedButton(
@@ -139,7 +137,7 @@ Free Delivery Provided for Awesome Designer products
                                 borderRadius: BorderRadius.circular(50))),
                         child:const Icon(LineAwesomeIcons.plus,color: Colors.black,), 
                         ),
-                        Spacer(),
+                        const Spacer(),
                         Container(
                           width: size.width*.4,
                           height: size.width*.1,
