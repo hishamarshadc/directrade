@@ -13,7 +13,7 @@ class SellerHomePage extends StatefulWidget {
 
 class _SellerHomePageState extends State<SellerHomePage> {
   final pages = [
-    SellerProductPage(),
+    const SellerProductPage(),
     SellerOrderListPage(),
     const SellerChatPage()
   ];

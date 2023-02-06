@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:sample_project/presentation/customer/screens/order/widgets/OrderCard.dart';
 import 'package:sample_project/presentation/seller/screens/seller_orders/widgets/seller_order_card.dart';
 import 'package:sample_project/presentation/user_model.dart';
 
@@ -29,9 +28,9 @@ class SellerOrderListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView.builder(
-          itemBuilder: (context, index) => Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: const SellerOrderCard(),
+          itemBuilder: (context, index) => const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: SellerOrderCard(),
           ), itemCount: orders.length ),
     );
   }

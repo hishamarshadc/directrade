@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:sample_project/presentation/customer/screens/order/widgets/OrderCard.dart';
 import 'package:sample_project/presentation/customer/screens/order/widgets/cust_order_card.dart';
 
 class OrderListPage extends StatelessWidget {

@@ -49,7 +49,7 @@ class CustOrderCard extends StatelessWidget {
                               products[0]['productName']!,
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
-                              style: TextStyle(fontSize: 18),
+                              style: const TextStyle(fontSize: 18),
                             ),
                           ),
                           Container(
@@ -71,17 +71,17 @@ class CustOrderCard extends StatelessWidget {
                         ],
                       ),
                       SizedBox(height: size.width*.02),
-                          Text(
+                          const Text(
                             'Quantity : 5',
                             style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                           ),
                           SizedBox(height: size.width*.02),
-                          Text(
+                          const Text(
                             'Status : Pending',
                             style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                           ),
                           SizedBox(height: size.width*.02),
-                          Text(
+                          const Text(
                             'Total Price : Rs.99',
                             style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                           ),
@@ -91,13 +91,13 @@ class CustOrderCard extends StatelessWidget {
                 )
               ],
             ),
-            Text('Sold By : Hisham Arshad',style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+            const Text('Sold By : Hisham Arshad',style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
             SizedBox(height: size.width*.02),
-            Text('PIN Code : 673019',style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+            const Text('PIN Code : 673019',style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
             SizedBox(height: size.width*.02),
-            Text('Shop Address :\n\tGiven full address with lots of details must be given here',style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+            const Text('Shop Address :\n\tGiven full address with lots of details must be given here',style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
             SizedBox(height: size.width*.02),
-            Text('Ordered Time : 10.00 AM 12 Jan 2023',style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+            const Text('Ordered Time : 10.00 AM 12 Jan 2023',style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
             SizedBox(height: size.width*.02),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,

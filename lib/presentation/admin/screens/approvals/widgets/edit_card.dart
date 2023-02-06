@@ -14,22 +14,22 @@ class SellerEditCard extends StatelessWidget {
             border: Border.all(color: Colors.black),
             borderRadius: BorderRadius.circular(20)),
         child: ExpansionTile(
-          tilePadding: EdgeInsets.all(8),
-          childrenPadding: EdgeInsets.symmetric(vertical: 10,horizontal: 25),
+          tilePadding: const EdgeInsets.all(8),
+          childrenPadding: const EdgeInsets.symmetric(vertical: 10,horizontal: 25),
           leading: const CircleAvatar(radius: 40, child: Icon(Icons.person)),
           title: const Text('Seller Name : \nHisham Arshad C',style:textStyleHead,),
           subtitle: const Text('Business Name : Awesome Designers',style: textStyleSubhead,),
           expandedCrossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Business Address : \n\tMamatha Bakery,Areacode Bypass,Near Driving School',style: subTextStyle,),
-            Text('PIN Code : 673019',style: subTextStyle,),
-            Text('Phone : 9207631618',style: subTextStyle,),
-            Text('Email ID : seller@gmail.com',style: subTextStyle,),
+            const Text('Business Address : \n\tMamatha Bakery,Areacode Bypass,Near Driving School',style: subTextStyle,),
+            const Text('PIN Code : 673019',style: subTextStyle,),
+            const Text('Phone : 9207631618',style: subTextStyle,),
+            const Text('Email ID : seller@gmail.com',style: subTextStyle,),
             SizedBox(height: size.width*.02),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Spacer(),
+                const Spacer(),
                 ElevatedButton.icon(
                   style: ButtonStyle(
                     backgroundColor:MaterialStateProperty.all(Colors.green),
@@ -38,7 +38,7 @@ class SellerEditCard extends StatelessWidget {
                     icon: const Icon(Icons.done),
                     label: const Text('Approve')),
                     const SizedBox(width: 10),
-                    Spacer(),
+                    const Spacer(),
                 ElevatedButton.icon(
                   style: ButtonStyle(
                     backgroundColor:MaterialStateProperty.all(Colors.red),
@@ -46,7 +46,7 @@ class SellerEditCard extends StatelessWidget {
                     onPressed: () => {},
                     icon: const Icon(Icons.close),
                     label: const Text('Reject')),
-                    Spacer()
+                    const Spacer()
               ],
             ),
           ],
