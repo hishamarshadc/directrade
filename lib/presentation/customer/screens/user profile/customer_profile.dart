@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sample_project/presentation/authentication/login.dart';
+import 'package:sample_project/presentation/feedback.dart';
 
 class CustProfilePage extends StatelessWidget {
   const CustProfilePage({super.key});
@@ -120,7 +121,7 @@ class CustProfilePage extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    Navigator.pushNamed(context, '');
+                    Navigator.pushNamed(context, 'feedback');
                   }),
               const SizedBox(
                 height: 10.0,
