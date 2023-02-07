@@ -120,7 +120,7 @@ class CustProfilePage extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    Navigator.pushNamed(context, '');
+                    Navigator.pushNamed(context, 'feedback');
                   }),
               const SizedBox(
                 height: 10.0,

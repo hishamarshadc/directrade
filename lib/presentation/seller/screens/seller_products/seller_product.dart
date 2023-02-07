@@ -123,6 +123,7 @@ class _SellerProductPageState extends State<SellerProductPage> {
           //   ),
           // ),
           Container(
+            color: Colors.lightBlue,
             width: double.infinity,
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,

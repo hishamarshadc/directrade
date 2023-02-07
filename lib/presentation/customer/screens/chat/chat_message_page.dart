@@ -11,7 +11,7 @@ class ChatMessagePage extends StatefulWidget {
 }
 
 class _ChatMessagePageState extends State<ChatMessagePage> {
- 
+ TextEditingController km=TextEditingController();
 
   List<Message> messages = [
     Message(
@@ -151,14 +151,23 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
                     )),
           ),
           Container(
-            color: Colors.black,
+            color: Colors.lightBlue,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
                 color: Colors.white,
                 child: TextField(
-                  decoration: const InputDecoration(
-                    contentPadding: EdgeInsets.all(12),
+                  controller: km,
+                  decoration:  InputDecoration(
+                    suffixIcon: IconButton(onPressed: (){
+                      final message = Message(
+                      text: km.text,
+                      date: DateTime.now(),
+                      isSentByMe: true,
+                    );
+                    setState(() => messages.add(message));
+                    }, icon:const Icon(Icons.send)),
+                    contentPadding:const EdgeInsets.all(12),
                     hintText: 'Type Message Here..',
                   ),
                   onSubmitted: (text) {

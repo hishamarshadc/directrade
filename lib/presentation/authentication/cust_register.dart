@@ -23,7 +23,7 @@ class _CustRegisterPageState extends State<CustRegisterPage> {
   Widget build(BuildContext context) {
     
     const sizedBox = SizedBox(
-      height: 30,
+      height: 20,
     );
     return Scaffold(
       body: SafeArea(
@@ -35,7 +35,7 @@ class _CustRegisterPageState extends State<CustRegisterPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
                     child: Form(
                       key: formKey,
                       child: Column(
@@ -44,12 +44,12 @@ class _CustRegisterPageState extends State<CustRegisterPage> {
                           sizedBox,
                           const Center(
                             child: CircleAvatar(
-                              radius: 50,
-                              backgroundColor: Colors.black,
+                             radius: 50,
+                                backgroundColor: Colors.lightBlue,
                               child: Icon(
                                 Icons.person_add_alt_outlined,
                                 color: Colors.white,
-                                size: 50,
+                                  size: 40,
                               ),
                             ),
                           ),
@@ -59,7 +59,7 @@ class _CustRegisterPageState extends State<CustRegisterPage> {
                             style: TextStyle(
                                 fontWeight: FontWeight.w500,
                                 color: Colors.black,
-                                fontSize: 30),
+                                fontSize: 25),
                           ),
                           sizedBox,
                           TextFormField(
@@ -123,6 +123,38 @@ class _CustRegisterPageState extends State<CustRegisterPage> {
                           ),
                           sizedBox,
                           TextFormField(
+                            keyboardType: TextInputType.emailAddress,
+                            decoration: InputDecoration(
+                              prefixIcon:
+                                  const Icon(Icons.home_filled, color: Colors.black),
+                              label: const Text('Full Address'),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(100),
+                              ),
+                            ),
+                          ),
+                          sizedBox,
+                          TextFormField(
+                            validator: (value){
+                            if(value!.isEmpty || !RegExp(r'^[1-9][0-9]{5}$').hasMatch(value)){
+                                //  r'^[0-9]{10}$' pattern plain match number with length 10
+                                return "Enter a valid PIN code";
+                            }else{
+                               return null;
+                            }
+                            },
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              prefixIcon: const Icon(Icons.numbers,
+                                  color: Colors.black),
+                              label: const Text('PIN Code'),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(100),
+                              ),
+                            ),
+                          ),
+                          sizedBox,
+                          TextFormField(
                             controller: kpass,
                             obscureText: true,
                             decoration: InputDecoration(
@@ -159,44 +191,10 @@ class _CustRegisterPageState extends State<CustRegisterPage> {
                             ),
                           ),
                           sizedBox,
-                          TextFormField(
-                            keyboardType: TextInputType.emailAddress,
-                            decoration: InputDecoration(
-                              prefixIcon:
-                                  const Icon(Icons.home_filled, color: Colors.black),
-                              label: const Text('address'),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(100),
-                              ),
-                            ),
-                          ),
-                    
-                          sizedBox,
-                          
-                          TextFormField(
-                            validator: (value){
-                            if(value!.isEmpty || !RegExp(r'^[1-9][0-9]{5}$').hasMatch(value)){
-                                //  r'^[0-9]{10}$' pattern plain match number with length 10
-                                return "Enter a valid PIN code";
-                            }else{
-                               return null;
-                            }
-                            },
-                            keyboardType: TextInputType.number,
-                            decoration: InputDecoration(
-                              prefixIcon: const Icon(Icons.numbers,
-                                  color: Colors.black),
-                              label: const Text('PIN Code'),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(100),
-                              ),
-                            ),
-                          ),
-                          sizedBox,
                           Container(
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(100),
-                                color: Colors.black),
+                                color: Colors.lightBlue),
                             width: double.infinity,
                             height: 60.0,
                             child: TextButton(

@@ -9,9 +9,14 @@ class LoginPage extends StatelessWidget {
   TextEditingController kemail = TextEditingController();
   TextEditingController kpass = TextEditingController();
   final auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+  const sizedBox = SizedBox(
+      height: 20,
+    );
+
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -22,53 +27,47 @@ class LoginPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
-                          width: size.width * .85,
-                          child: Column(children: [
-                            const SizedBox(
-                              height: 30,
-                            ),
-                            Center(
-                              child: InkWell(
-                                onLongPress: () {
-                                  Navigator.pushNamed(context, 'home');
-                                },
-                                onDoubleTap: () {
-                                  Navigator.pushNamed(context, 'adminhome');
-                                },
-                                onTap: () {
-                                  Navigator.pushNamed(context, 'sellerhome');
-                                },
-                                child: const CircleAvatar(
-                                  radius: 40,
-                                  backgroundColor: Colors.black,
-                                  child: Icon(
-                                    Icons.login_rounded,
-                                    color: Colors.white,
-                                    size: 30,
-                                  ),
+                        Column(
+                          children: [
+                          SizedBox(
+                            height: size.width * .2,
+                          ),
+                          Center(
+                            child: InkWell(
+                              onLongPress: () {
+                                Navigator.pushNamed(context, 'home');
+                              },
+                              onDoubleTap: () {
+                                Navigator.pushNamed(context, 'adminhome');
+                              },
+                              onTap: () {
+                                Navigator.pushNamed(context, 'sellerhome');
+                              },
+                              child: const CircleAvatar(
+                                radius: 50,
+                                backgroundColor: Colors.lightBlue,
+                                child: Icon(
+                                  Icons.login_rounded,
+                                  color: Colors.white,
+                                  size: 40,
                                 ),
                               ),
                             ),
-                          ]),
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
+                          ),
+                        ]),
+                        sizedBox,
                         const Text(
                           'Login to DirecTrade',
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               color: Colors.black,
-                              fontSize: 30),
+                              fontSize: 25),
                         ),
-                        const SizedBox(
-                          height: 30,
-                        ),
+                        sizedBox,
                         Form(
                           key: formKey,
                           child: TextFormField(
@@ -93,9 +92,7 @@ class LoginPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          height: 30,
-                        ),
+                        sizedBox,
                         TextFormField(
                           controller: kpass,
                           obscureText: true,
@@ -116,13 +113,11 @@ class LoginPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          height: 30,
-                        ),
+                        sizedBox,
                         Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(100),
-                              color: Colors.black),
+                              color: Colors.lightBlue),
                           width: double.infinity,
                           height: 60.0,
                           child: TextButton(

@@ -72,9 +72,8 @@ class SellerProductCard extends StatelessWidget {
                         ),
                         Expanded(
                           child: Text(
-                            '${products[index]['productRating']!} (12345678})',
+                            '${products[index]['productRating']!} (12)',
                             maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.w400),
                           ),
@@ -117,7 +116,9 @@ class SellerProductCard extends StatelessWidget {
               Row(
                 children: [
                   OutlinedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context,'prodviewseller');
+                    },
                     style: OutlinedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50))),
