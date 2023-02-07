@@ -22,9 +22,12 @@ class ProductFullViewPage extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
-        // appBar: AppBar(
-        //   title: const Text('DirecTrade'),
-        // ),
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+          title: const Text('Product Details',style: TextStyle(fontSize: 30),),
+        ),
         body: Column(
           children: [
             Expanded(
@@ -32,44 +35,55 @@ class ProductFullViewPage extends StatelessWidget {
                 child: Column(
                   children: [
                     //Image Product
-                  AspectRatio(
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20)
+                      ),
+                      child: AspectRatio(
               aspectRatio: 4/3,
               child: Image.asset(
                 imageUrl,
                 fit: BoxFit.cover,
               ),
             ),
+                    ),
+                  ),
                    
                     //Product Hero
-                    Row(
-                      children: [
-                        //ProductName
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                               SizedBox(width:size.width*.6 ,child: Text('Color Threads for Embroidary',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w400),)),
-                               SizedBox(width:size.width*.6,child: Text('Sold by Awesome Designers',style: TextStyle(fontSize:15, fontWeight: FontWeight.w500),)),
-                              
-                            ],
-                          ),
-                        ),
-                       
-                        //Price
-                        Column(
-                         children: [
-                           const Text('Rs.999 /-',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
-                            //rating row
-                            Row(
-                              children: const [
-                                Icon(Icons.star,color: Colors.amber,),
-                                Text('4.5 ( 15 Ratings )'),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          //ProductName
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                 SizedBox(width:size.width*.55 ,child: Text('Color Threads for Embroidary',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w400),)),
+                                 SizedBox(width:size.width*.55,child: Text('Sold by Awesome Designers',style: TextStyle(fontSize:15, fontWeight: FontWeight.w500),)),
+                                
                               ],
-                            )
-                         ],
-                        ),
-                      ],
+                            ),
+                          ),
+                         
+                          //Price
+                          Column(
+                           children: [
+                             const Text('Rs.999 /-',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
+                              //rating row
+                              Row(
+                                children: const [
+                                  Icon(Icons.star,color: Colors.amber,),
+                                  Text('4.5 ( 15 Ratings )'),
+                                ],
+                              )
+                           ],
+                          ),
+                        ],
+                      ),
                     ),
                     //Chat Button
                     Padding(
@@ -89,7 +103,7 @@ class ProductFullViewPage extends StatelessWidget {
                     ),
                     //Product Desc
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(15),
                       child: Container(
                       decoration: BoxDecoration(
                 border: Border.all(color: Colors.black),
