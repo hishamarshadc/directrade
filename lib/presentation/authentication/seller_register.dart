@@ -8,7 +8,6 @@ class SellerRegisterPage extends StatefulWidget {
 
   @override
   State<SellerRegisterPage> createState() => _SellerRegisterPageState();
-
 }
 
 class _SellerRegisterPageState extends State<SellerRegisterPage> {
@@ -19,17 +18,17 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
   final kname = TextEditingController();
   final kcname = TextEditingController();
   final kemail = TextEditingController();
-  final kphone=TextEditingController();
+  final kphone = TextEditingController();
   final kaddress = TextEditingController();
   final kpincode = TextEditingController();
 
-  final auth=FirebaseAuth.instance;
+  final auth = FirebaseAuth.instance;
 
   final storeUser = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
-     const sizedBox = SizedBox(
+    const sizedBox = SizedBox(
       height: 20,
     );
     return Scaffold(
@@ -70,14 +69,15 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                           ),
                           sizedBox,
                           TextFormField(
-                            controller:kname,
+                            controller: kname,
                             validator: (value) {
-                              if(value!.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(value)){
+                              if (value!.isEmpty ||
+                                  !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
                                 //allow upper and lower case alphabets and space
                                 return "Enter Correct Name";
-                            }else{
-                               return null;
-                            }
+                              } else {
+                                return null;
+                              }
                             },
                             keyboardType: TextInputType.text,
                             decoration: InputDecoration(
@@ -91,19 +91,20 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                           ),
                           sizedBox,
                           TextFormField(
-                            controller:kcname,
+                            controller: kcname,
                             validator: (value) {
-                              if(value!.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(value)){
+                              if (value!.isEmpty ||
+                                  !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
                                 //allow upper and lower case alphabets and space
                                 return "Enter Correct Name";
-                            }else{
-                               return null;
-                            }
+                              } else {
+                                return null;
+                              }
                             },
-                            keyboardType: TextInputType.emailAddress,
+                            keyboardType: TextInputType.text,
                             decoration: InputDecoration(
-                              prefixIcon:
-                                  const Icon(Icons.store_mall_directory, color: Colors.black),
+                              prefixIcon: const Icon(Icons.store_mall_directory,
+                                  color: Colors.black),
                               label: const Text('Company Name'),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(100),
@@ -113,14 +114,16 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                           sizedBox,
                           TextFormField(
                             controller: kemail,
-                            validator: (value){
-                            if(value!.isEmpty || !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)){
+                            validator: (value) {
+                              if (value!.isEmpty ||
+                                  !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                                      .hasMatch(value)) {
                                 return "Enter Correct Email Address";
-                            }else{
-                               return null;
-                            }
-                          },
-                            keyboardType: TextInputType.name,
+                              } else {
+                                return null;
+                              }
+                            },
+                            keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
                               prefixIcon:
                                   const Icon(Icons.email, color: Colors.black),
@@ -133,18 +136,20 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                           sizedBox,
                           TextFormField(
                             controller: kphone,
-                            validator: (value){
-                            if(value!.isEmpty || !RegExp(r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$').hasMatch(value)){
+                            validator: (value) {
+                              if (value!.isEmpty ||
+                                  !RegExp(r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$')
+                                      .hasMatch(value)) {
                                 //  r'^[0-9]{10}$' pattern plain match number with length 10
                                 return "Enter Correct Phone Number";
-                            }else{
-                               return null;
-                            }
-                          },
+                              } else {
+                                return null;
+                              }
+                            },
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
-                              prefixIcon: const Icon(Icons.phone,
-                                  color: Colors.black),
+                              prefixIcon:
+                                  const Icon(Icons.phone, color: Colors.black),
                               label: const Text('Phone Number'),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(100),
@@ -156,8 +161,8 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                             controller: kaddress,
                             keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
-                              prefixIcon:
-                                  const Icon(Icons.list_alt_rounded, color: Colors.black),
+                              prefixIcon: const Icon(Icons.list_alt_rounded,
+                                  color: Colors.black),
                               label: const Text('Company Address'),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(100),
@@ -166,15 +171,16 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                           ),
                           sizedBox,
                           TextFormField(
-                            controller:kpincode,
-                            validator: (value){
-                            if(value!.isEmpty || !RegExp(r'^[1-9][0-9]{5}$').hasMatch(value)){
+                            controller: kpincode,
+                            validator: (value) {
+                              if (value!.isEmpty ||
+                                  !RegExp(r'^[1-9][0-9]{5}$').hasMatch(value)) {
                                 //  r'^[0-9]{10}$' pattern plain match number with length 10
                                 return "Enter a valid PIN code";
-                            }else{
-                               return null;
-                            }
-                          },
+                              } else {
+                                return null;
+                              }
+                            },
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
                               prefixIcon: const Icon(Icons.numbers,
@@ -202,14 +208,15 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                           ),
                           sizedBox,
                           TextFormField(
+                            controller: cpass,
                             validator: (value) {
-                              if(kpass.text!=cpass.text||kpass.text.isEmpty)
-                              {return "Password does not match";}
-                              else{
+                              if (kpass.text != cpass.text ||
+                                  kpass.text.isEmpty) {
+                                return "Password does not match";
+                              } else {
                                 return null;
                               }
                             },
-                            controller: cpass,
                             obscureText: true,
                             decoration: InputDecoration(
                               prefixIcon: const Icon(
@@ -227,21 +234,25 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                             width: double.infinity,
                             height: 60,
                             child: OutlinedButton(
-                              style:  OutlinedButton.styleFrom(
-                                    // backgroundColor: Colors.white,
-                                    // foregroundColor: Colors.green,
-                                    padding: const EdgeInsets.symmetric(horizontal: 25),
-                                    shape: RoundedRectangleBorder(
-                                        side: const BorderSide(
-                                          width: 9,
-                                          style: BorderStyle.solid,
-                                          color: Colors.black,
-                                        ),
-                                        borderRadius: BorderRadius.circular(100)),
-                                  ),
-                              onPressed: (){},
-                              child:Text('Upload Seller Proof',style: TextStyle(fontSize: 18),),
+                              style: OutlinedButton.styleFrom(
+                                // backgroundColor: Colors.white,
+                                // foregroundColor: Colors.green,
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 25),
+                                shape: RoundedRectangleBorder(
+                                    side: const BorderSide(
+                                      width: 9,
+                                      style: BorderStyle.solid,
+                                      color: Colors.black,
+                                    ),
+                                    borderRadius: BorderRadius.circular(100)),
                               ),
+                              onPressed: () {},
+                              child: Text(
+                                'Upload Seller Proof',
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ),
                           ),
                           sizedBox,
                           Container(
@@ -252,36 +263,41 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                             height: 60.0,
                             child: TextButton(
                               onPressed: () async {
-                                SharedPreferences pref = await SharedPreferences.getInstance();
+                                SharedPreferences pref =
+                                    await SharedPreferences.getInstance();
 
-                                if(kemail.text.isNotEmpty&&kpass.text.isNotEmpty&&formKey.currentState!.validate())
-                                {
-                                  try{
-                                   await auth.createUserWithEmailAndPassword(email: kemail.text, password: kpass.text);
-                                   final user=FirebaseAuth.instance.currentUser;
+                                if (kemail.text.isNotEmpty &&
+                                    kpass.text.isNotEmpty &&
+                                    formKey.currentState!.validate()) {
+                                  try {
+                                    await auth.createUserWithEmailAndPassword(
+                                        email: kemail.text,
+                                        password: kpass.text);
+                                    final user =
+                                        FirebaseAuth.instance.currentUser;
 
-                                   if(user!=null){
-                                    storeUser.collection("Users").doc(user.uid).set({
-                                      'email':kemail.text,
-                                      'password':kpass.text,
-                                      'name':kname.text,
-                                      'companyname':kcname,
-                                      'phone':kphone.text,
-                                      'address':kaddress.text,
-                                      'pincode':kpincode.text,
-                                      'usertype':'s',
-                                   });
-                                    pref.setString('email', kemail.text);
-                                    Navigator.popAndPushNamed(context, 'sellerhome');
-                                   }
-                                  
-                                  }
-                                  catch(e){
+                                    if (user!=null) {
+                                      storeUser
+                                          .collection("Users")
+                                          .doc(user.uid)
+                                          .set({
+                                        'email': kemail.text,
+                                        'password': kpass.text,
+                                        'name': kname.text,
+                                        'companyname': kcname.text,
+                                        'phone': kphone.text,
+                                        'address': kaddress.text,
+                                        'pincode': kpincode.text,
+                                        'usertype': 's',
+                                      });
+                                      pref.setString('email', kemail.text);
+                                      Navigator.popAndPushNamed(
+                                          context, 'sellerhome');
+                                    }
+                                  } catch (e) {
                                     print(e.toString());
                                   }
                                 }
-                                
-                                
                               },
                               child: const Text(
                                 'Register',
@@ -301,7 +317,8 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                                 width: 1,
                               ),
                               TextButton(
-                                onPressed: () => Navigator.popAndPushNamed(context, 'login'),
+                                onPressed: () =>
+                                    Navigator.popAndPushNamed(context, 'login'),
                                 child: const Text(
                                   'User Login',
                                   style: TextStyle(
@@ -320,7 +337,6 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                               TextButton(
                                 onPressed: () {
                                   Navigator.pop(context);
-                                   
                                 },
                                 child: const Text(
                                   'Customer Register',
