@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SellerRegisterPage extends StatefulWidget {
   const SellerRegisterPage({super.key});
@@ -10,8 +13,20 @@ class SellerRegisterPage extends StatefulWidget {
 
 class _SellerRegisterPageState extends State<SellerRegisterPage> {
   final formKey = GlobalKey<FormState>();
-  TextEditingController password = TextEditingController();
-  TextEditingController cpassword = TextEditingController();
+
+  final kpass = TextEditingController();
+  final cpass = TextEditingController();
+  final kname = TextEditingController();
+  final kcname = TextEditingController();
+  final kemail = TextEditingController();
+  final kphone=TextEditingController();
+  final kaddress = TextEditingController();
+  final kpincode = TextEditingController();
+
+  final auth=FirebaseAuth.instance;
+
+  final storeUser = FirebaseFirestore.instance;
+
   @override
   Widget build(BuildContext context) {
      const sizedBox = SizedBox(
@@ -55,6 +70,7 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                           ),
                           sizedBox,
                           TextFormField(
+                            controller:kname,
                             validator: (value) {
                               if(value!.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(value)){
                                 //allow upper and lower case alphabets and space
@@ -63,7 +79,7 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                                return null;
                             }
                             },
-                            keyboardType: TextInputType.emailAddress,
+                            keyboardType: TextInputType.text,
                             decoration: InputDecoration(
                               prefixIcon:
                                   const Icon(Icons.person, color: Colors.black),
@@ -75,6 +91,7 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                           ),
                           sizedBox,
                           TextFormField(
+                            controller:kcname,
                             validator: (value) {
                               if(value!.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(value)){
                                 //allow upper and lower case alphabets and space
@@ -95,6 +112,7 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                           ),
                           sizedBox,
                           TextFormField(
+                            controller: kemail,
                             validator: (value){
                             if(value!.isEmpty || !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)){
                                 return "Enter Correct Email Address";
@@ -114,8 +132,9 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                           ),
                           sizedBox,
                           TextFormField(
+                            controller: kphone,
                             validator: (value){
-                            if(value!.isNotEmpty || !RegExp(r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$').hasMatch(value)){
+                            if(value!.isEmpty || !RegExp(r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$').hasMatch(value)){
                                 //  r'^[0-9]{10}$' pattern plain match number with length 10
                                 return "Enter Correct Phone Number";
                             }else{
@@ -134,6 +153,7 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                           ),
                           sizedBox,
                           TextFormField(
+                            controller: kaddress,
                             keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
                               prefixIcon:
@@ -146,6 +166,7 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                           ),
                           sizedBox,
                           TextFormField(
+                            controller:kpincode,
                             validator: (value){
                             if(value!.isEmpty || !RegExp(r'^[1-9][0-9]{5}$').hasMatch(value)){
                                 //  r'^[0-9]{10}$' pattern plain match number with length 10
@@ -166,7 +187,7 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                           ),
                           sizedBox,
                           TextFormField(
-                            controller: password,
+                            controller: kpass,
                             obscureText: true,
                             decoration: InputDecoration(
                               prefixIcon: const Icon(
@@ -182,13 +203,13 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                           sizedBox,
                           TextFormField(
                             validator: (value) {
-                              if(password.text!=cpassword.text||password.text.isEmpty)
+                              if(kpass.text!=cpass.text||kpass.text.isEmpty)
                               {return "Password does not match";}
                               else{
                                 return null;
                               }
                             },
-                            controller: cpassword,
+                            controller: cpass,
                             obscureText: true,
                             decoration: InputDecoration(
                               prefixIcon: const Icon(
@@ -230,12 +251,35 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                             width: double.infinity,
                             height: 60.0,
                             child: TextButton(
-                              onPressed: () {
-                                if(formKey.currentState!.validate()){
-                               //check if form data are valid, 
-                               // your process task ahed if all data are valid
-                               Navigator.popAndPushNamed(context, 'home');
-                            }
+                              onPressed: () async {
+                                SharedPreferences pref = await SharedPreferences.getInstance();
+
+                                if(kemail.text.isNotEmpty&&kpass.text.isNotEmpty&&formKey.currentState!.validate())
+                                {
+                                  try{
+                                   await auth.createUserWithEmailAndPassword(email: kemail.text, password: kpass.text);
+                                   final user=FirebaseAuth.instance.currentUser;
+
+                                   if(user!=null){
+                                    storeUser.collection("Users").doc(user.uid).set({
+                                      'email':kemail.text,
+                                      'password':kpass.text,
+                                      'name':kname.text,
+                                      'companyname':kcname,
+                                      'phone':kphone.text,
+                                      'address':kaddress.text,
+                                      'pincode':kpincode.text,
+                                      'usertype':'s',
+                                   });
+                                    pref.setString('email', kemail.text);
+                                    Navigator.popAndPushNamed(context, 'sellerhome');
+                                   }
+                                  
+                                  }
+                                  catch(e){
+                                    print(e.toString());
+                                  }
+                                }
                                 
                                 
                               },

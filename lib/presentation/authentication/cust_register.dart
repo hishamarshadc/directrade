@@ -228,6 +228,7 @@ class _CustRegisterPageState extends State<CustRegisterPage> {
                                       'phone':kphone.text,
                                       'address':kaddress.text,
                                       'pincode':kpincode.text,
+                                      'usertype':'c',
                                    });
                                     pref.setString('email', kemail.text);
                                     Navigator.popAndPushNamed(context, 'home');
