@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sample_project/presentation/seller/screens/seller_products/seller_product.dart';
 
 class AddProductForm extends StatefulWidget {
@@ -15,6 +19,35 @@ class _AddProductFormState extends State<AddProductForm> {
   late int price;
   final _imageController = TextEditingController();
 
+  File? image;
+  Future pickimagefromgallery() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null) return;
+
+      final imgtemp = File(image.path);
+      setState(() {
+        this.image = imgtemp;
+      });
+    } on PlatformException catch (e) {
+      return ('failed to pick image: $e ');
+    }
+  }
+
+  Future pickusingcamera() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.camera);
+      if (image == null) return;
+
+      final imgtemp = File(image.path);
+      setState(() {
+        this.image = imgtemp;
+      });
+    } on PlatformException catch (e) {
+      return ('failed to pick image: $e ');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -22,15 +55,32 @@ class _AddProductFormState extends State<AddProductForm> {
         key: _formKey,
         child: Column(
           children: <Widget>[
-            TextFormField(
-              controller: _imageController,
-              decoration: InputDecoration(labelText: 'Image URL'),
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Please enter a URL for the product image';
-                }
-                return null;
-              },
+            Container(
+              child: FlutterLogo(
+                size: 160,
+              ),
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                  border: Border.all(
+                color: Colors.black,
+                width: 10,
+              )),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(),
+                    onPressed: () {},
+                    icon: Icon(Icons.camera_alt_rounded),
+                    label: Text('Capture Image')),
+                ElevatedButton.icon(
+                    onPressed: () {
+                      pickimagefromgallery();
+                    },
+                    icon: Icon(Icons.folder_copy_rounded),
+                    label: Text('Pick Image from gallery')),
+              ],
             ),
             TextFormField(
               decoration: InputDecoration(labelText: 'Product Name'),
