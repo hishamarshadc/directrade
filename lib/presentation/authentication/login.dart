@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sample_project/core/fetchData.dart';
 import 'package:sample_project/presentation/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,7 +14,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-  const sizedBox = SizedBox(
+    const sizedBox = SizedBox(
       height: 20,
     );
 
@@ -31,15 +32,14 @@ class LoginPage extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Column(
-                          children: [
+                        Column(children: [
                           SizedBox(
                             height: size.width * .2,
                           ),
                           Center(
                             child: InkWell(
                               onLongPress: () {
-                                Navigator.pushNamed(context, 'home');
+                                Navigator.pushNamed(context, 'test');
                               },
                               onDoubleTap: () {
                                 Navigator.pushNamed(context, 'adminhome');
@@ -139,71 +139,46 @@ class LoginPage extends StatelessWidget {
                                     ),
                                   );
                                 } else {
-                                  if (kemail.text == users[0]['email'] ||
-                                      kemail.text == users[1]['email'] ||
-                                      kemail.text == users[2]['email'] ||
-                                      kemail.text == users[3]['email']) {
-                                    for (int i = 0; i < users.length; i++) {
-                                      if (kemail.text == users[i]['email'] &&
-                                          kpass.text == users[i]['password']) {
-                                        if (users[i]['type'] == 's') {
-                                          Navigator.pushNamed(
+                                  SharedPreferences pref =
+                                      await SharedPreferences.getInstance();
+                                  if (kemail.text.isNotEmpty &&
+                                      kpass.text.isNotEmpty) {
+                                    try {
+                                      await auth.signInWithEmailAndPassword(
+                                          email: kemail.text,
+                                          password: kpass.text);
+                                      final user =
+                                          FirebaseAuth.instance.currentUser;
+                                      if (user != null) {
+                                        String userType =
+                                            await getCurrentUserData(
+                                                user, 'userType');
+
+                                        pref.setString('email', kemail.text);
+                                        if (userType == 'c') {
+                                          Navigator.popAndPushNamed(
+                                              context, 'home');
+                                        } else if (userType == 's') {
+                                          Navigator.popAndPushNamed(
                                               context, 'sellerhome');
-                                        } else if (users[i]['type'] == 'p') {
-                                          // Navigator.pushNamed(
-                                          //     context, 'promptpending');
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            const SnackBar(
-                                              content: yellowSnackBar(
-                                                errortext:
-                                                    'You are waiting to be approved',
-                                              ),
-                                              elevation: 0,
-                                              behavior:
-                                                  SnackBarBehavior.floating,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                            ),
-                                          );
-                                        } else if (users[i]['type'] == 'c') {
-                                          Navigator.pushNamed(context, 'home');
-                                        } else if (users[i]['type'] == 'a') {
-                                          Navigator.pushNamed(
+                                        } else if (userType == 'a') {
+                                          Navigator.popAndPushNamed(
                                               context, 'adminhome');
                                         }
                                       }
-                                    }
-                                  } else {
-                                    SharedPreferences pref =
-                                        await SharedPreferences.getInstance();
-                                    if (kemail.text.isNotEmpty &&
-                                        kpass.text.isNotEmpty) {
-                                      try {
-                                        await auth.signInWithEmailAndPassword(
-                                            email: kemail.text,
-                                            password: kpass.text);
-                                        final user =
-                                            FirebaseAuth.instance.currentUser;
-                                        if (user != null) {
-                                          pref.setString('email', kemail.text);
-                                          Navigator.popAndPushNamed(
-                                              context, 'home');
-                                        }
-                                      } catch (e) {
-                                        print(e.toString());
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          const SnackBar(
-                                            content: customsnackbar(
-                                              errortext: 'Wrong Email/Password',
-                                            ),
-                                            elevation: 0,
-                                            behavior: SnackBarBehavior.floating,
-                                            backgroundColor: Colors.transparent,
+                                    } catch (e) {
+                                      print(e.toString());
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content: customsnackbar(
+                                            errortext: 'Wrong Email/Password',
                                           ),
-                                        );
-                                      }
+                                          elevation: 0,
+                                          behavior: SnackBarBehavior.floating,
+                                          backgroundColor: Colors.transparent,
+                                        ),
+                                      );
                                     }
                                   }
                                 }

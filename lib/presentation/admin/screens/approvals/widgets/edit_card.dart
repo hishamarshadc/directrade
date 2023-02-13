@@ -1,9 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sample_project/core/colors/Colors.dart';
 
-class SellerEditCard extends StatelessWidget {
-  const SellerEditCard({super.key});
 
+
+class SellerEditCard extends StatelessWidget {
+  SellerEditCard({super.key});
+
+  final auth=FirebaseAuth.instance.currentUser;
+  final storeUser = FirebaseFirestore.instance;
+  
   @override
   Widget build(BuildContext context) {
     final size=MediaQuery.of(context).size;

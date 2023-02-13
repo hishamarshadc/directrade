@@ -7,7 +7,7 @@ class SellerEditsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemBuilder: (context, index) => const SellerEditCard(),
+      itemBuilder: (context, index) =>  SellerEditCard(),
       itemCount: 30,
     );
   }

@@ -17,6 +17,7 @@ import 'package:sample_project/presentation/seller/screens/seller_orders/seller_
 import 'package:sample_project/presentation/seller/screens/seller_products/widgets/seller_product_view.dart';
 import 'package:sample_project/presentation/seller/screens/seller_profile/edit_seller_profile/edit_seller_profile.dart';
 import 'package:sample_project/presentation/seller/screens/seller_profile/seller_prof.dart';
+import 'package:sample_project/presentation/testdetails.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
         'sellerorderpage':(context) =>  SellerOrderListPage(),
         'aboutus':(context) =>  const AboutPage(),
         'adminprofile':(context) => const AdminProfilePage(),
+        'test':(context)=> DataFetch(),
         'prodviewseller':(context) => SellerProductView(),
         'feedback': (context) => FeedBackBox(),
       },

@@ -3,7 +3,7 @@ import 'package:sample_project/presentation/authentication/login.dart';
 
 class CustProfilePage extends StatelessWidget {
   const CustProfilePage({super.key});
-
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
