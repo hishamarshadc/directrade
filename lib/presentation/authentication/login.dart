@@ -147,13 +147,12 @@ class LoginPage extends StatelessWidget {
                                       await auth.signInWithEmailAndPassword(
                                           email: kemail.text,
                                           password: kpass.text);
-                                      final user =
+                                      final newUser =
                                           FirebaseAuth.instance.currentUser;
-                                      if (user != null) {
+                                      if (newUser != null) {
                                         String userType =
                                             await getCurrentUserData(
-                                                user, 'userType');
-
+                                                newUser, 'userType');
                                         pref.setString('email', kemail.text);
                                         if (userType == 'c') {
                                           Navigator.popAndPushNamed(
@@ -164,6 +163,21 @@ class LoginPage extends StatelessWidget {
                                         } else if (userType == 'a') {
                                           Navigator.popAndPushNamed(
                                               context, 'adminhome');
+                                        } else if (userType == 'p') {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            const SnackBar(
+                                              content: yellowSnackBar(
+                                                errortext:
+                                                    'Application not Approved !',
+                                              ),
+                                              elevation: 0,
+                                              behavior:
+                                                  SnackBarBehavior.floating,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                            ),
+                                          );
                                         }
                                       }
                                     } catch (e) {

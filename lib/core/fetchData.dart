@@ -23,7 +23,7 @@ class fetchData extends StatelessWidget {
   }
 }
 
-final user = FirebaseAuth.instance.currentUser;
+// final user = FirebaseAuth.instance.currentUser;
 
 Future<String> getCurrentUserData(User? user,String a) async {
   if (user != null) {
@@ -31,6 +31,7 @@ Future<String> getCurrentUserData(User? user,String a) async {
     // You would need to write a function that gets the current user's ID.
     DocumentSnapshot snapshot = await firestore.collection("Users").doc(user.uid).get();
     Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+    print(data[a]);
     return data[a] ?? '';
   } else {
     return 'yy';

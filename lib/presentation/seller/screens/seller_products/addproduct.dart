@@ -56,9 +56,16 @@ class _AddProductFormState extends State<AddProductForm> {
         child: Column(
           children: <Widget>[
             Container(
-              child: FlutterLogo(
-                size: 160,
-              ),
+              child: image != null
+                  ? Image.file(
+                      image!,
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.cover,
+                    )
+                  : FlutterLogo(
+                      size: 160,
+                    ),
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
                   border: Border.all(
@@ -71,7 +78,9 @@ class _AddProductFormState extends State<AddProductForm> {
               children: [
                 ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(),
-                    onPressed: () {},
+                    onPressed: () {
+                      pickusingcamera();
+                    },
                     icon: Icon(Icons.camera_alt_rounded),
                     label: Text('Capture Image')),
                 ElevatedButton.icon(

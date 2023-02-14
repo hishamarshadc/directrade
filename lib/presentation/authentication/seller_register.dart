@@ -288,7 +288,7 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                                         'phone': kphone.text,
                                         'address': kaddress.text,
                                         'pincode': kpincode.text,
-                                        'usertype': 's',
+                                        'userType': 'p',
                                       });
                                       pref.setString('email', kemail.text);
                                       Navigator.popAndPushNamed(

@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class CustEdit extends StatefulWidget {
@@ -6,6 +8,17 @@ class CustEdit extends StatefulWidget {
 }
 
 class _CustEditState extends State<CustEdit> {
+  TextEditingController kfname = TextEditingController();
+  TextEditingController kemail = TextEditingController();
+  TextEditingController kpassword = TextEditingController();
+  TextEditingController kpin = TextEditingController();
+  TextEditingController kaddress = TextEditingController();
+  TextEditingController kphone = TextEditingController();
+  final user=FirebaseAuth.instance.currentUser;
+  final storeUser = FirebaseFirestore.instance;
+
+  
+  int a=2;
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -23,7 +36,24 @@ class _CustEditState extends State<CustEdit> {
           },
         ),
       ),
-      body: Container(
+      body:
+      StreamBuilder<QuerySnapshot>(
+              stream: storeUser
+                  .collection("Users")
+                  .where('email', isEqualTo: user?.email)
+                  .snapshots(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+                switch (snapshot.connectionState) {
+                  case ConnectionState.waiting:
+                    return const Center();
+                  default:
+                    DocumentSnapshot document = snapshot.data!.docs[0];
+
+                    return snapshot.data!.docs.isNotEmpty
+                        ? 
+                         Container(
         padding: const EdgeInsets.only(left: 16, right: 16),
         child: GestureDetector(
           onTap: () {
@@ -94,11 +124,15 @@ class _CustEditState extends State<CustEdit> {
                 const SizedBox(
                   height: 35,
                 ),
-                buildTextField("Full Name", "Full name", 2),
-                buildTextField("E-mail", "Email@email.com", 1),
-                buildTextField("Password", "********", 0),
-                buildTextField("PinCode", "PinCode", 4),
-                buildTextField("Address", "Address", 5),
+                buildTextField("Full Name", document['name'],2,kfname),
+                buildTextField("E-mail", document['email'],1, kemail),
+                buildTextField("Password", document['password'], 0,kpassword),
+                buildTextField("PinCode", document['pincode'], 4,kpin),
+                buildTextField("Phone No", document['phone'], 10, kphone),
+                buildTextField("Address", document['address'], 5,kaddress),
+
+
+                
                 const SizedBox(
                   height: 5,
                 ),
@@ -128,6 +162,25 @@ class _CustEditState extends State<CustEdit> {
                         if(formKey.currentState!.validate())
                         {
                           Navigator.pushNamed(context, 'custprofile');
+                          try{
+
+                                   final user=FirebaseAuth.instance.currentUser;
+                                   if(user!=null){
+
+                                    storeUser.collection("Users").doc(user.uid).update({
+                                      'email':kemail.text,
+                                      'password':kpassword.text,
+                                      'name':kfname.text,
+                                      'address':kaddress.text,
+                                      'pincode':kpin.text,
+                                   });
+                                    Navigator.popAndPushNamed(context, 'home');
+                                   }
+                                  
+                                  }
+                                  catch(e){
+                                    print(e.toString());
+                                  }
                         }
                       },
                       child: const Text(
@@ -147,19 +200,30 @@ class _CustEditState extends State<CustEdit> {
             ),
           ),
         ),
-      ),
+      )
+                        : const Text(
+                            'empty',
+                          );
+                }
+              },
+            )
     );
   }
 
-  Widget buildTextField(String labelText, String placeholder,int type) {
+  Widget buildTextField(String labelText, String placeholder,int type,TextEditingController t) {
     // 0=password
     // 1=email
     // 2=name
     // 3=phone
     // 4=pin
+  
     return Padding(
+
       padding: const EdgeInsets.only(bottom: 35.0),
+      
       child: TextFormField(
+        controller: t,
+        
         validator: (value) {
           switch (type) {
             case 0:
@@ -224,6 +288,7 @@ class _CustEditState extends State<CustEdit> {
               fontWeight: FontWeight.bold,
               color: Colors.black,
             )),
+          
       ),
     );
   }
