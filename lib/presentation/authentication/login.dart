@@ -132,6 +132,7 @@ class LoginPage extends StatelessWidget {
                                       content: customsnackbar(
                                         errortext:
                                             'Please enter your email/password',
+                                        errorcolor: Colors.red,
                                       ),
                                       elevation: 0,
                                       behavior: SnackBarBehavior.floating,
@@ -167,9 +168,10 @@ class LoginPage extends StatelessWidget {
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
                                             const SnackBar(
-                                              content: yellowSnackBar(
+                                              content: customsnackbar(
                                                 errortext:
                                                     'Application not Approved !',
+                                                errorcolor: Colors.yellow,
                                               ),
                                               elevation: 0,
                                               behavior:
@@ -187,6 +189,7 @@ class LoginPage extends StatelessWidget {
                                         const SnackBar(
                                           content: customsnackbar(
                                             errortext: 'Wrong Email/Password',
+                                            errorcolor: Colors.red,
                                           ),
                                           elevation: 0,
                                           behavior: SnackBarBehavior.floating,
@@ -244,9 +247,11 @@ class customsnackbar extends StatelessWidget {
   const customsnackbar({
     Key? key,
     required this.errortext,
+    required this.errorcolor,
   }) : super(key: key);
 
   final String errortext;
+  final Color errorcolor;
 
   @override
   Widget build(BuildContext context) {
@@ -261,7 +266,7 @@ class customsnackbar extends StatelessWidget {
                 color: Colors.black,
               ),
               borderRadius: const BorderRadius.all(Radius.circular(15)),
-              color: Colors.red.shade500),
+              color: errorcolor),
           child: Row(
             children: [
               const SizedBox(
@@ -315,92 +320,7 @@ class customsnackbar extends StatelessWidget {
                         ),
                         Icon(
                           Icons.cancel,
-                          color: Colors.red.shade500,
-                          size: 30,
-                        ),
-                      ],
-                    )))),
-      ],
-    );
-  }
-}
-
-class yellowSnackBar extends StatelessWidget {
-  const yellowSnackBar({
-    Key? key,
-    required this.errortext,
-  }) : super(key: key);
-
-  final String errortext;
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        Container(
-          height: 90,
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.black,
-              ),
-              borderRadius: const BorderRadius.all(Radius.circular(15)),
-              color: Colors.amber.shade700),
-          child: Row(
-            children: [
-              const SizedBox(
-                width: 48,
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Please Wait!'.toUpperCase(),
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'roboto',
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        )),
-                    const Spacer(),
-                    Text(
-                      errortext,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: Colors.white,
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-        Positioned(
-            top: -20,
-            left: -20,
-            child: ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(20),
-                ),
-                child: IconButton(
-                    splashColor: Colors.transparent,
-                    onPressed: () {
-                      ScaffoldMessenger.of(context).removeCurrentSnackBar();
-                    },
-                    icon: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        const CircleAvatar(
-                          backgroundColor: Colors.black,
-                          radius: 40,
-                        ),
-                        Icon(
-                          Icons.cancel,
-                          color: Colors.amber.shade700,
+                          color: errorcolor,
                           size: 30,
                         ),
                       ],
