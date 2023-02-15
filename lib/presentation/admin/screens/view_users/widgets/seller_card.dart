@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:sample_project/core/colors/Colors.dart';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:sample_project/presentation/testdetails.dart';
 
 class SellerCard extends StatelessWidget {
-  
-   const SellerCard({
-    Key? key,required this.index
-  }) : super(key: key);
-  final int index;
-//  List<String> sellerList=[
-//       'Anshid O',
-//       'Acee'
-
-//  ]
-
+  DocumentSnapshot passingdocument;
+  SellerCard({Key? key, required this.passingdocument}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,30 +17,41 @@ class SellerCard extends StatelessWidget {
             border: Border.all(color: Colors.black),
             borderRadius: BorderRadius.circular(20)),
         child: ExpansionTile(
-          leading: const CircleAvatar(radius: 40, child: Icon(Icons.currency_rupee_outlined)),
-          title: const Text('sellername'),
-          subtitle: const Text('companyname'),
+          leading: const CircleAvatar(
+              radius: 40, child: Icon(Icons.currency_rupee_outlined)),
+          title: Text('${passingdocument['name']}'.toUpperCase(),
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold
+          ),
+          ),
+          subtitle: Text(""),
           children: [
-            Column(
-              children: [
-                
-                Text('Full Name : fullname${index+1}'),
-                Text('Company Name : companyname${index+1}'),
-                Text('Personal Address : paddress${index+1}'),
-                Text('Company Address : Company address${index+1}'),
-                Text('Place : place${index+1}'),
-                Text('PIN Code : pi code${index+1}'),
-                Text('District: district${index+1}'),
-                Text('Email ID : eamil${index+1}'),
-                Text('Phone No: phone${index+1}'),
-                ElevatedButton.icon(
-                  style: ButtonStyle(
-                    backgroundColor:MaterialStateProperty.all(Colors.red),
-                  ),
-                    onPressed: () => {},
-                    icon: const Icon(Icons.close),
-                    label: const Text('Cancel')),
-              ],
+            Container(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Full Name : ${passingdocument['name']}'),
+                  Text('Company Name : ${passingdocument['companyname']}'),
+                  Text('Company Address : ${passingdocument['address']}',maxLines: 3,),
+                  Text('PIN Code : ${passingdocument['pincode']}'),
+                  Text('Email ID : ${passingdocument['email']}'),
+                  Text('Phone No: ${passingdocument['phone']}'),
+                  ElevatedButton.icon(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(Colors.red),
+                      ),
+                      onPressed: () => {
+                        // set user type to removed customer
+                        // store.collection("Users").doc(passingdocument.id).update({
+                        //     'userType':'rc'})
+                      },
+                      icon: const Icon(Icons.close),
+                      label: const Text('Cancel')),
+                ],
+              ),
             ),
           ],
         ),
