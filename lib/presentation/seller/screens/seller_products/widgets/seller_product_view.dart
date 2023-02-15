@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:sample_project/core/colors/Colors.dart';
 import 'package:sample_project/presentation/user_model.dart';
@@ -10,8 +8,6 @@ class SellerProductView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
     const sizedBox = SizedBox(
       height: 20,
     );
@@ -20,156 +16,151 @@ class SellerProductView extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
-        // appBar: AppBar(
-        //   title: const Text('DirecTrade'),
-        // ),
+        appBar: AppBar(
+          title: const Text('DirecTrade'),
+          foregroundColor: Colors.black,
+          backgroundColor: Colors.white,
+        ),
         body: Column(
           children: [
             Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    //Image Product
-                  AspectRatio(
-              aspectRatio: 4/3,
-              child: Image.asset(
-                products[0]['imageUrl']!,
-                fit: BoxFit.cover,
-              ),
-            ),
-                   
-                    //Product Hero
-                    Row(
-                      children: [
-                        //ProductName
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 15,left: 15 ,right: 15),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      //Image Product
+                      AspectRatio(
+                        aspectRatio: 3/3,
+                        child: Image.asset(
+                          products[0]['productImgUrl']!,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+
+                      //Product Hero
+                      Row(
+                        children: [
+                          //ProductName
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                    width: size.width * .5,
+                                    child: Text(
+                                      'Color Threads for Embroidary',
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w400),
+                                    )),
+                                SizedBox(
+                                    width: size.width * .5,
+                                    child: Text(
+                                      'Sold by Awesome Designers',
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500),
+                                    )),
+                              ],
+                            ),
+                          ),
+                          Spacer(),
+                          //Price
+                          Column(
                             children: [
-                               SizedBox(width:size.width*.6 ,child: Text('Color Threads for Embroidary',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w400),)),
-                               SizedBox(width:size.width*.6,child: Text('Sold by Awesome Designers',style: TextStyle(fontSize:15, fontWeight: FontWeight.w500),)),
-                              
+                              const Text(
+                                'Rs.999 /-',
+                                style: TextStyle(
+                                    fontSize: 25, fontWeight: FontWeight.bold),
+                              ),
+                              //rating row
+                              Row(
+                                children: const [
+                                  Icon(
+                                    Icons.star,
+                                    color: Colors.amber,
+                                  ),
+                                  Text('4.5 ( 15 Ratings )'),
+                                ],
+                              )
                             ],
                           ),
-                        ),
-                       
-                        //Price
-                        Column(
-                         children: [
-                           const Text('Rs.999 /-',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
-                            //rating row
-                            Row(
-                              children: const [
-                                Icon(Icons.star,color: Colors.amber,),
-                                Text('4.5 ( 15 Ratings )'),
-                              ],
-                            )
-                         ],
-                        ),
-                      ],
-                    ),
-                    //Chat Button
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SizedBox(
-                                width: size.width*.9,
-                                height: size.width*.13,
-                                child: ElevatedButton(
-                                onPressed: () {},
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.lightBlue,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(30))),
-                                child:const Text('Chat with Seller',style: TextStyle(color: textColor),) 
+                        ],
+                      ),
+
+                      //Product Desc
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.lightBlue),
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Card(
+                              elevation: 1,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('Product Description',style: TextStyle(fontSize: 20,fontWeight:FontWeight.w400),),
+                                    sizedBox,
+                                    Text("Awesome Designers provide high quality stitching threads at a lower price,the product bundle consists the folowing : - 5 different colours of threads - Colors provided are Red,Blue,Yellow,White,Black Suitble for crochet designing Free Delivery Provided for Awesome Designer products")
+                                  ],
                                 ),
                               ),
-                    ),
-                    //Product Desc
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                      decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
-                borderRadius: BorderRadius.circular(10)),
-                      child: ExpansionTile(
-                           title: const Text('Product Discription'),
-                          children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: const [
-                        
-                        Text('''
-    Awesome Designers provide high quality stitching threads at a lower price,
-    the product bundle consists the folowing :-
-    - 5 different colours of threads 
-    - Colors provided are Red,Blue,Yellow,White,Black
-    Suitble for crochet designing
-    Free Delivery Provided for Awesome Designer products
-    
-    '''),
-                        
+                            )
+                            //                   ExpansionTile(
+                            //                        title: const Text('Product Discription'),
+                            //                       children: [
+                            //             Padding(
+                            //               padding: const EdgeInsets.all(8.0),
+                            //               child: Column(
+                            //                 children: const [
+
+                            //                     Text('''
+                            // Awesome Designers provide high quality stitching threads at a lower price,
+                            // the product bundle consists the folowing :-
+                            // - 5 different colours of threads
+                            // - Colors provided are Red,Blue,Yellow,White,Black
+                            // Suitble for crochet designing
+                            // Free Delivery Provided for Awesome Designer products
+
+                            // '''),
+
+                            //                 ],
+                            //               ),
+                            //             ),
+                            //                       ],
+                            //                   ),
+                            ),
+                      )
                     ],
                   ),
-                ),
-                          ],
-                      ),
-                  ),
-                    )
-                  ],
                 ),
               ),
             ),
             Container(
-              width: double.infinity,
-              height: size.width*.2,
-              decoration: const BoxDecoration(
-                color: Colors.lightBlue,
+              width: size.width*.9,
+              height: size.width*.15,
+              child: Container(
+                width: size.width* .8,
+                height: size.width * .2,
+                // decoration: const BoxDecoration(
+                //   color: Colors.lightBlue,
+                // ),
+                child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.amber.shade700,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50))),
+                    child: const Text(
+                      'Edit Product',
+                      style: TextStyle(color: textColor),
+                    )),
               ),
-              child: 
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.amber.shade700,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50))),
-                          child:const Icon(LineAwesomeIcons.minus,color: Colors.black,), 
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 8),
-                            child: Text('15',style: TextStyle(color: textColor,fontSize:18)),
-                          ),
-                          ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.amber.shade700,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50))),
-                          child:const Icon(LineAwesomeIcons.plus,color: Colors.black,), 
-                          ),
-                          const Spacer(),
-                          SizedBox(
-                            width: size.width*.4,
-                            height: size.width*.12,
-                            child: ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.amber.shade700,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50))),
-                            child:const Text('Order',style: TextStyle(color: textColor),) 
-                            ),
-                          ),
-    
-                      ],
-                    ),
-                  ),
             )
           ],
         ),

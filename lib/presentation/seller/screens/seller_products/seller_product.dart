@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sample_project/presentation/seller/screens/seller_products/addproduct.dart';
-import 'package:sample_project/presentation/seller/screens/seller_products/widgets/add_product_form.dart';
+import 'package:sample_project/presentation/seller/screens/seller_products/widgets/addproduct.dart';
 import 'package:sample_project/presentation/seller/screens/seller_products/widgets/seller_product_card.dart';
 import 'package:sample_project/presentation/user_model.dart';
 
@@ -66,39 +65,40 @@ class _SellerProductPageState extends State<SellerProductPage> {
               borderRadius: BorderRadius.circular(20)),
         ),
         onPressed: () {
-          showModalBottomSheet(
-              context: context,
-              //background color for modal bottom screen
-              //elevates modal bottom screen
-              elevation: 20,
-              // gives rounded corner to modal bottom screen
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30)),
-              ),
-              builder: (BuildContext context) {
-                return Padding(
-                  padding: EdgeInsets.all(20),
-                  child: AddProductForm(),
-                );
-              }
+          Navigator.pushNamed(context, 'addProdForm');
+        //   showModalBottomSheet(
+        //       context: context,
+        //       //background color for modal bottom screen
+        //       //elevates modal bottom screen
+        //       elevation: 20,
+        //       // gives rounded corner to modal bottom screen
+        //       shape: const RoundedRectangleBorder(
+        //         borderRadius: BorderRadius.only(
+        //             topLeft: Radius.circular(30),
+        //             topRight: Radius.circular(30)),
+        //       ),
+        //       builder: (BuildContext context) {
+        //         return Padding(
+        //           padding: EdgeInsets.all(20),
+        //           child: AddProductForm(),
+        //         );
+        //       }
 
-              //(BuildContext context) {
-              //   // UDE : SizedBox instead of Container for whitespaces
-              //   return SizedBox(
-              //     height: 200,
-              //     child: Center(
-              //       child: Column(
-              //         mainAxisAlignment: MainAxisAlignment.center,
-              //         children: const <Widget>[
-              //           AddProduct(),
-              //         ],
-              //       ),
-              //     ),
-              //   );
-              // },
-              );
+        //       //(BuildContext context) {
+        //       //   // UDE : SizedBox instead of Container for whitespaces
+        //       //   return SizedBox(
+        //       //     height: 200,
+        //       //     child: Center(
+        //       //       child: Column(
+        //       //         mainAxisAlignment: MainAxisAlignment.center,
+        //       //         children: const <Widget>[
+        //       //           AddProduct(),
+        //       //         ],
+        //       //       ),
+        //       //     ),
+        //       //   );
+        //       // },
+        //       );
         },
         child: const Text("Add Product",
             style: TextStyle(

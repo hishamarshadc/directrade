@@ -13,9 +13,14 @@ class SearchAndCategoryPage extends StatefulWidget {
 class _SearchAndCategoryPageState extends State<SearchAndCategoryPage> {
   TextEditingController ksearch = TextEditingController();
 
-  final _catList = ['All Catogery', 'Groceries', 'Fashion', 'Food', 'Others'];
+  String? catvalue = 'All Catogery';
+  String? priceValue = 'Any Price';
 
-  final _priceList = ['Any Price', '< 500', '< 750', '< 1000', '> 1000'];
+  final _catList = ['All Catogery','Fashion', 'Food','Others'];
+
+  final _priceList = ['Any Price', '< 500', '< 1000', '> 1000'];
+
+  
 
   final _productNameList = [
     'Paper Bags',
@@ -74,52 +79,96 @@ final _productPriceList=[
             ),
           ),
         ),
-        Container(
-          color: Colors.amber,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              const Text(
-                'Filters',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width * 0.3,
-                margin: const EdgeInsets.only(left: 10),
-                child: DropdownButton<String>(
-                  hint: const Text('Category'),
-                  onChanged: (value) {},
-                  items: _catList.map((item) {
-                    return DropdownMenuItem<String>(
-                      value: item,
-                      child: Text(
-                        item,
-                        style: const TextStyle(fontSize: 15),
+        // Container(
+        //   color: Colors.amber,
+        //   child: Row(
+        //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+        //     children: [
+        //       const Text(
+        //         'Filters',
+        //         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        //       ),
+        //       Container(
+        //         width: MediaQuery.of(context).size.width * 0.3,
+        //         margin: const EdgeInsets.only(left: 10),
+        //         child: DropdownButton<String>(
+        //           hint: const Text('Category'),
+        //           onChanged: (value) {},
+        //           items: _catList.map((item) {
+        //             return DropdownMenuItem<String>(
+        //               value: item,
+        //               child: Text(
+        //                 item,
+        //                 style: const TextStyle(fontSize: 15),
+        //               ),
+        //             );
+        //           }).toList(),
+        //         ),
+        //       ),
+        //       Container(
+        //         width: MediaQuery.of(context).size.width * 0.3,
+        //         margin: const EdgeInsets.only(left: 10),
+        //         child: DropdownButton<String>(
+        //           hint: const Text('Price'),
+        //           onChanged: (value) {},
+        //           items: _priceList.map((item) {
+        //             return DropdownMenuItem<String>(
+        //               value: item,
+        //               child: Text(
+        //                 item,
+        //                 style: const TextStyle(fontSize: 15),
+        //               ),
+        //             );
+        //           }).toList(),
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // ),
+         Container(
+            color: Colors.lightBlue,
+            width: double.infinity,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  const SizedBox(width: 20),
+                  const Text(
+                    'Filters : ',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.3,
+                    margin: const EdgeInsets.only(left: 10),
+                    child: DropdownButton<String>(
+                      // hint: const Text('Category'),
+                      value: catvalue,
+                      onChanged: (value) => setState(
+                        () => catvalue = value,
                       ),
-                    );
-                  }).toList(),
-                ),
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width * 0.3,
-                margin: const EdgeInsets.only(left: 10),
-                child: DropdownButton<String>(
-                  hint: const Text('Price'),
-                  onChanged: (value) {},
-                  items: _priceList.map((item) {
-                    return DropdownMenuItem<String>(
-                      value: item,
-                      child: Text(
-                        item,
-                        style: const TextStyle(fontSize: 15),
+                      items: _catList.map(buildMenuItem).toList(),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.3,
+                    margin: const EdgeInsets.only(left: 10),
+                    child: DropdownButton<String>(
+                      // hint: const Text('Category'),
+                      value: priceValue,
+                      onChanged: (value) => setState(
+                        () => priceValue = value,
                       ),
-                    );
-                  }).toList(),
-                ),
+                      items: _priceList.map(buildMenuItem).toList(),
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
         Expanded(
           child: Padding(
             padding: const EdgeInsets.only(left: 10, right: 10),
@@ -152,4 +201,11 @@ final _productPriceList=[
       ],
     );
   }
+  DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
+        value: item,
+        child: Text(
+          item,
+          style: const TextStyle(fontSize: 15),
+        ),
+      );
 }

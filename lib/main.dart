@@ -14,6 +14,7 @@ import 'package:sample_project/presentation/customer/screens/user%20profile/edit
 import 'package:sample_project/presentation/feedback.dart';
 import 'package:sample_project/presentation/seller/screens/seller_home.dart';
 import 'package:sample_project/presentation/seller/screens/seller_orders/seller_orders.dart';
+import 'package:sample_project/presentation/seller/screens/seller_products/widgets/addproduct.dart';
 import 'package:sample_project/presentation/seller/screens/seller_products/widgets/seller_product_view.dart';
 import 'package:sample_project/presentation/seller/screens/seller_profile/edit_seller_profile/edit_seller_profile.dart';
 import 'package:sample_project/presentation/seller/screens/seller_profile/seller_prof.dart';
@@ -52,6 +53,7 @@ class MyApp extends StatelessWidget {
         'adminprofile':(context) => const AdminProfilePage(),
         'test':(context)=> DataFetch(),
         'prodviewseller':(context) => SellerProductView(),
+        'addProdForm':(context) => AddProductForm(),
         'feedback': (context) => FeedBackBox(),
       },
       debugShowCheckedModeBanner: false,// This trailing comma makes auto-formatting nicer for build methods.
