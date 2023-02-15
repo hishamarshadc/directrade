@@ -67,7 +67,7 @@ class _CustEditState extends State<CustEdit> {
                   height: 5,
                 ),
                 const Text(
-                  "Edit Profile.",
+                  "Edit Profile",
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
                 ),
                 const SizedBox(

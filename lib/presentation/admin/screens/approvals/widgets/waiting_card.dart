@@ -1,19 +1,18 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:sample_project/core/colors/Colors.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:sample_project/presentation/testdetails.dart';
 
 class WaitingCard extends StatelessWidget {
   DocumentSnapshot passingdocument;
   WaitingCard({Key? key, required this.passingdocument}) : super(key: key);
 
+  
   @override
   Widget build(BuildContext context) {
 
-    var name = (passingdocument['name']);
-    print(name);
+    // var name = (passingdocument['name']);
     final size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -26,30 +25,30 @@ class WaitingCard extends StatelessWidget {
           childrenPadding:
               const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
           leading: const CircleAvatar(radius: 40, child: Icon(Icons.person)),
-          title: const Text(
-            "Seller Name :",
+          title:  Text(
+            "Seller Name : ${passingdocument['name']}",
             style: textStyleHead,
           ),
-          subtitle: const Text(
-            'Business Name : Awesome Designers',
+          subtitle:  Text(
+            'Business Name : ${passingdocument['companyname']}',
             style: textStyleSubhead,
           ),
           expandedCrossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Business Address : \n\tMamatha Bakery,Areacode Bypass,Near Driving School',
+            Text(
+              'Business Address : ${passingdocument['address']}',
               style: subTextStyle,
             ),
-            const Text(
-              'PIN Code : 673019',
+            Text(
+              'PIN Code : ${passingdocument['pincode']}',
               style: subTextStyle,
             ),
-            const Text(
-              'Phone : 9207631618',
+             Text(
+              'Phone : ${passingdocument['phone']}',
               style: subTextStyle,
             ),
-            const Text(
-              'Email ID : seller@gmail.com',
+           Text(
+              'Email ID : ${passingdocument['email']}',
               style: subTextStyle,
             ),
             SizedBox(height: size.width * .02),
@@ -61,7 +60,12 @@ class WaitingCard extends StatelessWidget {
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.green),
                     ),
-                    onPressed: () => {},
+                    onPressed: () => {
+                        store.collection("Users").doc(passingdocument.id).update({
+                          'userType':'s'
+                        })
+
+                    },
                     icon: const Icon(Icons.done),
                     label: const Text('Approve')),
                 const SizedBox(width: 10),

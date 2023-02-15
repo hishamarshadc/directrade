@@ -22,7 +22,7 @@ class SellerApprovalPage extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection("Users").snapshots(),
+      stream: FirebaseFirestore.instance.collection("Users").where('userType',isEqualTo:'p').snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:sample_project/core/colors/Colors.dart';
+import 'package:sample_project/presentation/customer/screens/chat/chat_message_page.dart';
 
-class ProductFullViewPage extends StatelessWidget {
+class ProductFullViewPage extends StatefulWidget {
   ProductFullViewPage(
       {super.key,
       required this.title,
@@ -12,13 +13,37 @@ class ProductFullViewPage extends StatelessWidget {
   String title;
   String imageUrl;
   String productPrice;
+
+  @override
+  State<ProductFullViewPage> createState() => _ProductFullViewPageState();
+}
+
+class _ProductFullViewPageState extends State<ProductFullViewPage> {
+    int prodQuantity = 1;
+    int minQuantity  = 5;
+    int maxQuantity = 10;
+
+    void increment(){
+      setState(() {
+        if(prodQuantity<maxQuantity){
+          prodQuantity++;
+        }
+      });
+    }
+    void decrement(){
+      setState(() {
+        if(prodQuantity>minQuantity){
+          prodQuantity--;
+        }
+      });
+    }
   @override
   Widget build(BuildContext context) {
 
     const sizedBox = SizedBox(
       height: 20,
     );
-
+    
     final size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
@@ -44,7 +69,7 @@ class ProductFullViewPage extends StatelessWidget {
                       child: AspectRatio(
               aspectRatio: 4/3,
               child: Image.asset(
-                imageUrl,
+                widget.imageUrl,
                 fit: BoxFit.cover,
               ),
             ),
@@ -92,7 +117,9 @@ class ProductFullViewPage extends StatelessWidget {
                                 width: size.width*.9,
                                 height: size.width*.13,
                                 child: ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                 Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=> ChatMessagePage(personName: 'Seller Name',)));
+                                },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.lightBlue,
                                     shape: RoundedRectangleBorder(
@@ -150,19 +177,19 @@ class ProductFullViewPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed:decrement,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.amber.shade700,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(50))),
                           child:const Icon(LineAwesomeIcons.minus,color: Colors.black,), 
                           ),
-                          const Padding(
+                          Padding(
                             padding: EdgeInsets.symmetric(horizontal: 8),
-                            child: Text('15',style: TextStyle(color: textColor,fontSize:18)),
+                            child: Text('$prodQuantity',style: TextStyle(color: textColor,fontSize:18)),
                           ),
                           ElevatedButton(
-                          onPressed: () {},
+                          onPressed: increment,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.amber.shade700,
                               shape: RoundedRectangleBorder(
