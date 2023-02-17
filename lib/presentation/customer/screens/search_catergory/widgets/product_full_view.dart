@@ -1,58 +1,76 @@
+import 'dart:ffi';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:sample_project/core/colors/Colors.dart';
+import 'package:sample_project/core/fetchData.dart';
 import 'package:sample_project/presentation/customer/screens/chat/chat_message_page.dart';
 
+
 class ProductFullViewPage extends StatefulWidget {
+  final DocumentSnapshot passingdocument;
+  
+  final imageUrl;
+  
+  int minQuantity;
+
   ProductFullViewPage(
       {super.key,
-      required this.title,
-      required this.imageUrl,
-      required this.productPrice});
-
-  String title;
-  String imageUrl;
-  String productPrice;
-
+       required this.passingdocument,
+       required this.minQuantity,
+       this.imageUrl = 'assets/images/color threads.jpeg',
+       
+      });
   @override
   State<ProductFullViewPage> createState() => _ProductFullViewPageState();
 }
 
 class _ProductFullViewPageState extends State<ProductFullViewPage> {
-  int minQuantity = 5;
-  int maxQuantity = 10;
-  int prodQuantity = 5;
 
-  void increment() {
+
+void decrement() {
     setState(() {
-      if (prodQuantity < maxQuantity) {
-        prodQuantity++;
+      if (widget.minQuantity > int.parse(widget.passingdocument['min_quantity'])) {
+        widget.minQuantity--;
       }
     });
   }
-
-  void decrement() {
+  void increment() {
     setState(() {
-      if (prodQuantity > minQuantity) {
-        prodQuantity--;
+      if (widget.minQuantity < int.parse(widget.passingdocument['max_quantity'])) {
+        widget.minQuantity++;
       }
     });
   }
 
   @override
-  Widget build(BuildContext context) {
+   Widget build(BuildContext context)  {
+
+  
+    
+    int min_q = int.parse(widget.passingdocument['min_quantity']);
+    int max_q = int.parse(widget.passingdocument['max_quantity']);
+    
+
+    
+
+  
+    
     const sizedBox = SizedBox(
       height: 20,
     );
-
+    
     final size = MediaQuery.of(context).size;
+   
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.white,
           foregroundColor: Colors.black,
-          title: const Text(
+          title: Text(
             'Product Details',
             style: TextStyle(fontSize: 30),
           ),
@@ -92,7 +110,7 @@ class _ProductFullViewPageState extends State<ProductFullViewPage> {
                                 SizedBox(
                                     width: size.width * .55,
                                     child: Text(
-                                      'Color Threads for Embroidary',
+                                      '${widget.passingdocument['product_name']}',
                                       style: TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.w400),
@@ -100,7 +118,7 @@ class _ProductFullViewPageState extends State<ProductFullViewPage> {
                                 SizedBox(
                                     width: size.width * .55,
                                     child: Text(
-                                      'Sold by Awesome Designers',
+                                      'Sold by ${widget.passingdocument['product_seller_id']}',
                                       style: TextStyle(
                                           fontSize: 15,
                                           fontWeight: FontWeight.w500),
@@ -113,7 +131,7 @@ class _ProductFullViewPageState extends State<ProductFullViewPage> {
                           Column(
                             children: [
                               const Text(
-                                'Rs.999 /-',
+                                'Rs. /-',
                                 style: TextStyle(
                                     fontSize: 25, fontWeight: FontWeight.bold),
                               ),
@@ -233,7 +251,7 @@ class _ProductFullViewPageState extends State<ProductFullViewPage> {
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 8),
-                      child: Text('$prodQuantity',
+                      child: Text('${widget.minQuantity}',
                           style: TextStyle(color: textColor, fontSize: 18)),
                     ),
                     ElevatedButton(
