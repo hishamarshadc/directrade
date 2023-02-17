@@ -148,13 +148,17 @@ class LoginPage extends StatelessWidget {
                                       await auth.signInWithEmailAndPassword(
                                           email: kemail.text,
                                           password: kpass.text);
-                                      final newUser =
+                                      final user =
                                           FirebaseAuth.instance.currentUser;
-                                      if (newUser != null) {
+                                      if (user != null) {
                                         String userType =
                                             await getCurrentUserData(
-                                                newUser, 'userType');
+                                                user, 'userType');
+                                        String status = await getCurrentUserData(user,'status');
+
                                         pref.setString('email', kemail.text);
+                                        if(status=='a'){
+                                          //account active
                                         if (userType == 'c') {
                                           Navigator.popAndPushNamed(
                                               context, 'home');
@@ -164,13 +168,48 @@ class LoginPage extends StatelessWidget {
                                         } else if (userType == 'a') {
                                           Navigator.popAndPushNamed(
                                               context, 'adminhome');
-                                        } else if (userType == 'p') {
+                                        }else if(userType=='p'){
+                                           ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            const SnackBar(
+                                              content: customsnackbar(
+                                                errortext:
+                                                    'Application Under Review\n Try Again Later',
+                                                errorcolor: Colors.yellow,
+                                              ),
+                                              elevation: 0,
+                                              behavior:
+                                                  SnackBarBehavior.floating,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                            ),
+                                          );
+                                        }
+                                        }else if(status=='r'){
+                                            //rejected Application case
+                                             ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            const SnackBar(
+                                              content: customsnackbar(
+                                                errortext:
+                                                    'Your Appliation has been Rejected\nYou may reapply in future.',
+                                                errorcolor: Colors.yellow,
+                                              ),
+                                              elevation: 0,
+                                              behavior:
+                                                  SnackBarBehavior.floating,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                            ),
+                                          );
+                                        }else if (status=='i') {
+                                          //inactive case
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
                                             const SnackBar(
                                               content: customsnackbar(
                                                 errortext:
-                                                    'Application not Approved !',
+                                                    'Account is Suspended !\nPlease Contact our Office',
                                                 errorcolor: Colors.yellow,
                                               ),
                                               elevation: 0,

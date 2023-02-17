@@ -51,6 +51,10 @@ class WaitingCard extends StatelessWidget {
               'Email ID : ${passingdocument['email']}',
               style: subTextStyle,
             ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.asset('assets/images/seller.jpg',fit: BoxFit.cover,),
+            ),
             SizedBox(height: size.width * .02),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -62,9 +66,9 @@ class WaitingCard extends StatelessWidget {
                     ),
                     onPressed: () => {
                         store.collection("Users").doc(passingdocument.id).update({
-                          'userType':'s'
+                          'userType':'s',
+                          'status':'a'
                         })
-
                     },
                     icon: const Icon(Icons.done),
                     label: const Text('Approve')),
@@ -74,7 +78,11 @@ class WaitingCard extends StatelessWidget {
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.red),
                     ),
-                    onPressed: () => {},
+                    onPressed: () => {
+                      store.collection("Users").doc(passingdocument.id).update({
+                          'status':'r'
+                        })
+                    },
                     icon: const Icon(Icons.close),
                     label: const Text('Reject')),
                 const Spacer()

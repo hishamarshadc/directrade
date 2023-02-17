@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sample_project/presentation/authentication/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SellerRegisterPage extends StatefulWidget {
@@ -289,10 +290,24 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                                         'address': kaddress.text,
                                         'pincode': kpincode.text,
                                         'userType': 'p',
+                                        'status':'a'
                                       });
                                       pref.setString('email', kemail.text);
-                                      Navigator.popAndPushNamed(
-                                          context, 'sellerhome');
+                                       ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            const SnackBar(
+                                              content: customsnackbar(
+                                                errortext:
+                                                    'Application Submitted\n Try Login later',
+                                                errorcolor: Colors.yellow,
+                                              ),
+                                              elevation: 0,
+                                              behavior:
+                                                  SnackBarBehavior.floating,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                            ),
+                                          );
                                     }
                                   } catch (e) {
                                     print(e.toString());
