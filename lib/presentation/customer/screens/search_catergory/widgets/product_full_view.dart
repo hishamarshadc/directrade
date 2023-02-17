@@ -19,9 +19,10 @@ class ProductFullViewPage extends StatefulWidget {
 }
 
 class _ProductFullViewPageState extends State<ProductFullViewPage> {
-    int prodQuantity = 1;
     int minQuantity  = 5;
     int maxQuantity = 10;
+    int prodQuantity = 5;
+    
 
     void increment(){
       setState(() {
