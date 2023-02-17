@@ -1,4 +1,9 @@
+
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sample_project/presentation/authentication/login.dart';
 
 class EditSeller extends StatefulWidget {
   const EditSeller({super.key});
@@ -17,6 +22,7 @@ class _EditSellerState extends State<EditSeller> {
   }
 }
 
+
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});
 
@@ -25,6 +31,16 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
+
+  final kpass = TextEditingController();
+  final cpass = TextEditingController();
+  final kname = TextEditingController();
+  final kcname = TextEditingController();
+  final kemail = TextEditingController();
+  final kphone = TextEditingController();
+  final kaddress = TextEditingController();
+  final kpincode = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,12 +126,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
               const SizedBox(
                 height: 35,
               ),
-              buildTextField("Full Name", "Full name", 2 ),
-              buildTextField("E-mail", "Email@email.com", 1),
-              buildTextField("Password", "", 0),
-              buildTextField("PinCode", "PinCode", 4),
-              buildTextField("Company Name", "Company Name", 2),
-              buildTextField("Company Address", "Company address", 5),
+              buildTextField("Full Name", "Full name", 2 ,kname),
+              buildTextField("E-mail", "Email@email.com", 1,kemail),
+              buildTextField("Password", "", 0,kpass),
+              buildTextField("PinCode", "PinCode", 4,kpincode),
+              buildTextField("Company Name", "Company Name", 2,kcname),
+              buildTextField("Company Address", "Company address", 5,kaddress),
               const SizedBox(
                 height: 5,
               ),
@@ -142,7 +158,64 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      try{
+                        final user=FirebaseAuth.instance.currentUser;
+                        final store=FirebaseFirestore.instance;
+                          if(user!=null){
+                            store
+                                          .collection("Changes")
+                                          .doc(user.uid)
+                                          .set({
+                                        // 'email': kemail.text,
+                                        // 'password': kpass.text,
+                                        'name': kname.text,
+                                        'companyname': kcname.text,
+                                        'phone': kphone.text,
+                                        'address': kaddress.text,
+                                        'pincode': kpincode.text,
+                                        'userType': 'p',
+                                        'status':'a',
+                                        'change_datetime': DateTime.now()                                      
+                                        });
+                                        ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                             SnackBar(
+                                              content: customsnackbar(
+                                                errortext:
+                                                    'Your changes will be updated after reviewing',
+                                                errorcolor: Colors.yellow,
+                                              ),
+                                              elevation: 0,
+                                              behavior:
+                                                  SnackBarBehavior.floating,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                            ),
+                                          );
+                            
+                        }
+                      }
+                      catch(e){
+                        print(e);
+                           ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                             SnackBar(
+                                              content: customsnackbar(
+                                                errortext:
+                                                    'An Error Occured : $e',
+                                                errorcolor: Colors.yellow,
+                                              ),
+                                              elevation: 0,
+                                              behavior:
+                                                  SnackBarBehavior.floating,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                            ),
+                                          );
+                      }                        
+
+                    },
                     child: const Text(
                       " SAVE ",
                       style: TextStyle(
@@ -163,7 +236,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
-  Widget buildTextField(String labelText, String placeholder, int type) {
+  Widget buildTextField(String labelText, String placeholder, int type,TextEditingController t) {
     // 0=password
     // 1=email
     // 2=name
@@ -173,6 +246,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 35.0),
       child: TextFormField(
+        controller: t,
         validator: (value) {
           switch (type) {
             case 0:

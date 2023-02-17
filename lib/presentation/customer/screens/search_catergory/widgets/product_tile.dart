@@ -1,21 +1,24 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class ProductTile extends StatelessWidget {
   const ProductTile({
     Key? key,
-    required this.price,
-    required this.productname,
-    this.rating = 4.5 ,
-    this.ratingcount = 25,
+    required this.passingdocument,
+    // required this.price,
+    // required this.productname,
+    // this.rating = 4.5 ,
+    // this.ratingcount = 25,
     required this.imageUrl
   }) : super(key: key);
 
   // final Size size;
+  final DocumentSnapshot passingdocument;
   final String imageUrl;
-  final String productname;
-  final int price;
-  final double ratingcount;
-  final double rating;
+  // final String productname;
+  // final int price;
+  // final double ratingcount;
+  // final double rating;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -36,7 +39,7 @@ class ProductTile extends StatelessWidget {
             ),
           ),
           Text(
-            productname,
+            passingdocument['product_name'],
             textAlign: TextAlign.center,
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
           ),
@@ -52,7 +55,7 @@ class ProductTile extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('$rating',style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w400),),
+                    Text(passingdocument['rating'],style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w400),),
                     const Icon(
                       Icons.star_sharp,
                       size: 17,
@@ -62,7 +65,7 @@ class ProductTile extends StatelessWidget {
                 ),
               ),
               Text(
-                'Rs.${price.toInt()}/-',
+                'Rs.${passingdocument['product_price']}/-',
                 style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,

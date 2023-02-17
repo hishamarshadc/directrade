@@ -37,3 +37,17 @@ Future<String> getCurrentUserData(User? user,String a) async {
     return 'yy';
   }
 }
+Future<String> getData(String col,String doc_id,String a) async {
+  try{
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    // You would need to write a function that gets the current user's ID.
+    DocumentSnapshot snapshot = await firestore.collection(col).doc(doc_id).get();
+    Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+    print(data[a]);
+    return data[a] ?? 'No Data';
+    }catch(e){
+      print(e);
+      return 'An Error Occured';
+    }
+  } 
+  
