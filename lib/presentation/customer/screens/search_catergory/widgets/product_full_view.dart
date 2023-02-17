@@ -1,11 +1,15 @@
+import 'dart:developer';
 import 'dart:ffi';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:sample_project/core/colors/Colors.dart';
 import 'package:sample_project/core/fetchData.dart';
+import 'package:sample_project/presentation/authentication/login.dart';
 import 'package:sample_project/presentation/customer/screens/chat/chat_message_page.dart';
+import 'package:sample_project/presentation/customer/screens/search_catergory/widgets/counter.dart';
 
 
 class ProductFullViewPage extends StatefulWidget {
@@ -22,6 +26,8 @@ class ProductFullViewPage extends StatefulWidget {
        this.imageUrl = 'assets/images/color threads.jpeg',
        
       });
+      
+        
   @override
   State<ProductFullViewPage> createState() => _ProductFullViewPageState();
 }
@@ -45,24 +51,35 @@ void decrement() {
   }
 
   @override
-   Widget build(BuildContext context)  {
+   Widget build(BuildContext context)  {  
 
-  
-    
-    int min_q = int.parse(widget.passingdocument['min_quantity']);
-    int max_q = int.parse(widget.passingdocument['max_quantity']);
-    
-
-    
-
-  
-    
     const sizedBox = SizedBox(
       height: 20,
     );
     
     final size = MediaQuery.of(context).size;
-   
+    
+    
+    
+  
+    return StreamBuilder<DocumentSnapshot>(
+  stream: FirebaseFirestore.instance.collection('Users').doc(widget.passingdocument['product_seller_id']).snapshots(),
+  builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+    if (snapshot.hasError) {
+      return Text('Error: ${snapshot.error}');
+    }
+
+    if (snapshot.connectionState == ConnectionState.waiting) {
+      return const Center(
+              child: CircularProgressIndicator(color: Colors.blue),
+            );
+    }
+
+    if (!snapshot.hasData) {
+      return Text('Document does not exist');
+    }
+    // Extract data from the snapshot and display it
+    final sellerdata = snapshot.data!;
 
     return SafeArea(
       child: Scaffold(
@@ -118,7 +135,7 @@ void decrement() {
                                 SizedBox(
                                     width: size.width * .55,
                                     child: Text(
-                                      'Sold by ${widget.passingdocument['product_seller_id']}',
+                                      'Sold by ${sellerdata['companyname']}',
                                       style: TextStyle(
                                           fontSize: 15,
                                           fontWeight: FontWeight.w500),
@@ -130,19 +147,19 @@ void decrement() {
                           //Price
                           Column(
                             children: [
-                              const Text(
-                                'Rs. /-',
+                               Text(
+                                'Rs.${widget.passingdocument['product_price']}/-',
                                 style: TextStyle(
                                     fontSize: 25, fontWeight: FontWeight.bold),
                               ),
                               //rating row
                               Row(
-                                children: const [
-                                  Icon(
+                                children: [
+                                  const Icon(
                                     Icons.star,
                                     color: Colors.amber,
                                   ),
-                                  Text('4.5 ( 15 Ratings )'),
+                                  Text('${widget.passingdocument['rating']} ( ${widget.passingdocument['rating_count']} Ratings )'),
                                 ],
                               )
                             ],
@@ -189,38 +206,10 @@ void decrement() {
                             ),
                             Padding(
                               padding: const EdgeInsets.only(left: 15,right:15,bottom: 10),
-                              child: Text('''
-    Awesome Designers provide high quality stitching threads at a lower price,
-    the product bundle consists the folowing :-
-    - 5 different colours of threads 
-    - Colors provided are Red,Blue,Yellow,White,Black
-    Suitble for crochet designing
-    Free Delivery Provided for Awesome Designer products
-    '''),
+                              child: Text(widget.passingdocument['description']),
                             ),
                           ],
                         ), 
-    //                  ExpansionTile(
-    //                       title: const Text('Product Discription'),
-    //                       children: [
-    //                         Padding(
-    //                           padding: const EdgeInsets.all(8.0),
-    //                           child: Column(
-    //                             children: const [
-    //                               Text('''
-    // Awesome Designers provide high quality stitching threads at a lower price,
-    // the product bundle consists the folowing :-
-    // - 5 different colours of threads 
-    // - Colors provided are Red,Blue,Yellow,White,Black
-    // Suitble for crochet designing
-    // Free Delivery Provided for Awesome Designer products
-    
-    // '''),
-    //                             ],
-    //                           ),
-    //                         ),
-    //                       ],
-    //                     ),
                       ),
                     )
                   ],
@@ -238,6 +227,8 @@ void decrement() {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
+                    // QCounter(minValue:widget.passingdocument['min_quantity'],maxValue:widget.passingdocument['min_quantity']),
+                    
                     ElevatedButton(
                       onPressed: decrement,
                       style: ElevatedButton.styleFrom(
@@ -270,7 +261,34 @@ void decrement() {
                       width: size.width * .4,
                       height: size.width * .12,
                       child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            final firestore = FirebaseFirestore.instance;
+                            final user= FirebaseAuth.instance.currentUser;
+                            num totalprice = widget.minQuantity *widget.passingdocument['product_price']; 
+
+                            firestore.collection('Orders').doc().set({
+                                'customer_id':user?.uid,
+                                'seller_id':widget.passingdocument['product_seller_id'],
+                                'product_id':widget.passingdocument.id,
+                                'datetime':DateTime.now(),
+                                'status':'p',
+                                'quantity':widget.minQuantity,
+                                'totalprice': totalprice
+                            });
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                     SnackBar(
+                                      content: NewSnackbar(
+                                        errortext:
+                                            'Your Order is Placed\nCheckout your Orders!\nTotal Price : $totalprice',
+                                        errorcolor: Colors.lightBlue,
+                                      ),
+                                      elevation: 0,
+                                      behavior: SnackBarBehavior.floating,
+                                      backgroundColor: Colors.transparent,
+                                    ),
+                                  );
+
+                          },
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.amber.shade700,
                               shape: RoundedRectangleBorder(
@@ -288,5 +306,9 @@ void decrement() {
         ),
       ),
     );
+
+    
+  },
+);
   }
 }

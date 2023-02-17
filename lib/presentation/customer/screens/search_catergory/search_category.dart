@@ -162,8 +162,8 @@ class _SearchAndCategoryPageState extends State<SearchAndCategoryPage> {
             child: StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
                   .collection("Products")
-                  .where('category', isEqualTo: 'fashion')
-                  .where('product_price',isLessThan: 400)
+                  // .where('category', isEqualTo: 'fashion')
+                  // .where('product_price',isLessThan: 400)
                   // .where('product_name',isEqualTo: ksearch.text)
                   .snapshots(),
               builder: (BuildContext context,
@@ -205,7 +205,7 @@ class _SearchAndCategoryPageState extends State<SearchAndCategoryPage> {
                     } else {
                       return Center(
                         child: const Text(
-                          'empty',
+                          'No Product Items',
                         ),
                       );
                     }
