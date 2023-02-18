@@ -7,43 +7,50 @@ final user = FirebaseAuth.instance.currentUser;
 
 // previous data databases and variables
 
-final olddatadb = FirebaseFirestore.instance;
-final olddatadoc = olddatadb.collection("Users").doc(user!.uid);
-var olddata;
+// final olddatadb = FirebaseFirestore.instance;
+// final olddatadoc = olddatadb.collection("Users").doc(user!.uid);
+// var olddata;
 
 // new data databases and variables
 
-final newdatadb = FirebaseFirestore.instance;
-final newdatadoc = newdatadb.collection("Changes").doc(user!.uid);
-var newdata;
-
 class SellerEditCard extends StatelessWidget {
-  SellerEditCard({super.key});
+  DocumentSnapshot passingdocument;
+  SellerEditCard({super.key, required this.passingdocument});
 
   final auth = FirebaseAuth.instance.currentUser;
   final storeUser = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
+    final newdatadb = FirebaseFirestore.instance;
+    late var docid = passingdocument.id;
+    final newdatadoc = newdatadb.collection("Users").doc(docid);
+     var newdata;
+    
+
     // old data
 
-    olddatadoc.get().then(
-      (DocumentSnapshot doc) {
-        olddata = doc.data() as Map<String, dynamic>;
-        print(olddata);
-      },
-      onError: (e) => print("Error getting document: $e"),
-    );
+    // olddatadoc.get().then(
+    //   (DocumentSnapshot doc) {
+    //     olddata = doc.data() as Map<String, dynamic>;
+    //     print(olddata);
+    //   },
+    //   onError: (e) => print("Error getting document: $e"),
+    // );
 
     // new data
 
-    newdatadoc.get().then(
-      (DocumentSnapshot doc) {
-        newdata = doc.data() as Map<String, dynamic>;
+   newdatadoc.get().then(
+      (DocumentSnapshot doc) async {
+        newdata = await doc.data() as Map<String, dynamic>;
         print(newdata);
       },
       onError: (e) => print("Error getting document: $e"),
     );
+
+    var olddata = passingdocument;
+    print("!!!!!!!old!!!!!!!!!!!${olddata}!!!!!!!!!!!!!");
+    print("!!!!!!!new!!!!!!!!!!!${newdata}!!!!!!!!!!!!!");
 
     final size = MediaQuery.of(context).size;
     return Padding(
@@ -83,38 +90,46 @@ class SellerEditCard extends StatelessWidget {
                     fontWeight: FontWeight.bold),
               ),
             ),
-            Text(
-              'Business Address : ${olddata['companyname']}',
-              style: TextStyle(
-                color: (olddata['companyname'] == newdata['companyname'])
-                    ? Colors.black
-                    : Colors.red,
-              ),
-            ),
-            Text(
-              'PIN Code : ${olddata['pincode']}',
-              style: TextStyle(
-                color: (olddata['pincode'] == newdata['pincode'])
-                    ? Colors.black
-                    : Colors.red,
-              ),
-            ),
-            Text(
-              'Phone : ${olddata['phone']}',
-              style: TextStyle(
-                color: (olddata['phone'] == newdata['phone'])
-                    ? Colors.black
-                    : Colors.red,
-              ),
-            ),
-            Text(
-              'Email ID : ${olddata['email']}',
-              style: TextStyle(
-                color: (olddata['email'] == newdata['email'])
-                    ? Colors.black
-                    : Colors.red,
-              ),
-            ),
+            // Text(
+            //   'Name : ${olddata['name']}',
+            //   style: TextStyle(
+            //     color: (olddata['name'] == newdata['name'])
+            //         ? Colors.black
+            //         : Colors.red,
+            //   ),
+            // ),
+            // Text(
+            //   'Business Address : ${olddata['companyname']}',
+            //   style: TextStyle(
+            //     color: (olddata['companyname'] == newdata['companyname'])
+            //         ? Colors.black
+            //         : Colors.red,
+            //   ),
+            // ),
+            // Text(
+            //   'PIN Code : ${olddata['pincode']}',
+            //   style: TextStyle(
+            //     color: (olddata['pincode'] == newdata['pincode'])
+            //         ? Colors.black
+            //         : Colors.red,
+            //   ),
+            // ),
+            // Text(
+            //   'Phone : ${olddata['phone']}',
+            //   style: TextStyle(
+            //     color: (olddata['phone'] == newdata['phone'])
+            //         ? Colors.black
+            //         : Colors.red,
+            //   ),
+            // ),
+            // Text(
+            //   'Email ID : ${olddata['email']}',
+            //   style: TextStyle(
+            //     color: (olddata['email'] == newdata['email'])
+            //         ? Colors.black
+            //         : Colors.red,
+            //   ),
+            // ),
             SizedBox(height: size.width * .02),
             Center(
               child: Text(
@@ -126,38 +141,46 @@ class SellerEditCard extends StatelessWidget {
                     fontWeight: FontWeight.bold),
               ),
             ),
-            Text(
-              'Business Address : ${newdata['companyname']}',
-              style: TextStyle(
-                color: (olddata['companyname'] == newdata['companyname'])
-                    ? Colors.black
-                    : Colors.green,
-              ),
-            ),
-            Text(
-              'PIN Code : ${newdata['pincode']}',
-              style: TextStyle(
-                color: (olddata['pincode'] == newdata['pincode'])
-                    ? Colors.black
-                    : Colors.green,
-              ),
-            ),
-            Text(
-              'Phone : ${newdata['phone']}',
-              style: TextStyle(
-                color: (olddata['phone'] == newdata['phone'])
-                    ? Colors.black
-                    : Colors.green,
-              ),
-            ),
-            Text(
-              'Email ID : ${newdata['email']}',
-              style: TextStyle(
-                color: (olddata['email'] == newdata['email'])
-                    ? Colors.black
-                    : Colors.green,
-              ),
-            ),
+            // Text(
+            //   'Name : ${newdata['name']}',
+            //   style: TextStyle(
+            //     color: (olddata['name'] == newdata['name'])
+            //         ? Colors.black
+            //         : Colors.green,
+            //   ),
+            // ),
+            // Text(
+            //   'Business Address : ${newdata['companyname']}',
+            //   style: TextStyle(
+            //     color: (olddata['companyname'] == newdata['companyname'])
+            //         ? Colors.black
+            //         : Colors.green,
+            //   ),
+            // ),
+            // Text(
+            //   'PIN Code : ${newdata['pincode']}',
+            //   style: TextStyle(
+            //     color: (olddata['pincode'] == newdata['pincode'])
+            //         ? Colors.black
+            //         : Colors.green,
+            //   ),
+            // ),
+            // Text(
+            //   'Phone : ${newdata['phone']}',
+            //   style: TextStyle(
+            //     color: (olddata['phone'] == newdata['phone'])
+            //         ? Colors.black
+            //         : Colors.green,
+            //   ),
+            // ),
+            // Text(
+            //   'Email ID : ${newdata['email']}',
+            //   style: TextStyle(
+            //     color: (olddata['email'] == newdata['email'])
+            //         ? Colors.black
+            //         : Colors.green,
+            //   ),
+            // ),
             SizedBox(height: size.width * .02),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
