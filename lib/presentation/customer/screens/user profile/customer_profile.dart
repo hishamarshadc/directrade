@@ -1,11 +1,27 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sample_project/presentation/authentication/login.dart';
 
+final user = FirebaseAuth.instance.currentUser;
+final db = FirebaseFirestore.instance;
+final docRef = db.collection("Users").doc(user!.uid);
+var data;
+
 class CustProfilePage extends StatelessWidget {
-  const CustProfilePage({super.key});
+   const CustProfilePage({super.key});
   
   @override
   Widget build(BuildContext context) {
+
+    docRef.get().then(
+      (DocumentSnapshot doc) {
+        data = doc.data() as Map<String, dynamic>;
+      },
+      onError: (e) => print("Error getting document: $e"),
+    );
+
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -26,7 +42,7 @@ class CustProfilePage extends StatelessWidget {
                 height: 10,
               ),
               Text(
-                'Full Name'.toUpperCase(),
+                '${data['name']}'.toUpperCase(),
                 style: const TextStyle(
                   fontSize: 30.0,
                   fontFamily: 'Pacifico',
