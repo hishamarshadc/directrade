@@ -282,6 +282,94 @@ class LoginPage extends StatelessWidget {
   }
 }
 
+class NewSnackbar extends StatelessWidget {
+  const NewSnackbar({
+    Key? key,
+    required this.errortext,
+    required this.errorcolor,
+  }) : super(key: key);
+
+  final String errortext;
+  final Color errorcolor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        Container(
+          height: 90,
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.black,
+              ),
+              borderRadius: const BorderRadius.all(Radius.circular(15)),
+              color: errorcolor),
+          child: Row(
+            children: [
+              const SizedBox(
+                width: 48,
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(errortext.toUpperCase(),
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontFamily: 'roboto',
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),),
+                    // const Spacer(),
+                    // Text(
+                    //   errortext,
+                    //   style: const TextStyle(
+                    //     fontSize: 12,
+                    //     color: Colors.white,
+                    //   ),
+                    //   maxLines: 2,
+                    //   overflow: TextOverflow.ellipsis,
+                    // ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        Positioned(
+            top: -20,
+            left: -20,
+            child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(20),
+                ),
+                child: IconButton(
+                    splashColor: Colors.transparent,
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                    },
+                    icon: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        const CircleAvatar(
+                          backgroundColor: Colors.black,
+                          radius: 30,
+                        ),
+                        Icon(
+                          Icons.cancel,
+                          color: errorcolor,
+                          size: 30,
+                        ),
+                      ],
+                    )))),
+      ],
+    );
+  }
+}
+
+
 class customsnackbar extends StatelessWidget {
   const customsnackbar({
     Key? key,
