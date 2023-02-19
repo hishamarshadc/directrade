@@ -11,12 +11,9 @@ class SellerEditsPage extends StatelessWidget {
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance
           .collection("Changes")
-
-          // .where('userType', isEqualTo: 'p')
+          .where('userType', isEqualTo: 'p')
           .snapshots(),
-          
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-
         if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         }
