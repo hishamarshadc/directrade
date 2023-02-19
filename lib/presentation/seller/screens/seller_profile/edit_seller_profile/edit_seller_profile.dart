@@ -1,5 +1,3 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +20,6 @@ class _EditSellerState extends State<EditSeller> {
   }
 }
 
-
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});
 
@@ -31,7 +28,6 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
-
   final kpass = TextEditingController();
   final cpass = TextEditingController();
   final kname = TextEditingController();
@@ -126,12 +122,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
               const SizedBox(
                 height: 35,
               ),
-              buildTextField("Full Name", "Full name", 2 ,kname),
-              buildTextField("E-mail", "Email@email.com", 1,kemail),
-              buildTextField("Password", "", 0,kpass),
-              buildTextField("PinCode", "PinCode", 4,kpincode),
-              buildTextField("Company Name", "Company Name", 2,kcname),
-              buildTextField("Company Address", "Company address", 5,kaddress),
+              buildTextField("Full Name", "Full name", 2, kname),
+              buildTextField("E-mail", "Email@email.com", 1, kemail),
+              buildTextField("Password", "", 0, kpass),
+              buildTextField("PinCode", "PinCode", 4, kpincode),
+              buildTextField("Company Name", "Company Name", 2, kcname),
+              buildTextField("Company Address", "Company address", 5, kaddress),
               const SizedBox(
                 height: 5,
               ),
@@ -158,63 +154,59 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
                     ),
-                    onPressed: () {
-                      try{
-                        final user=FirebaseAuth.instance.currentUser;
-                        final store=FirebaseFirestore.instance;
-                          if(user!=null){
-                            store
-                                          .collection("Changes")
-                                          .doc(user.uid)
-                                          .set({
-                                        // 'email': kemail.text,
-                                        // 'password': kpass.text,
-                                        'name': kname.text,
-                                        'companyname': kcname.text,
-                                        'phone': kphone.text,
-                                        'address': kaddress.text,
-                                        'pincode': kpincode.text,
-                                        'userType': 'p',
-                                        'status':'a',
-                                        'change_datetime': DateTime.now()                                      
-                                        });
-                                        ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                             SnackBar(
-                                              content: customsnackbar(
-                                                errortext:
-                                                    'Your changes will be updated after reviewing',
-                                                errorcolor: Colors.yellow,
-                                              ),
-                                              elevation: 0,
-                                              behavior:
-                                                  SnackBarBehavior.floating,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                            ),
-                                          );
-                            
+                    onPressed: () async {
+                      try {
+                        final user = FirebaseAuth.instance.currentUser;
+                        final store = FirebaseFirestore.instance;
+                        final db = FirebaseFirestore.instance;
+                        final docRef = db.collection("Users").doc(user!.uid);
+                        var data;
+                        await docRef.get().then(
+                          (DocumentSnapshot doc) {
+                            data = doc.data() as Map<String, dynamic>;
+                          },
+                          onError: (e) => print("Error getting document: $e"),
+                        );
+                        if (user != null) {
+                          store.collection("Changes").doc(user.uid).set({
+                            // 'email': kemail.text,
+                            // 'password': kpass.text,
+                            'name':(kname.text.isNotEmpty)?kname.text:data['name'] ,
+                            'companyname':(kcname.text.isNotEmpty)?kcname.text:data['companyname'],
+                            'phone': (kphone.text.isNotEmpty)?kphone.text:data['phone'],
+                            'address': (kaddress.text.isNotEmpty)?kaddress.text:data['address'],
+                            'pincode': (kpincode.text.isNotEmpty)?kpincode.text:data['pincode'],
+                            'userType': 'p',
+                            'status': 'a',
+                            'change_datetime': DateTime.now()
+                          });
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: customsnackbar(
+                                errortext:
+                                    'Your changes will be updated after reviewing',
+                                errorcolor: Colors.yellow,
+                              ),
+                              elevation: 0,
+                              behavior: SnackBarBehavior.floating,
+                              backgroundColor: Colors.transparent,
+                            ),
+                          );
                         }
-                      }
-                      catch(e){
+                      } catch (e) {
                         print(e);
-                           ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                             SnackBar(
-                                              content: customsnackbar(
-                                                errortext:
-                                                    'An Error Occured : $e',
-                                                errorcolor: Colors.yellow,
-                                              ),
-                                              elevation: 0,
-                                              behavior:
-                                                  SnackBarBehavior.floating,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                            ),
-                                          );
-                      }                        
-
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: customsnackbar(
+                              errortext: 'An Error Occured : $e',
+                              errorcolor: Colors.yellow,
+                            ),
+                            elevation: 0,
+                            behavior: SnackBarBehavior.floating,
+                            backgroundColor: Colors.transparent,
+                          ),
+                        );
+                      }
                     },
                     child: const Text(
                       " SAVE ",
@@ -236,7 +228,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
-  Widget buildTextField(String labelText, String placeholder, int type,TextEditingController t) {
+  Widget buildTextField(
+      String labelText, String placeholder, int type, TextEditingController t) {
     // 0=password
     // 1=email
     // 2=name

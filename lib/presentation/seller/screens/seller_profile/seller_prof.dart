@@ -1,11 +1,26 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sample_project/presentation/authentication/login.dart';
+
+final user = FirebaseAuth.instance.currentUser;
+final db = FirebaseFirestore.instance;
+final docRef = db.collection("Users").doc(user!.uid);
+var data;
 
 class SellerProfilePage extends StatelessWidget {
   const SellerProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+
+    docRef.get().then(
+      (DocumentSnapshot doc) {
+        data = doc.data() as Map<String, dynamic>;
+      },
+      onError: (e) => print("Error getting document: $e"),
+    );
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -24,7 +39,7 @@ class SellerProfilePage extends StatelessWidget {
                 height: 10,
               ),
               Text(
-                'Full Name'.toUpperCase(),
+                '${data['name']}'.toUpperCase(),
                 style: const TextStyle(
                   fontSize: 30.0,
                   fontFamily: 'Pacifico',
@@ -42,12 +57,10 @@ class SellerProfilePage extends StatelessWidget {
               InkWell(
                   child: Card(
                     shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    side: const BorderSide(
-                      color: Colors.black,
-                      
-                    )
-                  ),
+                        borderRadius: BorderRadius.circular(30),
+                        side: const BorderSide(
+                          color: Colors.black,
+                        )),
                     margin: const EdgeInsets.symmetric(
                         vertical: 10.0, horizontal: 25.0),
                     child: ListTile(
@@ -86,12 +99,10 @@ class SellerProfilePage extends StatelessWidget {
               InkWell(
                   child: Card(
                     shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    side: const BorderSide(
-                      color: Colors.black,
-                      
-                    )
-                  ),
+                        borderRadius: BorderRadius.circular(30),
+                        side: const BorderSide(
+                          color: Colors.black,
+                        )),
                     margin: const EdgeInsets.symmetric(
                         vertical: 10.0, horizontal: 25.0),
                     child: ListTile(
@@ -165,12 +176,10 @@ class SellerProfilePage extends StatelessWidget {
               InkWell(
                 child: Card(
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    side: const BorderSide(
-                      color: Colors.black,
-                      
-                    )
-                  ),
+                      borderRadius: BorderRadius.circular(30),
+                      side: const BorderSide(
+                        color: Colors.black,
+                      )),
                   margin: const EdgeInsets.symmetric(
                       vertical: 10.0, horizontal: 25.0),
                   child: ListTile(
@@ -211,11 +220,13 @@ class SellerProfilePage extends StatelessWidget {
                 height: 5,
                 width: 150,
               ),
-              TextButton(onPressed: () {
-                Navigator.pushNamed(context,'aboutus');
-              }, child: const Text('About Us'),style: TextButton.styleFrom(
-                foregroundColor: Colors.black
-              ),),
+              TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, 'aboutus');
+                },
+                child: const Text('About Us'),
+                style: TextButton.styleFrom(foregroundColor: Colors.black),
+              ),
               const SizedBox(
                 height: 20.0,
                 width: 150,
@@ -232,7 +243,7 @@ class SellerProfilePage extends StatelessWidget {
                   color: Colors.black,
                 ),
               ),
-              
+
               const SizedBox(
                 height: 20.0,
                 width: 150,
