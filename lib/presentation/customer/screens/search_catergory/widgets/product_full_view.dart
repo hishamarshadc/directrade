@@ -1,30 +1,25 @@
-import 'dart:developer';
-import 'dart:ffi';
+
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:sample_project/core/colors/Colors.dart';
-import 'package:sample_project/core/fetchData.dart';
 import 'package:sample_project/presentation/authentication/login.dart';
 import 'package:sample_project/presentation/customer/screens/chat/chat_message_page.dart';
-import 'package:sample_project/presentation/customer/screens/search_catergory/widgets/counter.dart';
 
 
 class ProductFullViewPage extends StatefulWidget {
   final DocumentSnapshot passingdocument;
-  
-  final imageUrl;
+  final DocumentSnapshot sellerdata;
   
   int minQuantity;
 
   ProductFullViewPage(
       {super.key,
        required this.passingdocument,
+       required this.sellerdata,
        required this.minQuantity,
-       this.imageUrl = 'assets/images/color threads.jpeg',
-       
       });
       
         
@@ -61,26 +56,7 @@ void decrement() {
     
     
     
-  
-    return StreamBuilder<DocumentSnapshot>(
-  stream: FirebaseFirestore.instance.collection('Users').doc(widget.passingdocument['product_seller_id']).snapshots(),
-  builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-    if (snapshot.hasError) {
-      return Text('Error: ${snapshot.error}');
-    }
-
-    if (snapshot.connectionState == ConnectionState.waiting) {
-      return const Center(
-              child: CircularProgressIndicator(color: Colors.blue),
-            );
-    }
-
-    if (!snapshot.hasData) {
-      return Text('Document does not exist');
-    }
-    // Extract data from the snapshot and display it
-    final sellerdata = snapshot.data!;
-
+    print(widget.passingdocument['product_price']);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -105,9 +81,9 @@ void decrement() {
                         borderRadius: BorderRadius.circular(20),
                         child: AspectRatio(
                           aspectRatio: 4 / 3,
-                          child: Image.asset(
-                            widget.imageUrl,
-                            fit: BoxFit.cover,
+                          child: Image.network(
+                            widget.passingdocument['image_url'],
+                            // fit: BoxFit.cover,
                           ),
                         ),
                       ),
@@ -135,7 +111,7 @@ void decrement() {
                                 SizedBox(
                                     width: size.width * .55,
                                     child: Text(
-                                      'Sold by ${sellerdata['companyname']}',
+                                      'Sold by ${widget.sellerdata['companyname']}',
                                       style: TextStyle(
                                           fontSize: 15,
                                           fontWeight: FontWeight.w500),
@@ -208,6 +184,15 @@ void decrement() {
                               padding: const EdgeInsets.only(left: 15,right:15,bottom: 10),
                               child: Text(widget.passingdocument['description']),
                             ),
+
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical:15,horizontal: 10),
+                              child: const Text("Shop Address",style: TextStyle(fontSize: 20)),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 15,right:15,bottom: 10),
+                              child: Text(widget.sellerdata['address']),
+                            ),
                           ],
                         ), 
                       ),
@@ -227,8 +212,6 @@ void decrement() {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    // QCounter(minValue:widget.passingdocument['min_quantity'],maxValue:widget.passingdocument['min_quantity']),
-                    
                     ElevatedButton(
                       onPressed: decrement,
                       style: ElevatedButton.styleFrom(
@@ -306,9 +289,5 @@ void decrement() {
         ),
       ),
     );
-
-    
-  },
-);
   }
 }

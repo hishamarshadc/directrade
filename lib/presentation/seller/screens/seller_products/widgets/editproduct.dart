@@ -9,28 +9,28 @@ import 'package:image_picker/image_picker.dart';
 import 'package:sample_project/presentation/authentication/login.dart';
 import 'package:sample_project/presentation/seller/screens/seller_products/seller_product.dart';
 
-class AddProductForm extends StatefulWidget {
+class EditProductForm extends StatefulWidget {
   @override
-  _AddProductFormState createState() => _AddProductFormState();
+  _EditProductFormState createState() => _EditProductFormState();
 }
 
-class _AddProductFormState extends State<AddProductForm> {
+class _EditProductFormState extends State<EditProductForm> {
   final _formKey = GlobalKey<FormState>();
   bool _isWholesale = false;
   late String _productName;
   late int _maxQuantity;
   late int _minQuantity;
   late int _productPrice;
-  late String _productDesc;
+  late String _productDesc ;  
 
-  final kpname = TextEditingController();
-  final kdesc = TextEditingController();
+  final kpname = TextEditingController() ;
+  final kdesc = TextEditingController() ;
   final kprice = TextEditingController();
-  final kminqty = TextEditingController();
-  final kmaxqty = TextEditingController();
-  final kselltype = TextEditingController();
-  final kcat = TextEditingController();
-
+  final kminqty = TextEditingController() ;
+  final kmaxqty = TextEditingController() ;
+  final kselltype = TextEditingController() ;
+  final kcat = TextEditingController() ;
+  
   final _imageController = TextEditingController();
 
   String? productImgUrl;
@@ -91,7 +91,6 @@ class _AddProductFormState extends State<AddProductForm> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.lightBlue,
         centerTitle: true,
         title: Text("Add Product"),
       ),
@@ -117,27 +116,20 @@ class _AddProductFormState extends State<AddProductForm> {
                   decoration: BoxDecoration(
                       border: Border.all(
                     color: Colors.black,
-                    width: 1,
+                    width: 10,
                   )),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     ElevatedButton.icon(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.lightBlue,
-                          maximumSize: Size.fromWidth(300),
-                        ),
+                        style: ElevatedButton.styleFrom(),
                         onPressed: () {
                           pickusingcamera();
                         },
                         icon: Icon(Icons.camera_alt_rounded),
-                        label: Text(' Capture Image ')),
+                        label: Text('Capture Image')),
                     ElevatedButton.icon(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.lightBlue,
-                          maximumSize: Size.fromWidth(300),
-                        ),
                         onPressed: () {
                           pickimagefromgallery();
                         },
@@ -183,13 +175,13 @@ class _AddProductFormState extends State<AddProductForm> {
                 TextFormField(
                   controller: kmaxqty,
                   keyboardType: TextInputType.number,
-                  decoration:
-                      InputDecoration(labelText: 'Maximum Quantity to Order'),
+                  decoration: InputDecoration(labelText: 'Maximum Quantity to Order'),
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Please enter the maximum quantity';
-                    } else if (int.parse(kmaxqty.text) <=
-                        int.parse(kminqty.text)) {
+                    }
+                    else if (int.parse(kmaxqty.text)<=int.parse(kminqty.text))
+                    {
                       return 'Maximum should be greater than Minimum';
                     }
                     return null;
@@ -199,8 +191,7 @@ class _AddProductFormState extends State<AddProductForm> {
                 TextFormField(
                   controller: kminqty,
                   keyboardType: TextInputType.number,
-                  decoration:
-                      InputDecoration(labelText: 'Minimum Quantity to Order'),
+                  decoration: InputDecoration(labelText: 'Minimum Quantity to Order'),
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Please enter the minimum quantity';
@@ -214,56 +205,67 @@ class _AddProductFormState extends State<AddProductForm> {
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text("Retail",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                          color: Colors.red,
-                        )),
-                    Switch(
-                      activeColor: Colors.green,
-                      inactiveThumbColor: Colors.red,
-                      inactiveTrackColor: Colors.red.shade100,
-                      value: _isWholesale,
-                      onChanged: (value) {
-                        setState(() {
-                          _isWholesale = value;
-                        });
-                      },
-                    ),
-                    const Text("Wholesale",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                          color: Colors.green,
-                        ))
-                  ],
-                ),
+                    children: [
+                      const Text("Retail",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18)),
+                      Switch(value: _isWholesale, onChanged: (value) {
+                    setState(() {
+                      _isWholesale = value;
+                    });
+                  },),
+                      const Text("Wholesale",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18))
+                    ],
+                  ),
+
+                
+                
+
+               
+                // SwitchListTile(
+                //   title: const Text('Wholesale'),
+                //   value: !_isRetail,
+                //   onChanged: (value) {
+                //     setState(() {
+                //       _isRetail = !value;
+                //     });
+                //   },
+                // ),
                 ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      
-                      final user=FirebaseAuth.instance.currentUser;
+                  onPressed: () async{
+                    
+                    if (_formKey.currentState!.validate()) { 
+                      if (image!=null){
+                        productImgUrl = await uploadImage(image!);
+                        
+                        final user=FirebaseAuth.instance.currentUser;
                       final db=FirebaseFirestore.instance;
 
+                    if(productImgUrl!.isNotEmpty){
                       db.collection("Products").doc().set({
-                                      'product_name' :kpname.text,
-                                      'discription':kdesc.text,
-                                      'product_price':kprice.text,
-                                      'product_seller_id':user?.uid,
-                                      'min_quantity':kminqty.text,
-                                      'max_quantity':kmaxqty.text,
-                                      'product_rating':0.0,
-                                      'no_of_rating':0,
-                                      'sell_type': _isWholesale?'w':'r',
-                                      'upload_time':DateTime.now()
-                                   });
+                                    'product_name' :kpname.text,
+                                    'image_url': productImgUrl, 
+                                    'description':kdesc.text,
+                                    'product_price':kprice.text,
+                                    'category':'fashion',
+                                    'product_seller_id':user?.uid,
+                                    'min_quantity':kminqty.text,
+                                    'max_quantity':kmaxqty.text,
+                                    'product_rating':0.0,
+                                    'no_of_rating':0,
+                                    'sell_type': _isWholesale?'w':'r',
+                                    'upload_time':DateTime.now()
+                                  });
+
+                                  Navigator.pop(context);}
+                      }
+                      else{
+                          customsnackbar(errortext: 'Please Upload Image Of Product', errorcolor: Colors.lightBlue);
+                      }
+                      
 
 
 
                       _formKey.currentState!.save();
-                      Navigator.pop(context);
+                     
     
                       // Add logic to save the product here
                       // ...
