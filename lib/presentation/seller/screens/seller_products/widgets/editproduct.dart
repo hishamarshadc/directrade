@@ -9,12 +9,12 @@ import 'package:image_picker/image_picker.dart';
 import 'package:sample_project/presentation/authentication/login.dart';
 import 'package:sample_project/presentation/seller/screens/seller_products/seller_product.dart';
 
-class AddProductForm extends StatefulWidget {
+class EditProductForm extends StatefulWidget {
   @override
-  _AddProductFormState createState() => _AddProductFormState();
+  _EditProductFormState createState() => _EditProductFormState();
 }
 
-class _AddProductFormState extends State<AddProductForm> {
+class _EditProductFormState extends State<EditProductForm> {
   final _formKey = GlobalKey<FormState>();
   bool _isWholesale = false;
   late String _productName;
@@ -249,8 +249,8 @@ class _AddProductFormState extends State<AddProductForm> {
                                     'product_seller_id':user?.uid,
                                     'min_quantity':kminqty.text,
                                     'max_quantity':kmaxqty.text,
-                                    'rating':0.0,
-                                    'rating_count':0,
+                                    'product_rating':0.0,
+                                    'no_of_rating':0,
                                     'sell_type': _isWholesale?'w':'r',
                                     'upload_time':DateTime.now()
                                   });
