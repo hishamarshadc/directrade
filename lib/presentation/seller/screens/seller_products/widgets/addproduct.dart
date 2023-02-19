@@ -249,13 +249,13 @@ class _AddProductFormState extends State<AddProductForm> {
 
                       db.collection("Products").doc().set({
                                       'product_name' :kpname.text,
-                                      'discription':kdesc.text,
-                                      'product_price':kprice.text,
+                                      'description':kdesc.text,
+                                      'product_price':int.parse(kprice.text),
                                       'product_seller_id':user?.uid,
                                       'min_quantity':kminqty.text,
                                       'max_quantity':kmaxqty.text,
-                                      'product_rating':0.0,
-                                      'no_of_rating':0,
+                                      'rating':0.0,
+                                      'rating_count':0,
                                       'sell_type': _isWholesale?'w':'r',
                                       'upload_time':DateTime.now()
                                    });
