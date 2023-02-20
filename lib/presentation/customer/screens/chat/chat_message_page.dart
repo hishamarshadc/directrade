@@ -6,187 +6,201 @@ import 'package:intl/intl.dart';
 import 'package:sample_project/presentation/testdetails.dart';
 
 class ChatMessagePage extends StatefulWidget {
-  ChatMessagePage({super.key,});
-  String userid='EgBK8xzOUNOHqMmXLjeaAppL7kn1';
+  ChatMessagePage({super.key, required this.id, required this.name});
+  String id;
+  String name;
+
+  String image = '';
+  
 
   @override
   State<ChatMessagePage> createState() => _ChatMessagePageState();
 }
 
 class _ChatMessagePageState extends State<ChatMessagePage> {
- TextEditingController km=TextEditingController();
+  TextEditingController msg = TextEditingController();
 
+  final auth = FirebaseAuth.instance;
+  final storeUser = FirebaseFirestore.instance;
 
-  List<Message> messages = [
-    Message(
-      text: 'Yes sure!',
-      date: DateTime.now().subtract(const Duration(days: 3, minutes: 3)),
-      isSentByMe: false,
-    ),
-
-    Message(
-      text: 'Do You Provide Free Delivery?',
-      date: DateTime.now().subtract(const Duration(days: 3, minutes: 2)),
-      isSentByMe: true,
-    ),
-    Message(
-      text: 'Yes sure!',
-      date: DateTime.now().subtract(const Duration(days: 4, minutes: 3)),
-      isSentByMe: false,
-    ),
-    Message(
-      text: 'Do You Provide Free Delivery?',
-      date: DateTime.now().subtract(const Duration(days: 4, minutes: 4)),
-      isSentByMe: true,
-    ),
-    Message(
-      text: 'Yes sure!',
-      date: DateTime.now().subtract(const Duration(days: 5, minutes: 3)),
-      isSentByMe: false,
-    ),
-    Message(
-      text: 'Do You Provide Free Delivery?',
-      date: DateTime.now().subtract(const Duration(days: 5, minutes: 4)),
-      isSentByMe: true,
-    ),
-    Message(
-      text: 'Yes sure!',
-      date: DateTime.now().subtract(const Duration(days: 10, minutes: 3)),
-      isSentByMe: false,
-    ),
-    Message(
-      text: 'Do You Provide Free Delivery?',
-      date: DateTime.now().subtract(const Duration(days: 10, minutes: 4)),
-      isSentByMe: true,
-    ),
-    Message(
-      text: 'Yes sure!',
-      date: DateTime.now().subtract(const Duration(days: 11, minutes: 3)),
-      isSentByMe: false,
-    ),
-    Message(
-      text: 'Do You Provide Free Delivery?',
-      date: DateTime.now().subtract(const Duration(days: 11, minutes: 4)),
-      isSentByMe: true,
-    ),
-    Message(
-      text: 'Yes sure!',
-      date: DateTime.now().subtract(const Duration(days: 12, minutes: 3)),
-      isSentByMe: false,
-    ),
-    Message(
-      text: 'Do You Provide Free Delivery?',
-      date: DateTime.now().subtract(const Duration(days: 12, minutes: 4)),
-      isSentByMe: true,
-    ),
-    // Message(),
-  ].reversed.toList();
+  List<Message> messages = [];
+  // .reversed.toList();
 
   // _ChatMessagePageState(this.name);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
-          title: Text('Seller Name',
-            style: const TextStyle(
-              fontSize: 27,
-            ),
-          ),
-          actions: [
-            IconButton(
-              iconSize: 35,
-              onPressed: () {
-                Navigator.pushNamed(context, 'chatsellerdetails');
-              },
-              icon: const CircleAvatar(
-                backgroundImage: AssetImage('assets/images/seller.jpg'),
+        appBar: AppBar(
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.black,
+            title: Text(
+              widget.name,
+              style: const TextStyle(
+                fontSize: 27,
               ),
             ),
-          ]),
-      // appBar: AppBar(
-      //    const CircleAvatar(
-      //     backgroundImage: AssetImage('assets/images/seller.jpg'),
-      //   ),
-      //   title:const Text('Seller Name'),
-      // ),
-      body: Column(
-        children: [
-          Expanded(
-            child: GroupedListView(
-                reverse: true,
-                order: GroupedListOrder.DESC,
-                useStickyGroupSeparators: true,
-                floatingHeader: true,
-                padding: const EdgeInsets.all(8),
-                elements: messages,
-                groupBy: (message) => DateTime(
-                      message.date.year,
-                      message.date.month,
-                      message.date.day,
-                    ),
-                groupHeaderBuilder: (Message message) => SizedBox(
-                      height: 40,
-                      child: Center(
-                          child: Card(
-                        color: Theme.of(context).primaryColor,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: Text(
-                            DateFormat.yMMMd().format(message.date),
-                            style: const TextStyle(color: Colors.white),
+            actions: [
+              IconButton(
+                iconSize: 35,
+                onPressed: () {
+                  Navigator.pushNamed(context, 'chatsellerdetails');
+                },
+                icon: const CircleAvatar(
+                  backgroundImage: AssetImage('assets/images/seller.jpg'),
+                ),
+              ),
+            ]),
+        body: StreamBuilder(
+          stream: storeUser
+          .collection('Messages')
+          .where('chatId',whereIn: ['${auth.currentUser!.uid}','${widget.id}'])
+          .orderBy('time')
+          .snapshots(),
+          builder: (context, snapshot) {
+            if(snapshot.hasError){
+              return Text('Error:${snapshot.error}');
+            }
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+                break;
+              default:
+                messages.clear();
+                for(int i=0;i<snapshot.data!.docs.length;i++){
+                  DocumentSnapshot document =snapshot.data!.docs[i];
+                  final message = Message(
+                    text: document['messageText'],
+                    date: (document['time'] as Timestamp).toDate(),
+                    isSentByMe: document['fromId'] == auth.currentUser!.uid
+                        ? true
+                        : false);
+
+                messages.add(message);
+                }
+                return snapshot.data!.docs.isNotEmpty
+                ?
+                  Column(
+          children: [
+            Expanded(
+              child: GroupedListView(
+                  reverse: true,
+                  order: GroupedListOrder.DESC,
+                  useStickyGroupSeparators: true,
+                  floatingHeader: true,
+                  padding: const EdgeInsets.all(8),
+                  elements: messages,
+                  groupBy: (message) => DateTime(
+                        message.date.year,
+                        message.date.month,
+                        message.date.day,
+                      ),
+                  groupHeaderBuilder: (Message message) => SizedBox(
+                        height: 40,
+                        child: Center(
+                            child: Card(
+                          color: Theme.of(context).primaryColor,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: Text(
+                              DateFormat.yMMMd().format(message.date),
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        )),
+                      ),
+                  itemBuilder: (context, Message message) => Align(
+                        alignment: message.isSentByMe
+                            ? Alignment.centerRight
+                            : Alignment.centerLeft,
+                        child: Card(
+                          elevation: 8,
+                          child: Padding(
+                            padding: const EdgeInsets.all(12),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(message.text),
+                                SizedBox(height: 3,),
+                                Text(DateFormat.jm().format(message.date),style: const TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 10),
+                                            textAlign: TextAlign.end,)
+                              ],
+                            ),
                           ),
                         ),
                       )),
+            ),
+            Container(
+              color: Colors.lightBlue,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  color: Colors.white,
+                  child: TextFormField(
+                    controller: msg,
+                    onFieldSubmitted: (value) {
+                       if (value.isNotEmpty) {
+                                    final now = DateTime.now();
+                                    String formatter =
+                                        DateFormat('yMd').format(now);
+                                    String time = DateFormat.jms().toString();
+                                    storeUser.collection("Messages").doc().set({
+                                      'cid':'${auth.currentUser!.uid}${widget.id}',
+                                      'fromId': auth.currentUser!.uid,
+                                      'toId': widget.id,
+                                      'messageId': value,
+                                      'date': formatter,
+                                      'time': now
+                                    });
+                                    // final message = Message(
+                                    //     text: value,
+                                    //     date: DateTime.now(),
+                                    //     isSentByMe: true);
+                                    // setState(() {
+                                    //   messages.add(message);
+                                    // });
+                                    msg.clear();
+                                  }
+                    },
+                    decoration:  InputDecoration(
+                      suffixIcon: IconButton(onPressed: (){
+                      if (msg.text.isNotEmpty) {
+                                    final now = DateTime.now();
+                                    String formatter =
+                                        DateFormat('yMd').format(now);
+                                    String time = DateFormat.jms().toString();
+                                    storeUser.collection("Messages").doc().set({
+                                      'chatId':
+                                          '${auth.currentUser!.uid}${widget.id}',
+                                      'fromId': auth.currentUser!.uid,
+                                      'toId': widget.id,
+                                      'messageText': msg.text,
+                                      'date': formatter,
+                                      'time': now
+                                    });
+                                    msg.clear();
+                                    }
+                      }, icon:const Icon(Icons.send)),
+                      contentPadding:const EdgeInsets.all(12),
+                      hintText: 'Enter Message Here..',
                     ),
-                itemBuilder: (context, Message message) => Align(
-                      alignment: message.isSentByMe
-                          ? Alignment.centerRight
-                          : Alignment.centerLeft,
-                      child: Card(
-                        elevation: 8,
-                        child: Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Text(message.text),
-                        ),
-                      ),
-                    )),
-          ),
-          Container(
-            color: Colors.lightBlue,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                color: Colors.white,
-                child: TextField(
-                  controller: km,
-                  decoration:  InputDecoration(
-                    suffixIcon: IconButton(onPressed: (){
-                      final message = Message(
-                      text: km.text,
-                      date: DateTime.now(),
-                      isSentByMe: true,
-                    );
-                    setState(() => messages.add(message));
-                    }, icon:const Icon(Icons.send)),
-                    contentPadding:const EdgeInsets.all(12),
-                    hintText: 'Type Message Here..',
                   ),
-                  onSubmitted: (text) {
-                    final user=FirebaseAuth.instance.currentUser;
-                    final db=FirebaseFirestore.instance;
-                    
-                    // db.collection('Messages').doc("")
-                  },
                 ),
               ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ):
+        Text('Error Loading Messages !')
+                ;
+            }
+          },
+        )
+        
+        );
   }
 }
 

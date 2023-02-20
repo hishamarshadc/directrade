@@ -1,7 +1,8 @@
-// 
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sample_project/presentation/customer/screens/chat/chat_message_page.dart';
 
 class ChatListPage extends StatefulWidget {
   @override
@@ -16,102 +17,134 @@ class _ChatListPageState extends State<ChatListPage> {
         title: Text('Recent Chats'),
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance
-            .collection('Messages')
-            .where('fromId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
-            .orderBy('messageTime', descending: true)
-            .snapshots(),
-        builder: (context, fromSnapshot) {
-          if (fromSnapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          }
+          stream: FirebaseFirestore.instance
+              .collection('Messages')
+              .where('fromId',
+                  isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+              .orderBy('messageTime', descending: true)
+              .snapshots(),
+          builder: (context, fromSnapshot) {
+            if (fromSnapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            }
+            return StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection('Messages')
+                    .where('toId',
+                        isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+                    .orderBy('messageTime', descending: true)
+                    .snapshots(),
+                builder: (context, toSnapshot) {
+                  if (toSnapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                  if(toSnapshot.hasError){
+                    return Text('Error:${toSnapshot.error}');
+                  }
+                  if(fromSnapshot.hasError){
+                    return Text('Error:${fromSnapshot.error}');
+                  }
+                  List<String> chattedUsers = [];
+                  if(toSnapshot.data==null&&fromSnapshot.data==null){
+                        chattedUsers = ['T1VrZiUCEsZJ5Y1gFWRaFVgtokc2'];
+                  }else if(fromSnapshot.data==null){
+                          toSnapshot.data!.docs.forEach((doc) {
+                    if (!chattedUsers.contains(doc['fromId'])) {
+                      chattedUsers.add(doc['fromId']);
+                    }
+                  });              
+                  }else if(toSnapshot.data==null){
+                      fromSnapshot.data!.docs.forEach((doc) {
+                    if (!chattedUsers.contains(doc['toId'])) {
+                      chattedUsers.add(doc['toId']);
+                    }
+                  });
+                  }else{
+                    toSnapshot.data!.docs.forEach((doc) {
+                    if (!chattedUsers.contains(doc['fromId'])) {
+                      chattedUsers.add(doc['fromId']);
+                    }
+                  }); 
+                  fromSnapshot.data!.docs.forEach((doc) {
+                    if (!chattedUsers.contains(doc['toId'])) {
+                      chattedUsers.add(doc['toId']);
+                    }
+                  });
+                  }
 
-          return StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance
-                .collection('Messages')
-                .where('toId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
-                .orderBy('messageTime', descending: true)
-                .snapshots(),
-            builder: (context, toSnapshot) {
-              if (toSnapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
-              }
+                  if (chattedUsers.isEmpty) {
+                    return Center(child: Text('No Chats'));
+                  }
 
-              List<String> chattedUsers = [];
-              toSnapshot.data!.docs.forEach((doc) {
-                if (!chattedUsers.contains(doc['fromId'])) {
-                  chattedUsers.add(doc['fromId']);
-                }
-              });
-              fromSnapshot.data!.docs.forEach((doc) {
-                if (!chattedUsers.contains(doc['toId'])) {
-                  chattedUsers.add(doc['toId']);
-                }
-              });
-
-              if (chattedUsers.isEmpty) {
-                return Center(child: Text('No Chats'));
-              }
-
-              return ListView.builder(
-                itemCount: chattedUsers.length,
-                itemBuilder: (context, index) {
-                  return StreamBuilder<DocumentSnapshot>(
-                    stream: FirebaseFirestore.instance
-                        .collection('users')
-                        .doc(chattedUsers[index])
-                        .snapshots(),
-                    builder: (context, userSnapshot) {
-                      if (userSnapshot.connectionState == ConnectionState.waiting) {
-                        return ListTile(
-                          title: Text(chattedUsers[index]),
-                        );
-                      }
-
-                      String name = userSnapshot.data!['name'];
-                      String profileImage=userSnapshot.data!['profileImage'];
-
-                      return StreamBuilder<QuerySnapshot>(
+                  return ListView.builder(
+                    itemCount: chattedUsers.length,
+                    itemBuilder: (context, index) {
+                      return StreamBuilder<DocumentSnapshot>(
                         stream: FirebaseFirestore.instance
-                            .collection('Messages')
-                            .where('fromId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
-                            .where('toId', isEqualTo: chattedUsers[index])
-                            .orderBy('messageTime', descending: true)
-                            .limit(1)
+                            .collection('Users')
+                            .doc(chattedUsers[index])
                             .snapshots(),
-                        builder: (context, lastMessageSnapshot) {
-                          if (lastMessageSnapshot.connectionState == ConnectionState.waiting) {
+                        builder: (context, userSnapshot) {
+                          if (userSnapshot.connectionState ==
+                              ConnectionState.waiting) {
                             return ListTile(
-                              title: Text(name),
-                              subtitle: Text(''),
+                              title: Text(chattedUsers[index]),
                             );
                           }
 
-                          String lastMessage = '';
+                          String name = userSnapshot.data!['name'];
+                          DocumentSnapshot? document = userSnapshot.data;
+                          // String profileImage =
+                          //     userSnapshot.data?['profileImage'];
 
-                          if (lastMessageSnapshot.data!.docs.isNotEmpty) {
-                            lastMessage = lastMessageSnapshot.data!.docs.first['messageText'];
-                          }
+                          return StreamBuilder<QuerySnapshot>(
+                            stream: FirebaseFirestore.instance
+                                .collection('Messages')
+                                .where('fromId',
+                                    isEqualTo:
+                                        FirebaseAuth.instance.currentUser!.uid)
+                                .where('toId', isEqualTo: chattedUsers[index])
+                                .orderBy('messageTime', descending: true)
+                                .limit(1)
+                                .snapshots(),
+                            builder: (context, lastMessageSnapshot) {
+                              if (lastMessageSnapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return ListTile(
+                                  title: Text(name),
+                                  subtitle: Text(''),
+                                );
+                              }
 
-                          return ListTile(
-                            title: Text(name),
-                            
-                            subtitle: Text(lastMessage),
-                            onTap: () {
-                              // navigate to chat screen for the selected user
+                              String lastMessage = '';
+                              // String time=;
+                              if (lastMessageSnapshot.data!.docs.isNotEmpty) {
+                                lastMessage = lastMessageSnapshot
+                                    .data!.docs.first['messageText'];
+                              }
+
+                              return ListTile(
+                                title: Text(name),
+                                leading: CircleAvatar(
+                                  radius: 25,
+                                  backgroundColor: Colors.green,
+                                  backgroundImage:
+                                      AssetImage('assets/images/seller.jpg'),
+                                ),
+                                subtitle: Text(lastMessage),
+                                onTap: () {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => ChatMessagePage(id:chattedUsers[index],name:name),));
+                                  // navigate to chat screen for the selected user
+                                },
+                              );
                             },
                           );
                         },
                       );
                     },
                   );
-                },
-              );
-            }
-          );
-        }
-      ),
+                });
+          }),
     );
   }
 }
-
