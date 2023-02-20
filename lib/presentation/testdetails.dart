@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,7 +10,7 @@ import 'package:sample_project/core/fetchData.dart';
 
 final store = FirebaseFirestore.instance;
 
-getData() {
+getData(String a) {
   final docRef = store.collection("Users").doc("eUX17M7RtofTrdgnH4evkuqfpTk1");
   docRef.get().then(
     (DocumentSnapshot doc) {
@@ -20,9 +22,13 @@ getData() {
   );
 }
 
+
+
+
+
+
 class DataFetch extends StatelessWidget {
   const DataFetch({super.key});
-
   @override
   Widget build(BuildContext context) {
     // getData();

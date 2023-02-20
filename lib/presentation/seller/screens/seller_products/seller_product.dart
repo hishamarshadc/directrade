@@ -106,22 +106,6 @@ class _SellerProductPageState extends State<SellerProductPage> {
       ),
       body: Column(
         children: [
-          // Padding(
-          //   padding: const EdgeInsets.all(8.0),
-          //   child: TextFormField(
-          //     controller: ksearch,
-          //     decoration: InputDecoration(
-          //       suffixIcon: const Icon(Icons.search, color: Colors.black),
-          //       label: const Text(
-          //         'Search Products',
-          //         style: TextStyle(fontWeight: FontWeight.w500),
-          //       ),
-          //       border: OutlineInputBorder(
-          //         borderRadius: BorderRadius.circular(60),
-          //       ),
-          //     ),
-          //   ),
-          // ),
           Container(
             color: Colors.lightBlue,
             width: double.infinity,
@@ -142,7 +126,6 @@ class _SellerProductPageState extends State<SellerProductPage> {
                     width: MediaQuery.of(context).size.width * 0.3,
                     margin: const EdgeInsets.only(left: 10),
                     child: DropdownButton<String>(
-                      // hint: const Text('Category'),
                       value: catvalue,
                       onChanged: (value) => setState(
                         () => catvalue = value,
@@ -154,7 +137,6 @@ class _SellerProductPageState extends State<SellerProductPage> {
                     width: MediaQuery.of(context).size.width * 0.3,
                     margin: const EdgeInsets.only(left: 10),
                     child: DropdownButton<String>(
-                      // hint: const Text('Category'),
                       value: priceValue,
                       onChanged: (value) => setState(
                         () => priceValue = value,

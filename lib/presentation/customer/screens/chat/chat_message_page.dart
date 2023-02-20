@@ -1,10 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
+import 'package:sample_project/presentation/testdetails.dart';
 
 class ChatMessagePage extends StatefulWidget {
-  const ChatMessagePage({super.key, required this.personName});
-  final String personName;
+  ChatMessagePage({super.key,});
+  String userid='EgBK8xzOUNOHqMmXLjeaAppL7kn1';
 
   @override
   State<ChatMessagePage> createState() => _ChatMessagePageState();
@@ -12,6 +15,7 @@ class ChatMessagePage extends StatefulWidget {
 
 class _ChatMessagePageState extends State<ChatMessagePage> {
  TextEditingController km=TextEditingController();
+
 
   List<Message> messages = [
     Message(
@@ -86,7 +90,7 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
       appBar: AppBar(
           backgroundColor: Colors.white,
           foregroundColor: Colors.black,
-          title: Text(widget.personName,
+          title: Text('Seller Name',
             style: const TextStyle(
               fontSize: 27,
             ),
@@ -111,7 +115,7 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
       body: Column(
         children: [
           Expanded(
-            child: GroupedListView<Message, DateTime>(
+            child: GroupedListView(
                 reverse: true,
                 order: GroupedListOrder.DESC,
                 useStickyGroupSeparators: true,
@@ -171,12 +175,10 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
                     hintText: 'Type Message Here..',
                   ),
                   onSubmitted: (text) {
-                    final message = Message(
-                      text: text,
-                      date: DateTime.now(),
-                      isSentByMe: true,
-                    );
-                    setState(() => messages.add(message));
+                    final user=FirebaseAuth.instance.currentUser;
+                    final db=FirebaseFirestore.instance;
+                    
+                    // db.collection('Messages').doc("")
                   },
                 ),
               ),

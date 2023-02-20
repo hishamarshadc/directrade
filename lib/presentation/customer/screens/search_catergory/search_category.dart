@@ -30,17 +30,6 @@ class _SearchAndCategoryPageState extends State<SearchAndCategoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    
-    
-
-    // stream=FirebaseFirestore.instance
-    //                 .collection("Products")
-    //                 .where('category',isEqualTo: 'fashion')
-    //                 .where('product_price',isGreaterThan: 0)
-    //                 .orderBy('product_price',descending: true)
-    //                 .snapshots();
-    
-  
     if(cat==''){
     if(price==0){
           stream=FirebaseFirestore.instance
