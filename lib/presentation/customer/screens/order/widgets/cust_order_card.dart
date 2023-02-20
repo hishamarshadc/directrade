@@ -1,29 +1,73 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:intl/intl.dart';
-import 'package:sample_project/presentation/user_model.dart';
 
 class CustOrderCard extends StatelessWidget {
   const CustOrderCard(
       {required this.orderdoc, required this.productdoc, super.key});
   final DocumentSnapshot orderdoc;
   final DocumentSnapshot productdoc;
+
   @override
   Widget build(BuildContext context) {
-
-    // DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(orderdoc['datetime']);
-
-    // String formattedDateTime = DateFormat('hh:mm a dd MMM yyyy').format(dateTime);
+    double rating = 0;
     String formatTimestamp(Timestamp timestamp) {
-    var format = new DateFormat('hh:mm a dd MMM yyyy'); // <- use skeleton here
-    return format.format(timestamp.toDate());
-  }
+      var format =
+          new DateFormat('hh:mm a dd MMM yyyy'); // <- use skeleton here
+      return format.format(timestamp.toDate());
+    }
+    Widget buildRating() => RatingBar.builder(
+        minRating: 1,
+        itemSize: 40,
+        updateOnDrag: true,
+        itemBuilder: (context, _) => Icon(
+              Icons.star,
+              color: Colors.amber,
+            ),
+        onRatingUpdate: (value) {
+          rating=value;
+        }
+        
+        );
+
+    showRating() => showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Rate the Order'),
+            content: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text('Please leave a star rating',style: TextStyle(fontSize: 20),),
+                buildRating(),
+              ],
+            ),
+            actions: [
+              TextButton(onPressed: (){
+                num curr_rating = productdoc['rating'];
+                num no_rating = productdoc['rating_count'];
+                num curr_no = ++no_rating;
+                num finalrating = ((curr_rating*no_rating)+rating)/(no_rating+1);
+                print(finalrating);
+
+                final db=FirebaseFirestore.instance;
+                db.collection("Products").doc(orderdoc['product_id']) 
+    .update({'rating' : finalrating,
+    'rating_count':curr_no.toString()});
+              db.collection("Orders").doc(orderdoc.id).update({'status':'r'});
+
+              Navigator.pop(context);
     
+              }, child: Text('OK',style: TextStyle(fontWeight: FontWeight.bold),))
+            ],
+          ),
+        );
+
     String orderdatetime = formatTimestamp(orderdoc['datetime']);
 
-    
-
-    final visibility=(orderdoc['status']=='s')?true:false;
+    final visibility = (orderdoc['status'] == 's') ? true : false;
+    final cVisibility = (orderdoc['status']=='p')?true:false;
     final size = MediaQuery.of(context).size;
     return StreamBuilder(
         stream: FirebaseFirestore.instance
@@ -47,7 +91,7 @@ class CustOrderCard extends StatelessWidget {
           }
           // Extract data from the snapshot and display it
           final sellerdoc = snapshot.data!;
-         
+
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 5),
             child: Container(
@@ -72,8 +116,8 @@ class CustOrderCard extends StatelessWidget {
                                     const BorderRadius.all(Radius.circular(15)),
                                 color: Colors.blue.shade200,
                                 image: DecorationImage(
-                                  image:
-                                      AssetImage(products[0]['productImgUrl']!),
+                                  image: NetworkImage(
+                                      productdoc['image_url']),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -89,7 +133,7 @@ class CustOrderCard extends StatelessWidget {
                               Row(
                                 children: [
                                   Container(
-                                    width: size.width * .4,
+                                    width: size.width *.4,
                                     child: Text(
                                       productdoc['product_name'],
                                       overflow: TextOverflow.ellipsis,
@@ -124,12 +168,16 @@ class CustOrderCard extends StatelessWidget {
                               ),
                               SizedBox(height: size.width * .02),
                               Text(
-                                (orderdoc['status']=='s')?'Status : Success':(orderdoc['status']=='p')?'Status : Pending':'Status : Cancelled',
+                                (orderdoc['status'] == 's'||orderdoc['status']=='r')
+                                    ? 'Status : Success'
+                                    : (orderdoc['status'] == 'p')
+                                        ? 'Status : Pending'
+                                        : 'Status : Cancelled',
                                 style: TextStyle(
                                     fontSize: 15, fontWeight: FontWeight.bold),
                               ),
                               SizedBox(height: size.width * .02),
-                               Text(
+                              Text(
                                 'Total Price : Rs.${orderdoc['totalprice']}',
                                 style: TextStyle(
                                     fontSize: 15, fontWeight: FontWeight.bold),
@@ -140,24 +188,24 @@ class CustOrderCard extends StatelessWidget {
                         )
                       ],
                     ),
-                     Text('Sold By : Hisham Arshad',
-                        style:
-                            TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                    Text('Sold By : ${sellerdoc['companyname']}',
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.bold)),
                     SizedBox(height: size.width * .02),
-                     Text('PIN Code : 673019',
-                        style:
-                            TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                    Text('PIN Code : ${sellerdoc['pincode']}',
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.bold)),
                     SizedBox(height: size.width * .02),
-                     Text(
-                        'Shop Address :\n\t${sellerdoc['address']}',
-                        style:
-                            TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                    Text('Shop Address :\n\t${sellerdoc['address']}',
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.bold)),
                     SizedBox(height: size.width * .02),
                     Text('Ordered Time : $orderdatetime',
-                        style:
-                            TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.bold)),
                     SizedBox(height: size.width * .02),
-                    Row(
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         OutlinedButton(
@@ -174,7 +222,7 @@ class CustOrderCard extends StatelessWidget {
                           visible: visibility,
                           child: OutlinedButton(
                             onPressed: () {
-                              
+                              showRating();
                             },
                             style: OutlinedButton.styleFrom(
                                 shape: RoundedRectangleBorder(
@@ -186,16 +234,17 @@ class CustOrderCard extends StatelessWidget {
                           ),
                         ),
                         Visibility(
-                          visible: !visibility,
+                          visible: cVisibility,
                           child: OutlinedButton(
-                              onPressed: () {},
-                              style: OutlinedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(50))),
-                              child: const Text(
-                                'Cancel',
-                                style: TextStyle(color: Colors.red),
-                              ),),
+                            onPressed: () {},
+                            style: OutlinedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50))),
+                            child: const Text(
+                              'Cancel',
+                              style: TextStyle(color: Colors.red),
+                            ),
+                          ),
                         )
                       ],
                     )

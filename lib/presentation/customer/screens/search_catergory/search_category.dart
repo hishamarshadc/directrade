@@ -13,42 +13,76 @@ class SearchAndCategoryPage extends StatefulWidget {
 }
 
 class _SearchAndCategoryPageState extends State<SearchAndCategoryPage> {
-  TextEditingController ksearch = TextEditingController();
 
-  String? catvalue = 'All Catogery';
-  String? priceValue = 'Any Price';
+  Stream<QuerySnapshot<Object?>>? stream; 
 
-  final _catList = ['All Catogery', 'Fashion', 'Food', 'Others'];
+  String? cat='';
+  num? price=0;
 
-  final _priceList = ['Any Price', '< 500', '< 1000', '> 1000'];
+  String? catvalue = 'All Category';
+  String? priceValue = 'All Price';
 
-  final _productNameList = [
-    'Paper Bags',
-    'Gift Wrappings',
-    'Embroidary Threads',
-    'Paper Bags',
-    'Gift Wrappings',
-    'Embroidary Threads',
-    'Paper Bags',
-    'Gift Wrappings',
-    'Embroidary Threads',
-    'Penholder Paper Craft'
-  ];
-  final _imageUrlList = [
-    'assets/images/decorators.jpeg',
-    'assets/images/gift wrappings.jpeg',
-    'assets/images/color threads.jpeg',
-    'assets/images/decorators.jpeg',
-    'assets/images/gift wrappings.jpeg',
-    'assets/images/color threads.jpeg',
-    'assets/images/decorators.jpeg',
-    'assets/images/gift wrappings.jpeg',
-    'assets/images/color threads.jpeg',
-    'assets/images/pencilholder.jpeg'
-  ];
-  final _productPriceList = [50, 40, 99, 50, 40, 99, 50, 40, 99, 55];
+  final _catList = ['All Category', 'Fashion', 'Food', 'Others'];
+
+  final _priceList = ['All Price', '< Rs.500', '< Rs.1000', '> Rs.1000'];
+
+
+
   @override
   Widget build(BuildContext context) {
+    
+    
+
+    // stream=FirebaseFirestore.instance
+    //                 .collection("Products")
+    //                 .where('category',isEqualTo: 'fashion')
+    //                 .where('product_price',isGreaterThan: 0)
+    //                 .orderBy('product_price',descending: true)
+    //                 .snapshots();
+    
+  
+    if(cat==''){
+    if(price==0){
+          stream=FirebaseFirestore.instance
+                  .collection("Products")
+                  .snapshots();
+    }
+    else if(price==1){
+          stream=FirebaseFirestore.instance
+                  .collection("Products")
+                  .where('product_price',isGreaterThan:1000)
+                  .snapshots();
+    }else{
+          stream=FirebaseFirestore.instance
+                  .collection("Products")
+                  .where('product_price',isLessThanOrEqualTo: price)
+                  .snapshots();
+    }
+  }else if(cat!.isNotEmpty){
+    if(price==0){
+          stream=FirebaseFirestore.instance
+                  .collection("Products")
+                  .where('category', isEqualTo: cat)
+                  .snapshots();
+    }
+    else if(price==1){
+          stream=FirebaseFirestore.instance
+                  .collection("Products")
+                  .where('category', isEqualTo: cat)
+                  .where('product_price',isGreaterThan:1000)
+                  .snapshots();
+    }else{
+          stream=FirebaseFirestore.instance
+                  .collection("Products")
+                  .where('category', isEqualTo: cat)
+                  .where('product_price',isLessThanOrEqualTo: price)
+                  .snapshots();
+    }
+  }
+    print(cat);
+print(price.toString()+'d');
+
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.lightBlue,
@@ -130,8 +164,26 @@ class _SearchAndCategoryPageState extends State<SearchAndCategoryPage> {
                     child: DropdownButton<String>(
                       // hint: const Text('Category'),
                       value: catvalue,
-                      onChanged: (value) => setState(
-                        () => catvalue = value,
+                      onChanged: (value) => setState(() {
+                          catvalue = value;
+                          switch (value) {
+                            case 'All Category':
+                            cat='';
+                            break;
+                            case 'Fashion':
+                              cat='fashion';
+                              break;
+                            case 'Food':
+                              cat='food';
+                              break;
+                            case 'Others':
+                              cat='others';
+                              break;
+                          }
+                          // print(cat);
+                          // print(price);
+                      } 
+                      
                       ),
                       items: _catList.map(buildMenuItem).toList(),
                     ),
@@ -143,7 +195,24 @@ class _SearchAndCategoryPageState extends State<SearchAndCategoryPage> {
                       // hint: const Text('Category'),
                       value: priceValue,
                       onChanged: (value) => setState(
-                        () => priceValue = value,
+                        (){
+                          priceValue = value;
+                          switch (value) {
+                            // ['', '< Rs.500', '< 1000', '> 1000'];
+                            case 'All Price':
+                              price=0;
+                              break;
+                            case '< Rs.500':
+                              price=500;
+                              break;
+                            case '< Rs.1000':
+                              price=1000;
+                              break;
+                            case '> Rs.1000':
+                              price=1;
+                              break;
+                          }
+                        } ,
                       ),
                       items: _priceList.map(buildMenuItem).toList(),
                     ),
@@ -156,12 +225,7 @@ class _SearchAndCategoryPageState extends State<SearchAndCategoryPage> {
             child: Padding(
               padding: const EdgeInsets.only(left: 10, right: 10),
               child: StreamBuilder<QuerySnapshot>(
-                stream: FirebaseFirestore.instance
-                    .collection("Products")
-                    // .where('category', isEqualTo: 'fashion')
-                    // .where('product_price',isLessThan: 400)
-                    // .where('product_name',isEqualTo: ksearch.text)
-                    .snapshots(),
+                stream: stream,
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.hasError) {
@@ -207,9 +271,6 @@ class _SearchAndCategoryPageState extends State<SearchAndCategoryPage> {
                                   }
                                   // Extract data from the snapshot and display it
                                   final sellerdata = snapshot.data!;
-
-                                  print(sellerdata['name']);
-                                  print(document['min_quantity']);
                                   return InkWell(
                                     onTap: () => Navigator.push(
                                       context,
