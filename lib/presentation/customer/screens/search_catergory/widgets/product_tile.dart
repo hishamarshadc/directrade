@@ -44,7 +44,7 @@ class ProductTile extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(passingdocument['rating'],style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w400),),
+                    Text('${passingdocument['rating']}',style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w400),),
                     const Icon(
                       Icons.star_sharp,
                       size: 17,
