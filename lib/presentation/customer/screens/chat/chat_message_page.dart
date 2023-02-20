@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
-import 'package:sample_project/presentation/testdetails.dart';
 
 class ChatMessagePage extends StatefulWidget {
   ChatMessagePage({super.key, required this.id, required this.name});
@@ -54,13 +53,17 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
         body: StreamBuilder(
           stream: storeUser
           .collection('Messages')
-          .where('chatId',whereIn: ['${auth.currentUser!.uid}','${widget.id}'])
+          .where('chatId',whereIn: ['${auth.currentUser!.uid}${widget.id}','${widget.id}${auth.currentUser!.uid}'])
           .orderBy('time')
           .snapshots(),
           builder: (context, snapshot) {
             if(snapshot.hasError){
               return Text('Error:${snapshot.error}');
             }
+            if(snapshot.data==null){
+              print("Snapshot null");
+            }
+  
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
                 return const Center(
@@ -80,6 +83,7 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
 
                 messages.add(message);
                 }
+                
                 return snapshot.data!.docs.isNotEmpty
                 ?
                   Column(
@@ -194,7 +198,7 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
             ),
           ],
         ):
-        Text('Error Loading Messages !')
+        Text('No Messages !')
                 ;
             }
           },

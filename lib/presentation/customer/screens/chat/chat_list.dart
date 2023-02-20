@@ -21,7 +21,7 @@ class _ChatListPageState extends State<ChatListPage> {
               .collection('Messages')
               .where('fromId',
                   isEqualTo: FirebaseAuth.instance.currentUser!.uid)
-              .orderBy('messageTime', descending: true)
+              .orderBy('time', descending: true)
               .snapshots(),
           builder: (context, fromSnapshot) {
             if (fromSnapshot.connectionState == ConnectionState.waiting) {
@@ -32,7 +32,7 @@ class _ChatListPageState extends State<ChatListPage> {
                     .collection('Messages')
                     .where('toId',
                         isEqualTo: FirebaseAuth.instance.currentUser!.uid)
-                    .orderBy('messageTime', descending: true)
+                    .orderBy('time', descending: true)
                     .snapshots(),
                 builder: (context, toSnapshot) {
                   if (toSnapshot.connectionState == ConnectionState.waiting) {
@@ -46,7 +46,7 @@ class _ChatListPageState extends State<ChatListPage> {
                   }
                   List<String> chattedUsers = [];
                   if(toSnapshot.data==null&&fromSnapshot.data==null){
-                        chattedUsers = ['T1VrZiUCEsZJ5Y1gFWRaFVgtokc2'];
+                        chattedUsers = [];
                   }else if(fromSnapshot.data==null){
                           toSnapshot.data!.docs.forEach((doc) {
                     if (!chattedUsers.contains(doc['fromId'])) {
@@ -104,7 +104,7 @@ class _ChatListPageState extends State<ChatListPage> {
                                     isEqualTo:
                                         FirebaseAuth.instance.currentUser!.uid)
                                 .where('toId', isEqualTo: chattedUsers[index])
-                                .orderBy('messageTime', descending: true)
+                                .orderBy('time', descending: true)
                                 .limit(1)
                                 .snapshots(),
                             builder: (context, lastMessageSnapshot) {
