@@ -19,11 +19,9 @@ class SellerCard extends StatelessWidget {
         child: ExpansionTile(
           leading: const CircleAvatar(
               radius: 40, child: Icon(Icons.currency_rupee_outlined)),
-          title: Text('${passingdocument['name']}'.toUpperCase(),
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold
-          ),
+          title: Text(
+            '${passingdocument['name']}'.toUpperCase(),
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           subtitle: Text(""),
           children: [
@@ -35,21 +33,46 @@ class SellerCard extends StatelessWidget {
                 children: [
                   Text('Full Name : ${passingdocument['name']}'),
                   Text('Company Name : ${passingdocument['companyname']}'),
-                  Text('Company Address : ${passingdocument['address']}',maxLines: 3,),
+                  Text(
+                    'Company Address : ${passingdocument['address']}',
+                    maxLines: 3,
+                  ),
                   Text('PIN Code : ${passingdocument['pincode']}'),
                   Text('Email ID : ${passingdocument['email']}'),
                   Text('Phone No: ${passingdocument['phone']}'),
-                  ElevatedButton.icon(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.red),
-                      ),
-                      onPressed: () => {
-                        // set user type to removed customer
-                        // store.collection("Users").doc(passingdocument.id).update({
-                        //     'userType':'rc'})
-                      },
-                      icon: const Icon(Icons.close),
-                      label: const Text('Cancel')),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton.icon(
+                          style: ButtonStyle(
+                            foregroundColor:
+                                MaterialStateProperty.all(Colors.red),
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.white),
+                          ),
+                          onPressed: () => {
+                                // set user type to removed customer
+                                // store.collection("Users").doc(passingdocument.id).update({
+                                //     'userType':'rc'})
+                              },
+                          icon: const Icon(Icons.close),
+                          label: const Text('Remove Seller')),
+                      ElevatedButton.icon(
+                          style: ButtonStyle(
+                            foregroundColor:
+                                MaterialStateProperty.all(Colors.blue),
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.white),
+                          ),
+                          onPressed: () => {
+                                // set user type to removed customer
+                                // store.collection("Users").doc(passingdocument.id).update({
+                                //     'userType':'rc'})
+                              },
+                          icon: const Icon(Icons.shopping_cart_outlined),
+                          label: const Text('View Products')),
+                    ],
+                  ),
                 ],
               ),
             ),
