@@ -21,6 +21,7 @@ class CustProfilePage extends StatelessWidget {
       onError: (e) => print("Error getting document: $e"),
     );
 
+print(data);
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -42,7 +43,8 @@ class CustProfilePage extends StatelessWidget {
                 height: 10,
               ),
               Text(
-                '${data['name']}'.toUpperCase(),
+                // '${data['name']}'.toUpperCase(),
+                '',
                 style: const TextStyle(
                   fontSize: 30.0,
                   fontFamily: 'Pacifico',

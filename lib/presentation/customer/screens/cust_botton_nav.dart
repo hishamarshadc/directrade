@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sample_project/presentation/customer/screens/chat/chat_list.dart';
-import 'package:sample_project/presentation/customer/screens/order/orders_list.dart';
+import 'package:sample_project/presentation/chat/chat_list.dart';
+import 'package:sample_project/presentation/customer/screens/order/cust_tabbar.dart';
 import 'package:sample_project/presentation/customer/screens/search_catergory/search_category.dart';
 // import 'package:sample_project/screens/product.dart';
 
@@ -14,7 +14,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final pages = [
     const SearchAndCategoryPage(),
-    const OrderListPage(),
+    const CustOrderTabBar(),
     ChatListPage(),
   ];
 
@@ -24,33 +24,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          elevation: 0,
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
-          title: const Text(
-            'DirecTrade',
-            style: TextStyle(
-              fontSize: 27,
-            ),
-          ),
-          actions: [
-            InkWell(
-              onTap: () => {
-                Navigator.pushNamed(context,'custprofile')
-              },
-              child: const CircleAvatar(
-                    radius: 20,
-                    backgroundColor: Colors.green,
-                    backgroundImage: AssetImage('assets/images/seller.jpg'),
-                  ),
-            ),
-      const SizedBox(
-        width: 10,
-      )
-          ],
-        ),
         body: pages[selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,

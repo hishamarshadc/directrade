@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:sample_project/core/colors/Colors.dart';
 import 'package:sample_project/presentation/authentication/login.dart';
-import 'package:sample_project/presentation/customer/screens/chat/chat_message_page.dart';
+import 'package:sample_project/presentation/chat/chat_message_page.dart';
 
 
 class ProductFullViewPage extends StatefulWidget {
@@ -79,12 +79,9 @@ void decrement() {
                       padding: const EdgeInsets.all(10),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(20),
-                        child: AspectRatio(
-                          aspectRatio: 4 / 3,
-                          child: Image.network(
-                            widget.passingdocument['image_url'],
-                            // fit: BoxFit.cover,
-                          ),
+                        child: Image.network(
+                          widget.passingdocument['image_url'],
+                          fit: BoxFit.fill,
                         ),
                       ),
                     ),

@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:sample_project/presentation/customer/screens/chat/chat_message_page.dart';
+import 'package:sample_project/presentation/chat/chat_message_page.dart';
 
 class ChatListPage extends StatefulWidget {
   @override
@@ -12,6 +12,7 @@ class ChatListPage extends StatefulWidget {
 class _ChatListPageState extends State<ChatListPage> {
   @override
   Widget build(BuildContext context) {
+    final user=FirebaseAuth.instance.currentUser;
     return Scaffold(
       appBar: AppBar(
         title: Text('Recent Chats'),
@@ -103,19 +104,19 @@ class _ChatListPageState extends State<ChatListPage> {
                             stream: FirebaseFirestore.instance
                                 .collection('Messages')
                                 .where('fromId',
-                                    isEqualTo:
-                                        FirebaseAuth.instance.currentUser!.uid)
-                                .where('toId', isEqualTo: chattedUsers[index])
+                                    isEqualTo: chattedUsers[index])
+                                .where('toId',isEqualTo:
+                                        user!.uid)
                                 .orderBy('time', descending: true)
                                 .limit(1)
                                 .snapshots(),
                             builder: (context, lastMessageSnapshot) {
+                              if(lastMessageSnapshot.hasError){
+                                print(lastMessageSnapshot.error);
+                              }
                               if (lastMessageSnapshot.connectionState ==
                                   ConnectionState.waiting) {
-                                return ListTile(
-                                  title: Text(name),
-                                  subtitle: Text(''),
-                                );
+                                return Center(child: CircularProgressIndicator());
                               }
 
                               String lastMessage = '';
@@ -135,11 +136,11 @@ class _ChatListPageState extends State<ChatListPage> {
                                       NetworkImage(img),
                                 ):
                                 CircleAvatar(
-                                  child: Icon(Icons.person,size: 15,),
+                                  child: Icon(Icons.person,size: 25,),
                                 ),
                                 subtitle: Text(lastMessage),
                                 onTap: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => ChatMessagePage(id:chattedUsers[index],name:name),));
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => ChatMessagePage(id:chattedUsers[index],name:name,passingdocument: document!),));
                                   // navigate to chat screen for the selected user
                                 },
                               );

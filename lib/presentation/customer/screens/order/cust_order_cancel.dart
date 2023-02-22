@@ -3,8 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sample_project/presentation/customer/screens/order/widgets/cust_order_card.dart';
 
-class OrderListPage extends StatelessWidget {
-  const OrderListPage({super.key});
+class CustOrderCancelPage extends StatelessWidget {
+  const CustOrderCancelPage({super.key});
   
 
 
@@ -15,6 +15,8 @@ class OrderListPage extends StatelessWidget {
       stream: FirebaseFirestore.instance
           .collection("Orders")
           .where('customer_id', isEqualTo: user?.uid )
+          .where('status',isEqualTo: 'c')
+          .orderBy('datetime',descending: true)
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
@@ -73,30 +75,7 @@ class OrderListPage extends StatelessWidget {
         }
       },
     );
-
-    // Padding(
-    //                     padding: const EdgeInsets.all(8.0),
-    //                     child: CustOrderCard(orderdocument: document),
-    //                   );
-
-    // Scaffold(
-    //   body: Padding(
-    //     padding: const EdgeInsets.all(8.0),
-    //     child: ListView.builder(
-    //         itemBuilder: (context, index) => Padding(
-    //           padding: const EdgeInsets.all(8.0),
-    //           child: CustOrderCard(index:index),
-    //         ), itemCount: 20 ),
-    //   ),
-    // );
   }
 }
 
-// class Order {
-//   final String? productName;
-//   final double? quantity;
-//   final double? totalPrice;
-//   final String? statusText;
 
-//   Order({this.productName, this.quantity, this.totalPrice, this.statusText});
-// }

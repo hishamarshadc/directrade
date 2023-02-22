@@ -5,7 +5,8 @@ import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 
 class ChatMessagePage extends StatefulWidget {
-  ChatMessagePage({super.key, required this.id, required this.name});
+  ChatMessagePage({super.key, required this.id, required this.name,required this.passingdocument});
+  DocumentSnapshot passingdocument;
   String id;
   String name;
   String image = '';
