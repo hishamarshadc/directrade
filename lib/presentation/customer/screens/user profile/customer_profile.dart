@@ -15,8 +15,8 @@ class CustProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
 
     docRef.get().then(
-      (DocumentSnapshot doc) {
-        data = doc.data() as Map<String, dynamic>;
+      (DocumentSnapshot doc) async {
+        data = await doc.data() as Map<String, dynamic>;
       },
       onError: (e) => print("Error getting document: $e"),
     );

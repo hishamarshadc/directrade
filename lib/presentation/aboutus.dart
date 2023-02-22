@@ -1,100 +1,93 @@
 import 'package:flutter/material.dart';
 
 class AboutPage extends StatelessWidget {
-  const AboutPage({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("About Us"),
+        title: Text('About Us'),
       ),
-      body: Column(
-        children: <Widget>[
-          const SizedBox(height: 20),
-          Container(
-            padding: const EdgeInsets.all(20.0),
-            child: const Text("Meet the team",
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    decoration: TextDecoration.underline)),
+      backgroundColor: Colors.black,
+      body: ListView(
+        children: [
+          _buildDeveloperSection(
+            name: 'Nijas Ali H',
+            photoUrl: 'https://via.placeholder.com/150x150',
+            color: Colors.deepPurple,
+            description:
+                'John is a software engineer with a background in computer science. He is an expert in developing high-performance mobile applications using Flutter. John loves working on complex problems and building beautiful user interfaces that are intuitive and easy to use.',
           ),
-          const SizedBox(height: 20),
-          Expanded(
-            child: ListView(
-              padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 30),
-              children: <Widget>[
-                _buildCard(
-                    name: "Nijas",
-                    image: "https://randomuser.me/api/portraits/men/1.jpg"),
-                _buildCard(
-                    name: "Rinsha",
-                    image: "https://randomuser.me/api/portraits/men/1.jpg"),
-                _buildCard(
-                    name: "Henna",
-                    image: "https://randomuser.me/api/portraits/men/1.jpg"),
-                _buildCard(
-                    name: "hisham",
-                    image: "https://randomuser.me/api/portraits/men/1.jpg"),
-              ],
-            ),
+          _buildDeveloperSection(
+            name: 'Rinsha',
+            photoUrl: 'https://via.placeholder.com/150x150',
+            color: Colors.indigo,
+            description:
+                'Jane is a graphic designer and front-end developer with over five years of experience. She is passionate about creating beautiful and responsive designs that make user experiences enjoyable and efficient. Jane specializes in designing user interfaces and brand identities.',
           ),
-          Container(
-            padding: const EdgeInsets.all(20.0),
-            child: Align(
-              alignment: Alignment.center,
-              child: RichText(
-                text: const TextSpan(
-                  text: "Made with",
-                  style: TextStyle(color: Colors.black),
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: " ❤️",
-                      style: TextStyle(color: Colors.red),
-                    ),
-                    TextSpan(
-                      text: " for India",
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          )
+          _buildDeveloperSection(
+            name: 'Henna',
+            photoUrl: 'https://via.placeholder.com/150x150',
+            color: Colors.teal,
+            description:
+                'Mark is a full-stack developer with experience in building web and mobile applications. He is skilled in developing scalable and efficient applications using modern technologies. Mark is passionate about software development and loves to explore new technologies and tools.',
+          ),
+          _buildDeveloperSection(
+            name: 'Hisham C',
+            photoUrl: 'https://via.placeholder.com/150x150',
+            color: Colors.amber,
+            description:
+                'Sarah is a mobile developer with a focus on user experience and accessibility. She has experience developing mobile applications for both iOS and Android using Flutter. Sarah loves to create seamless and efficient user experiences that delight users.',
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildCard({required String name, required String image}) {
+  Widget _buildDeveloperSection({
+    required String name,
+    required String photoUrl,
+    required Color color,
+    required String description,
+  }) {
     return Container(
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15.0),
-          side: const BorderSide(
-            color: Colors.black,
-            width: 2.0,
+      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      padding: EdgeInsets.all(16),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CircleAvatar(
+            radius: 50,
+            backgroundImage: NetworkImage(photoUrl),
           ),
-        ),
-        elevation: 10.0,
-        child: Column(
-          children: <Widget>[
-            Container(
-              width: double.infinity,
-              height: 200,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: NetworkImage(image), fit: BoxFit.fitHeight)),
+          SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  name,
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(height: 8),
+                Text(
+                  description,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Text(name,
-                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
