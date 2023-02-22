@@ -1,10 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:sample_project/presentation/seller/screens/seller_products/widgets/seller_product_view.dart';
 import 'package:sample_project/presentation/user_model.dart';
 
 class SellerProductCard extends StatelessWidget {
-  int index;
-  SellerProductCard({Key? key, required this.index}) : super(key: key);
-
+  SellerProductCard({Key? key, required this.passingdocument}) : super(key: key);
+DocumentSnapshot passingdocument;
 //  List<String> sellerList=[
 //       'Anshid O',
 //       'Acee'
@@ -33,7 +34,7 @@ class SellerProductCard extends StatelessWidget {
                     borderRadius: const BorderRadius.all(Radius.circular(10)),
                     color: Colors.blue.shade200,
                     image: DecorationImage(
-                      image: AssetImage(products[index]['productImgUrl']!),
+                      image: NetworkImage(passingdocument['image_url']),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -50,7 +51,7 @@ class SellerProductCard extends StatelessWidget {
                   SizedBox(
                     width: size.width*.35,
                     child: Text(
-                      products[index]['productName']!,
+                      passingdocument['product_name']!,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style: const TextStyle(fontSize: 18),
@@ -65,6 +66,7 @@ class SellerProductCard extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        SizedBox(width: 5,),
                         const Icon(
                           Icons.star_sharp,
                           size: 12,
@@ -72,7 +74,7 @@ class SellerProductCard extends StatelessWidget {
                         ),
                         Expanded(
                           child: Text(
-                            '${products[index]['productRating']!} (12)',
+                            '${passingdocument['rating']!} (${passingdocument['rating_count']!})',
                             maxLines: 1,
                             style: const TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.w400),
@@ -90,7 +92,7 @@ class SellerProductCard extends StatelessWidget {
                   Container(
                     width: size.width*.35,
                     child: Text(
-                      'Rs.${products[index]['productPrice']!}/unit',
+                      'Rs.${passingdocument['product_price']!}/unit',
                       style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                     ),
                   ),
@@ -102,7 +104,7 @@ class SellerProductCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(5)),
                     child: Center(
                       child: Text(
-                        (products[index]['productSellType'] == 'w')
+                        (passingdocument['sell_type'] =='w')
                             ? 'Wholesale'
                             : 'Retail',
                         style: const TextStyle(
@@ -117,7 +119,7 @@ class SellerProductCard extends StatelessWidget {
                 children: [
                   OutlinedButton(
                     onPressed: () {
-                      Navigator.pushNamed(context,'prodviewseller');
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => SellerProductView(passingdocument: passingdocument),));
                     },
                     style: OutlinedButton.styleFrom(
                         shape: RoundedRectangleBorder(
@@ -129,7 +131,10 @@ class SellerProductCard extends StatelessWidget {
                   ),
                   SizedBox(width:size.width * .03),
                   OutlinedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        final db=FirebaseFirestore.instance;
+                        // db.collection('Products').doc(passingdocument.id).delete();
+                      },
                       style: OutlinedButton.styleFrom(
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(50))),

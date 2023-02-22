@@ -13,7 +13,7 @@ import 'package:sample_project/presentation/customer/screens/user%20profile/cust
 import 'package:sample_project/presentation/customer/screens/user%20profile/edit_profile/edit_customer_profile.dart';
 import 'package:sample_project/presentation/feedback.dart';
 import 'package:sample_project/presentation/seller/screens/seller_home.dart';
-import 'package:sample_project/presentation/seller/screens/seller_orders/seller_orders.dart';
+import 'package:sample_project/presentation/seller/screens/seller_orders/seller_pending_orders.dart';
 import 'package:sample_project/presentation/seller/screens/seller_products/widgets/addproduct.dart';
 import 'package:sample_project/presentation/seller/screens/seller_products/widgets/seller_product_view.dart';
 import 'package:sample_project/presentation/seller/screens/seller_profile/edit_seller_profile/edit_seller_profile.dart';
@@ -52,7 +52,6 @@ class MyApp extends StatelessWidget {
         'aboutus':(context) =>   AboutPage(),
         'adminprofile':(context) => const AdminProfilePage(),
         'test':(context)=> DataFetch(),
-        'prodviewseller':(context) => SellerProductView(),
         'addProdForm':(context) => AddProductForm(),
         'feedback': (context) => FeedbackBox(),
       },

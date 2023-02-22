@@ -1,13 +1,52 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:sample_project/presentation/user_model.dart';
+import 'package:intl/intl.dart';
+import 'package:sample_project/presentation/customer/screens/chat/chat_list.dart';
+import 'package:sample_project/presentation/customer/screens/chat/chat_message_page.dart';
 
 class SellerOrderCard extends StatelessWidget {
-  const SellerOrderCard({super.key});
+  const SellerOrderCard({required this.orderdoc, required this.productdoc, super.key});
+  final DocumentSnapshot orderdoc;
+  final DocumentSnapshot productdoc;
 
   @override
   Widget build(BuildContext context) {
+    
+    
+    String formatTimestamp(Timestamp timestamp) {
+      var format =
+          new DateFormat('hh:mm a dd MMM yyyy'); // <- use skeleton here
+      return format.format(timestamp.toDate());
+    }
+    String orderdatetime = formatTimestamp(orderdoc['datetime']);
+
+    final visibility = (orderdoc['status']=='p')?true:false;
+
     final size = MediaQuery.of(context).size;
-    return   Container(
+    return StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection('Users')
+            .doc(orderdoc['customer_id'])
+            .snapshots(),
+        builder:
+            (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          }
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(color: Colors.blue),
+            );
+          }
+
+          if (!snapshot.hasData) {
+            return Text('Document does not exist');
+          }
+          // Extract data from the snapshot and display it
+          final custdoc = snapshot.data!;
+
+          return Container(
       decoration: BoxDecoration(
           border: Border.all(color: Colors.black),
           borderRadius: BorderRadius.circular(20)),
@@ -28,7 +67,7 @@ class SellerOrderCard extends StatelessWidget {
                         borderRadius: const BorderRadius.all(Radius.circular(15)),
                         color: Colors.blue.shade200,
                         image: DecorationImage(
-                          image: AssetImage(products[0]['productImgUrl']!),
+                          image: NetworkImage(productdoc['image_url']!),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -41,17 +80,19 @@ class SellerOrderCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            width: size.width*.35,
+                            width: size.width*.5,
                             child: Text(
-                              products[0]['productName']!,
+                              productdoc['product_name']!,
                               overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
+                              maxLines: 2,
                               style: const TextStyle(fontSize: 18),
                             ),
                           ),
+                          SizedBox(height: 5,),
                           Container(
                             width: size.width * .2,
                             height: size.width * .06,
@@ -60,7 +101,7 @@ class SellerOrderCard extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(5)),
                             child: Center(
                               child: Text(
-                                (products[0]['productSellType'] == 'w')
+                                (productdoc['sell_type'] == 'w')
                                     ? 'Wholesale'
                                     : 'Retail',
                                 style: const TextStyle(
@@ -71,96 +112,80 @@ class SellerOrderCard extends StatelessWidget {
                         ],
                       ),
                       SizedBox(height: size.width*.02),
-                          const Text(
-                            'Quantity : 5',
+                           Text(
+                            'Quantity : ${orderdoc['quantity']}',
                             style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                           ),
                           SizedBox(height: size.width*.02),
-                          const Text(
-                            'Status : Pending',
-                            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(height: size.width*.02),
-                          const Text(
-                            'Total Price : Rs.99',
+                           Text(
+                            'Total Price : Rs.${orderdoc['totalprice']}',
                             style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                           ),
                       SizedBox(height: size.width*.02),
 
-                      // Row(
-                      //   children: [
-                      //     OutlinedButton(
-                      //       onPressed: () {},
-                      //       style: OutlinedButton.styleFrom(
-                      //           shape: RoundedRectangleBorder(
-                      //               borderRadius: BorderRadius.circular(50))),
-                      //       child: const Text(
-                      //         'Show Product',
-                      //         style: TextStyle(color: Colors.blue),
-                      //       ),
-                      //     ),
-                      //     SizedBox(width:size.width * .03),
-                      //     OutlinedButton(
-                      //         onPressed: () {},
-                      //         style: OutlinedButton.styleFrom(
-                      //             shape: RoundedRectangleBorder(
-                      //                 borderRadius: BorderRadius.circular(50))),
-                      //         child: const Icon(
-                      //           Icons.delete,
-                      //           color: Colors.red,
-                      //         ))
-                      //   ],
-                      // )
                     ],
                   ),
                 )
               ],
             ),
-            const Text('Ordered by Customer : Hisham Arshad',style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+             Text('Ordered by Customer : ${custdoc['name']}',style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
             SizedBox(height: size.width*.02),
-            const Text('PIN Code : 673019',style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+             Text('PIN Code : ${custdoc['pincode']}',style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
             SizedBox(height: size.width*.02),
-            Container(width:size.width*.7,child: const Text('Address :\n\tGiven full address with lots of details must be given here',style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold))),
+            Container(width:size.width*.75,child:  Text('Address :\n\t${custdoc['address']}',style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold))),
             SizedBox(height: size.width*.02),
-            const Text('Ordered Time : 10.00 AM 12 Jan 2023',style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+            Text('Phone No : +91 ${custdoc['phone']}',style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
             SizedBox(height: size.width*.02),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+             Text('Ordered Time : $orderdatetime',style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+            SizedBox(height: size.width*.02),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                OutlinedButton(
-                          onPressed: () {},
+                          OutlinedButton(
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder:(context) => ChatMessagePage(id: custdoc.id,name: custdoc['name']!,)));
+                          },
                           style: OutlinedButton.styleFrom(
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(50))),
                           child: const Text(
-                            'Contact Seller',
+                            'Chat with Customer',
                             style: TextStyle(color: Colors.blue),
                           ),
                         ),
-                        OutlinedButton(
-                          onPressed: () {},
-                          style: OutlinedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50))),
-                          child: const Text(
-                            'Completed',
-                            style: TextStyle(color: Colors.green),
-                          ),
-                        ),
-                            OutlinedButton(
+                        Visibility(
+                          visible: visibility,
+                          child: OutlinedButton(
                             onPressed: () {},
                             style: OutlinedButton.styleFrom(
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(50))),
-                            child: const Icon(
-                              Icons.delete,
-                              color: Colors.red,
-                            ))
+                            child: const Text(
+                              'Order Complete',
+                              style: TextStyle(color: Colors.green),
+                            ),
+                          ),
+                        ),
+                           Visibility(
+                            visible: visibility,
+                             child: OutlinedButton(
+                                                     onPressed: () {},
+                                                     style: OutlinedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50))),
+                                                     child: const Text(
+                              'Order Cancel',
+                              style: TextStyle(color: Colors.red),
+                                                     ),
+                                                   ),
+                           ),
               ],
             )
           ],
         ),
       ),
     );
+          });   
+    
   }
 }

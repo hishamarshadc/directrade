@@ -8,7 +8,6 @@ class ChatMessagePage extends StatefulWidget {
   ChatMessagePage({super.key, required this.id, required this.name});
   String id;
   String name;
-
   String image = '';
   
 
@@ -50,7 +49,11 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
                 ),
               ),
             ]),
-        body: StreamBuilder(
+        body: 
+Column(
+          children: [
+            Expanded(
+              child: StreamBuilder(
           stream: storeUser
           .collection('Messages')
           .where('chatId',whereIn: ['${auth.currentUser!.uid}${widget.id}','${widget.id}${auth.currentUser!.uid}'])
@@ -85,11 +88,7 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
                 }
                 
                 return snapshot.data!.docs.isNotEmpty
-                ?
-                  Column(
-          children: [
-            Expanded(
-              child: GroupedListView(
+                ? GroupedListView(
                   reverse: true,
                   order: GroupedListOrder.DESC,
                   useStickyGroupSeparators: true,
@@ -136,7 +135,13 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
                             ),
                           ),
                         ),
-                      )),
+                      )
+                  ):
+        Center(child: Text('No Messages !'))
+                ;
+            }
+          },
+        )
             ),
             Container(
               color: Colors.lightBlue,
@@ -151,7 +156,7 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
                                     final now = DateTime.now();
                                     String formatter =
                                         DateFormat('yMd').format(now);
-                                    String time = DateFormat.jms().toString();
+                                    // String time = DateFormat.jms().toString();
                                     storeUser.collection("Messages").doc().set({
                                       'cid':'${auth.currentUser!.uid}${widget.id}',
                                       'fromId': auth.currentUser!.uid,
@@ -176,7 +181,7 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
                                     final now = DateTime.now();
                                     String formatter =
                                         DateFormat('yMd').format(now);
-                                    String time = DateFormat.jms().toString();
+                                    // String time = DateFormat.jms().toString();
                                     storeUser.collection("Messages").doc().set({
                                       'chatId':
                                           '${auth.currentUser!.uid}${widget.id}',
@@ -197,12 +202,7 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
               ),
             ),
           ],
-        ):
-        Text('No Messages !')
-                ;
-            }
-          },
-        )
+)
         
         );
   }
@@ -219,3 +219,67 @@ class Message {
     required this.isSentByMe,
   });
 }
+
+
+
+
+
+
+
+
+
+
+
+
+//  GroupedListView(
+//                   reverse: true,
+//                   order: GroupedListOrder.DESC,
+//                   useStickyGroupSeparators: true,
+//                   floatingHeader: true,
+//                   padding: const EdgeInsets.all(8),
+//                   elements: messages,
+//                   groupBy: (message) => DateTime(
+//                         message.date.year,
+//                         message.date.month,
+//                         message.date.day,
+//                       ),
+//                   groupHeaderBuilder: (Message message) => SizedBox(
+//                         height: 40,
+//                         child: Center(
+//                             child: Card(
+//                           color: Theme.of(context).primaryColor,
+//                           child: Padding(
+//                             padding: const EdgeInsets.all(8),
+//                             child: Text(
+//                               DateFormat.yMMMd().format(message.date),
+//                               style: const TextStyle(color: Colors.white),
+//                             ),
+//                           ),
+//                         )),
+//                       ),
+//                   itemBuilder: (context, Message message) => Align(
+//                         alignment: message.isSentByMe
+//                             ? Alignment.centerRight
+//                             : Alignment.centerLeft,
+//                         child: Card(
+//                           elevation: 8,
+//                           child: Padding(
+//                             padding: const EdgeInsets.all(12),
+//                             child: Column(
+//                               crossAxisAlignment: CrossAxisAlignment.start,
+//                               children: [
+//                                 Text(message.text),
+//                                 SizedBox(height: 3,),
+//                                 Text(DateFormat.jm().format(message.date),style: const TextStyle(
+//                                                 color: Colors.black,
+//                                                 fontSize: 10),
+//                                             textAlign: TextAlign.end,)
+//                               ],
+//                             ),
+//                           ),
+//                         ),
+//                       )),
+
+
+
+

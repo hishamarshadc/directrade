@@ -1,11 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:sample_project/core/colors/Colors.dart';
+import 'package:sample_project/presentation/seller/screens/seller_products/widgets/editproduct.dart';
 import 'package:sample_project/presentation/user_model.dart';
 
 class SellerProductView extends StatelessWidget {
-  const SellerProductView({super.key});
-
+  SellerProductView({super.key,required this.passingdocument});
+  DocumentSnapshot passingdocument;
   @override
   Widget build(BuildContext context) {
     const sizedBox = SizedBox(
@@ -32,8 +34,8 @@ class SellerProductView extends StatelessWidget {
                       //Image Product
                       AspectRatio(
                         aspectRatio: 3/3,
-                        child: Image.asset(
-                          products[0]['productImgUrl']!,
+                        child: Image.network(
+                          passingdocument['image_url']!,
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -50,7 +52,7 @@ class SellerProductView extends StatelessWidget {
                                 SizedBox(
                                     width: size.width * .5,
                                     child: Text(
-                                      'Color Threads for Embroidary',
+                                      passingdocument['product_name']!,
                                       style: TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.w400),
@@ -70,19 +72,19 @@ class SellerProductView extends StatelessWidget {
                           //Price
                           Column(
                             children: [
-                              const Text(
-                                'Rs.999 /-',
+                               Text(
+                                'Rs.${passingdocument['product_price']!} /-',
                                 style: TextStyle(
                                     fontSize: 25, fontWeight: FontWeight.bold),
                               ),
                               //rating row
                               Row(
-                                children: const [
+                                children:  [
                                   Icon(
                                     Icons.star,
                                     color: Colors.amber,
                                   ),
-                                  Text('4.5 ( 15 Ratings )'),
+                                  Text('${passingdocument['rating']!} ( ${passingdocument['rating_count']} Ratings )'),
                                 ],
                               )
                             ],
@@ -106,8 +108,8 @@ class SellerProductView extends StatelessWidget {
                                   children: [
                                     Text('Product Description',style: TextStyle(fontSize: 20,fontWeight:FontWeight.w400),),
                                     sizedBox,
-                                    Text("Awesome Designers provide high quality stitching threads at a lower price,the product bundle consists the folowing : - 5 different colours of threads - Colors provided are Red,Blue,Yellow,White,Black Suitble for crochet designing Free Delivery Provided for Awesome Designer products")
-                                  ],
+                                    Text('${passingdocument['description']}'),
+                                    ],
                                 ),
                               ),
                             )
@@ -151,7 +153,13 @@ class SellerProductView extends StatelessWidget {
                 //   color: Colors.lightBlue,
                 // ),
                 child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) => EditProductForm(
+                          passingdocument:passingdocument,
+                        ),
+                      ));
+                    },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.amber.shade700,
                         shape: RoundedRectangleBorder(

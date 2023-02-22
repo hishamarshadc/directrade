@@ -10,6 +10,14 @@ import 'package:sample_project/presentation/authentication/login.dart';
 import 'package:sample_project/presentation/seller/screens/seller_products/seller_product.dart';
 
 class EditProductForm extends StatefulWidget {
+
+  EditProductForm(
+      {super.key,
+       required this.passingdocument,
+      });
+      DocumentSnapshot passingdocument;
+      
+
   @override
   _EditProductFormState createState() => _EditProductFormState();
 }
@@ -17,6 +25,7 @@ class EditProductForm extends StatefulWidget {
 class _EditProductFormState extends State<EditProductForm> {
   final _formKey = GlobalKey<FormState>();
   bool _isWholesale = false;
+
   late String _productName;
   late int _maxQuantity;
   late int _minQuantity;
@@ -215,20 +224,6 @@ class _EditProductFormState extends State<EditProductForm> {
                       const Text("Wholesale",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18))
                     ],
                   ),
-
-                
-                
-
-               
-                // SwitchListTile(
-                //   title: const Text('Wholesale'),
-                //   value: !_isRetail,
-                //   onChanged: (value) {
-                //     setState(() {
-                //       _isRetail = !value;
-                //     });
-                //   },
-                // ),
                 ElevatedButton(
                   onPressed: () async{
                     
@@ -255,8 +250,8 @@ class _EditProductFormState extends State<EditProductForm> {
                                     'upload_time':DateTime.now()
                                   });
 
-                                  Navigator.pop(context);}
-                      }
+                                  Navigator.pop(context);
+                                  }
                       else{
                           customsnackbar(errortext: 'Please Upload Image Of Product', errorcolor: Colors.lightBlue);
                       }
@@ -269,6 +264,7 @@ class _EditProductFormState extends State<EditProductForm> {
     
                       // Add logic to save the product here
                       // ...
+                      }
                     }
                   },
                   child: Text('Save'),

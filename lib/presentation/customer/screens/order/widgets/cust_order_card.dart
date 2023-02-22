@@ -54,7 +54,7 @@ class CustOrderCard extends StatelessWidget {
                 final db=FirebaseFirestore.instance;
                 db.collection("Products").doc(orderdoc['product_id']) 
     .update({'rating' : finalrating,
-    'rating_count':curr_no.toString()});
+    'rating_count':FieldValue.increment(1)});
               db.collection("Orders").doc(orderdoc.id).update({'status':'r'});
 
               Navigator.pop(context);

@@ -87,12 +87,14 @@ class _ChatListPageState extends State<ChatListPage> {
                         builder: (context, userSnapshot) {
                           if (userSnapshot.connectionState ==
                               ConnectionState.waiting) {
-                            return ListTile(
-                              title: Text(chattedUsers[index]),
-                            );
+                            return Center(child: CircularProgressIndicator());
                           }
 
                           String name = userSnapshot.data!['name'];
+                          String img='';
+                          if(userSnapshot.data!['profileImage']!=''){
+                                img=userSnapshot.data!['profileImage'];
+                          }
                           DocumentSnapshot? document = userSnapshot.data;
                           // String profileImage =
                           //     userSnapshot.data?['profileImage'];
@@ -117,7 +119,8 @@ class _ChatListPageState extends State<ChatListPage> {
                               }
 
                               String lastMessage = '';
-                              // String time=;
+                              // String time='';
+                              // String img=''
                               if (lastMessageSnapshot.data!.docs.isNotEmpty) {
                                 lastMessage = lastMessageSnapshot
                                     .data!.docs.first['messageText'];
@@ -125,11 +128,14 @@ class _ChatListPageState extends State<ChatListPage> {
 
                               return ListTile(
                                 title: Text(name),
-                                leading: CircleAvatar(
+                                leading: (img.isEmpty)?CircleAvatar(
                                   radius: 25,
                                   backgroundColor: Colors.green,
                                   backgroundImage:
-                                      AssetImage('assets/images/seller.jpg'),
+                                      NetworkImage(img),
+                                ):
+                                CircleAvatar(
+                                  child: Icon(Icons.person,size: 15,),
                                 ),
                                 subtitle: Text(lastMessage),
                                 onTap: () {
