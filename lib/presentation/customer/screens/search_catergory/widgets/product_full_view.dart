@@ -148,10 +148,12 @@ void decrement() {
                         height: size.width * .13,
                         child: ElevatedButton(
                             onPressed: () {
-                              // Navigator.of(context).push(MaterialPageRoute(
-                              //     builder: (ctx) => ChatMessagePage(
-                              //           personName: 'Seller Name',
-                              //         )));
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (ctx) => ChatMessagePage(
+                                            id:widget.sellerdata.id,
+                                            name:widget.sellerdata['name'],
+                                            passingdocument: widget.sellerdata,
+                                      )));
                             },
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.lightBlue,
