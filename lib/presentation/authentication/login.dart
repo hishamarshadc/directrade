@@ -39,7 +39,7 @@ class LoginPage extends StatelessWidget {
                           Center(
                             child: InkWell(
                               onLongPress: () {
-                                Navigator.pushNamed(context, 'test');
+                                Navigator.pushNamed(context, 'home');
                               },
                               onDoubleTap: () {
                                 Navigator.pushNamed(context, 'adminhome');
