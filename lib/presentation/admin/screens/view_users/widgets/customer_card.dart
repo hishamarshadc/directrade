@@ -21,7 +21,7 @@ class CustCard extends StatelessWidget {
               radius: 40, child: Icon(Icons.currency_rupee_outlined)),
           title: Text(
             '${passingdocument['name']}'.toUpperCase(),
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
           ),
           subtitle: Text(""),
           children: [

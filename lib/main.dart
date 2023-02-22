@@ -48,7 +48,6 @@ class MyApp extends StatelessWidget {
         'sellerprofile':(context) => const SellerProfilePage(),
         'editcust':(context) => CustEdit(),
         'editseller':(context) => const EditSeller(),
-        'sellerorderpage':(context) =>  SellerOrderListPage(),
         'aboutus':(context) =>   AboutPage(),
         'adminprofile':(context) => const AdminProfilePage(),
         'test':(context)=> DataFetch(),

@@ -156,7 +156,7 @@ class SellerProductView extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(context, MaterialPageRoute(
                         builder: (context) => EditProductForm(
-                          passingdocument:passingdocument,
+                          // passingdocument:passingdocument,
                         ),
                       ));
                     },
