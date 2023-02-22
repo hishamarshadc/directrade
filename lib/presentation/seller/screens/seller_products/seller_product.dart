@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:sample_project/presentation/admin/screens/view_users/widgets/seller_card.dart';
 import 'package:sample_project/presentation/seller/screens/seller_products/widgets/addproduct.dart';
 import 'package:sample_project/presentation/seller/screens/seller_products/widgets/seller_product_card.dart';
 import 'package:sample_project/presentation/user_model.dart';
@@ -11,45 +13,145 @@ class SellerProductPage extends StatefulWidget {
 }
 
 class _SellerProductPageState extends State<SellerProductPage> {
+
+
+  Stream<QuerySnapshot<Object?>>? stream;
+
+  String? cat = '';
+  num? price = 0;
+  String? type='r';
+  String? priceValue = 'All Price';
+
 //TextEditingController ksearch = TextEditingController();
-  String? catvalue = 'All Catogery';
-  String? priceValue = 'Any Price';
+  // String? catvalue = 'All Catogery';
+  // String? priceValue = 'Any Price';
 
-  final _catList = ['All Catogery', 'Food', 'Hand Crafts'];
+  // final _catList = ['All Catogery', 'Food', 'Hand Crafts'];
 
-  final _priceList = ['Any Price', '< 500', '< 750', '< 1000', '> 1000'];
+  // final _priceList = ['Any Price', '< 500', '< 750', '< 1000', '> 1000'];
 
-  final _productNameList = [
-    'Paper Bags',
-    'Gift Wrappings',
-    'Embroidary Threads',
-    'Paper Bags',
-    'Gift Wrappings',
-    'Embroidary Threads',
-    'Paper Bags',
-    'Gift Wrappings',
-    'Embroidary Threads',
-    'Penholder Paper Craft'
-  ];
+  // final _productNameList = [
+  //   'Paper Bags',
+  //   'Gift Wrappings',
+  //   'Embroidary Threads',
+  //   'Paper Bags',
+  //   'Gift Wrappings',
+  //   'Embroidary Threads',
+  //   'Paper Bags',
+  //   'Gift Wrappings',
+  //   'Embroidary Threads',
+  //   'Penholder Paper Craft'
+  // ];
 
-  final _imageUrlList = [
-    'assets/images/decorators.jpeg',
-    'assets/images/gift wrappings.jpeg',
-    'assets/images/color threads.jpeg',
-    'assets/images/decorators.jpeg',
-    'assets/images/gift wrappings.jpeg',
-    'assets/images/color threads.jpeg',
-    'assets/images/decorators.jpeg',
-    'assets/images/gift wrappings.jpeg',
-    'assets/images/color threads.jpeg',
-    'assets/images/pencilholder.jpeg'
-  ];
+  // final _imageUrlList = [
+  //   'assets/images/decorators.jpeg',
+  //   'assets/images/gift wrappings.jpeg',
+  //   'assets/images/color threads.jpeg',
+  //   'assets/images/decorators.jpeg',
+  //   'assets/images/gift wrappings.jpeg',
+  //   'assets/images/color threads.jpeg',
+  //   'assets/images/decorators.jpeg',
+  //   'assets/images/gift wrappings.jpeg',
+  //   'assets/images/color threads.jpeg',
+  //   'assets/images/pencilholder.jpeg'
+  // ];
 
-  final _productPriceList = [50, 40, 99, 50, 40, 99, 50, 40, 99, 55];
+  // final _productPriceList = [50, 40, 99, 50, 40, 99, 50, 40, 99, 55];
 
   @override
   Widget build(BuildContext context) {
+
+    if (cat == '') {
+      if (price == 0) {
+        (type=='w')?stream = FirebaseFirestore.instance.collection("Products").where('sell_type',isEqualTo:'w').snapshots():stream = FirebaseFirestore.instance.collection("Products").where('sell_type',isEqualTo:'r').snapshots();
+      } else if (price == 1) {
+        (type=='w')?stream = FirebaseFirestore.instance
+            .collection("Products")
+            .where('product_price', isGreaterThan: 1000)
+            .where('sell_type',isEqualTo: 'w')
+            .snapshots():stream = FirebaseFirestore.instance
+            .collection("Products")
+            .where('product_price', isGreaterThan: 1000)
+            .where('sell_type',isEqualTo: 'r')
+            .snapshots();
+      } else {
+        (type=='w')?stream = FirebaseFirestore.instance
+            .collection("Products")
+            .where('product_price', isLessThan: price)
+            .where('sell_type',isEqualTo: 'w')
+            .snapshots():stream = FirebaseFirestore.instance
+            .collection("Products")
+            .where('product_price', isLessThan: price)
+            .where('sell_type',isEqualTo: 'r')
+            .snapshots();
+      }
+    } else if (cat!.isNotEmpty) {
+      if (price == 0) {
+        // stream = FirebaseFirestore.instance
+        //     .collection("Products")
+        //     .where('category', isEqualTo: cat)
+        //     .snapshots();
+        (type=='w')?stream = FirebaseFirestore.instance
+            .collection("Products")
+            .where('category', isEqualTo: cat)
+            .where('sell_type',isEqualTo: 'w')
+            .snapshots():stream = FirebaseFirestore.instance
+            .collection("Products")
+            .where('category', isEqualTo: cat)
+            .where('sell_type',isEqualTo: 'r')
+            .snapshots();
+      } else if (price == 1) {
+        (type=='w')?stream = FirebaseFirestore.instance
+            .collection("Products")
+            .where('category', isEqualTo: cat)
+            .where('product_price', isGreaterThan: 1000)
+            .where('sell_type',isEqualTo: 'w')
+            .snapshots():stream = FirebaseFirestore.instance
+            .collection("Products")
+            .where('category', isEqualTo: cat)
+            .where('product_price', isGreaterThan: 1000)
+            .where('sell_type',isEqualTo: 'r')
+            .snapshots();
+      } else {
+        (type=='w')?stream = FirebaseFirestore.instance
+            .collection("Products")
+            .where('category', isEqualTo: cat)
+            .where('product_price', isLessThan: price)
+            .where('sell_type',isEqualTo: 'w')
+            .snapshots():stream = FirebaseFirestore.instance
+            .collection("Products")
+            .where('category', isEqualTo: cat)
+            .where('product_price', isLessThan: price)
+            .where('sell_type',isEqualTo: 'r')
+            .snapshots();
+      }
+    }
+
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+          automaticallyImplyLeading: false,
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+          title: const Text(
+            'DirecTrade',
+            style: TextStyle(
+              fontSize: 27,
+            ),
+          ),
+          actions: [
+            IconButton(
+              iconSize: 35,
+              onPressed: () {
+                Navigator.pushNamed(context, 'sellerprofile');
+              },
+              icon: const Icon(
+                Icons.account_circle_outlined,
+              ),
+            ),
+          ],
+      ),
+
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: OutlinedButton(
         style: OutlinedButton.styleFrom(
@@ -123,25 +225,86 @@ class _SellerProductPageState extends State<SellerProductPage> {
                         fontWeight: FontWeight.bold),
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.3,
+                    width: MediaQuery.of(context).size.width * 0.35,
                     margin: const EdgeInsets.only(left: 10),
-                    child: DropdownButton<String>(
-                      value: catvalue,
-                      onChanged: (value) => setState(
-                        () => catvalue = value,
-                      ),
-                      items: _catList.map(buildMenuItem).toList(),
+                    child: DropdownButton(
+                      // hint: const Text('Category'),
+                      value: cat,
+                      items: [
+                        DropdownMenuItem(
+                          child: Text('All Category'),
+                          value: '',
+                        ),
+                        DropdownMenuItem(
+                          child: Text('Fashion'),
+                          value: 'fashion',
+                        ),
+                        DropdownMenuItem(
+                          child: Text('Food'),
+                          value: 'food',
+                        ),
+                        DropdownMenuItem(
+                          child: Text('Others'),
+                          value: 'others',
+                        ),
+                      ],
+                      onChanged: (value) => setState(() {
+                        cat = value;
+                      }),
+
                     ),
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.3,
+                    width: MediaQuery.of(context).size.width * 0.4,
                     margin: const EdgeInsets.only(left: 10),
                     child: DropdownButton<String>(
-                      value: priceValue,
+                      // hint: const Text('Category'),
+                      items:[
+                    DropdownMenuItem(
+                      child: Text('Any Price'),
+                      value: '0',
+                    ),
+                    DropdownMenuItem(
+                      child: Text('Less than 500'),
+                      value: '500',
+                    ),
+                    DropdownMenuItem(
+                      child: Text('Less than 1000'),
+                      value: '1000',
+                    ),
+                    DropdownMenuItem(
+                      child: Text('Greater than 1000'),
+                      value: '1',
+                    ),
+                  ],
+                      value: price.toString(),
                       onChanged: (value) => setState(
-                        () => priceValue = value,
+                        () {
+                          price = num.parse(value!);
+                          }
                       ),
-                      items: _priceList.map(buildMenuItem).toList(),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.35,
+                    margin: const EdgeInsets.only(left: 10),
+                    child: DropdownButton(
+                      // hint: const Text('Sale Type'),
+                      value: type,
+                      items: [
+                        DropdownMenuItem(
+                          child: Text('Retail'),
+                          value: 'r',
+                        ),
+                        DropdownMenuItem(
+                          child: Text('Wholesale'),
+                          value: 'w',
+                        ),
+                      ],
+                      onChanged: (value) => setState(() {
+                        type = value;
+                      }),
+
                     ),
                   ),
                 ],
@@ -151,13 +314,45 @@ class _SellerProductPageState extends State<SellerProductPage> {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(10),
-              child: ListView.separated(
-                itemBuilder: (context, index) => SellerProductCard(
-                  index: index,
+              child:StreamBuilder<QuerySnapshot>(
+      stream: stream,
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        }
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return const Center(
+              child: CircularProgressIndicator(color: Colors.blue),
+            );
+          default:
+            if (snapshot.data!.docs.isNotEmpty) {
+              return ListView.separated(
+                  itemCount: snapshot.data!.docs.length,
+                  separatorBuilder: (context, index) => const SizedBox(
+                        height: 10,
+                      ),
+                  itemBuilder: (context, index) {
+                    DocumentSnapshot document = snapshot.data!.docs[index];
+                    return SellerProductCard(passingdocument: document,);
+                  });
+            } else {
+              return Center(
+                child: const Text(
+                  'No Products',
                 ),
-                separatorBuilder: (context, index) => const Divider(),
-                itemCount: products.length,
-              ),
+              );
+            }
+        }
+      },
+    )
+              // ListView.separated(
+              //   itemBuilder: (context, index) => SellerProductCard(
+              //     index: index,
+              //   ),
+              //   separatorBuilder: (context, index) => const Divider(),
+              //   itemCount: products.length,
+              // ),
             ),
           ),
 
