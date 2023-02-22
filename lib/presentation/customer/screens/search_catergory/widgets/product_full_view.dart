@@ -151,10 +151,10 @@ void decrement() {
                         height: size.width * .13,
                         child: ElevatedButton(
                             onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (ctx) => ChatMessagePage(
-                                        personName: 'Seller Name',
-                                      )));
+                              // Navigator.of(context).push(MaterialPageRoute(
+                              //     builder: (ctx) => ChatMessagePage(
+                              //           personName: 'Seller Name',
+                              //         )));
                             },
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.lightBlue,

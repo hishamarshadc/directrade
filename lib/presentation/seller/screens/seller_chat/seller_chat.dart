@@ -11,7 +11,7 @@ class SellerChatPage extends StatelessWidget {
     return ListTile(
       title: Text('Customer $index'),
       onTap: (){
-        Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>ChatMessagePage(personName: 'Customer $index',)));
+        // Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>ChatMessagePage(personName: 'Customer $index',)));
       },
       subtitle: const Text('Last Message Goes here'),
       leading: const CircleAvatar(
