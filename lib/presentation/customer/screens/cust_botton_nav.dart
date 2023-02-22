@@ -26,18 +26,19 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         body: pages[selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
+          selectedItemColor: Colors.lightBlue,
           type: BottomNavigationBarType.fixed,
           items: const [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home, size: 35),
+              icon: Icon(Icons.home, size: 25),
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart, size: 35),
+              icon: Icon(Icons.shopping_cart, size: 25),
               label: 'Orders',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.chat, size: 35),
+              icon: Icon(Icons.chat, size: 25),
               label: 'Chat',
             )
           ],

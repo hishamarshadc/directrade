@@ -48,11 +48,11 @@ class MyApp extends StatelessWidget {
         'sellerprofile':(context) => const SellerProfilePage(),
         'editcust':(context) => CustEdit(),
         'editseller':(context) => const EditSeller(),
-        'aboutus':(context) =>  const AboutPage(),
+        'aboutus':(context) =>   AboutPage(),
         'adminprofile':(context) => const AdminProfilePage(),
         'test':(context)=> DataFetch(),
         'addProdForm':(context) => AddProductForm(),
-        'feedback': (context) => FeedBackBox(),
+        'feedback': (context) => FeedbackBox(),
       },
       debugShowCheckedModeBanner: false,// This trailing comma makes auto-formatting nicer for build methods.
     );

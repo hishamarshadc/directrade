@@ -26,18 +26,19 @@ class _AdminHomePageState extends State<AdminHomePage> {
         body: pages[selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
+          selectedItemColor: Colors.lightBlue ,
           items: const [
             BottomNavigationBarItem(
-              icon: Icon(Icons.verified_outlined, size: 35),
+              icon: Icon(Icons.verified_outlined, size: 25),
               label: 'Approvals',
               
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person_pin_rounded, size: 35),
+              icon: Icon(Icons.person_pin_rounded, size: 25),
               label: 'View Users',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.feedback_outlined, size: 35),
+              icon: Icon(Icons.feedback_outlined, size: 25),
               label: 'Feedbacks',
             ),
           ],

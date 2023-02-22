@@ -31,6 +31,8 @@ class _AddProductFormState extends State<AddProductForm> {
   final kselltype = TextEditingController();
   final kcat = TextEditingController();
 
+ late var imgTemp;
+
   final _imageController = TextEditingController();
 
   String? productImgUrl;
@@ -43,6 +45,7 @@ class _AddProductFormState extends State<AddProductForm> {
       if (image == null) return;
 
       final imgtemp = File(image.path);
+      imgTemp = File(image.path);
       setState(() {
         this.image = imgtemp;
       });
@@ -57,6 +60,7 @@ class _AddProductFormState extends State<AddProductForm> {
       if (image == null) return;
 
       final imgtemp = File(image.path);
+      imgTemp = File(image.path);
       setState(() {
         this.image = imgtemp;
       });
@@ -241,11 +245,14 @@ class _AddProductFormState extends State<AddProductForm> {
                   ],
                 ),
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       
                       final user=FirebaseAuth.instance.currentUser;
                       final db=FirebaseFirestore.instance;
+                      final dl = await uploadImage(imgTemp);
+                      print('!!!!!!!!!!${dl}!!!!!!!!!!!');
+
 
                       db.collection("Products").doc().set({
                                       'product_name' :kpname.text,
@@ -254,6 +261,7 @@ class _AddProductFormState extends State<AddProductForm> {
                                       'product_seller_id':user?.uid,
                                       'min_quantity':kminqty.text,
                                       'max_quantity':kmaxqty.text,
+                                      'image_url':dl,
                                       'rating':0.0,
                                       'rating_count':0,
                                       'sell_type': _isWholesale?'w':'r',
