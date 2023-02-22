@@ -3,6 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sample_project/presentation/authentication/login.dart';
 
+final user = FirebaseAuth.instance.currentUser;
+final db = FirebaseFirestore.instance;
+final docRef = db.collection("Users").doc(user!.uid);
+var data;
+
 class EditSeller extends StatefulWidget {
   const EditSeller({super.key});
 
@@ -13,6 +18,15 @@ class EditSeller extends StatefulWidget {
 class _EditSellerState extends State<EditSeller> {
   @override
   Widget build(BuildContext context) {
+
+    docRef.get().then(
+      (DocumentSnapshot doc) async {
+        data = await doc.data() as Map<String, dynamic>;
+      },
+      onError: (e) => print("Error getting document: $e"),
+    );
+
+
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: EditProfilePage(),
@@ -122,12 +136,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
               const SizedBox(
                 height: 35,
               ),
-              buildTextField("Full Name", "Full name", 2, kname),
-              buildTextField("E-mail", "Email@email.com", 1, kemail),
-              buildTextField("Password", "", 0, kpass),
-              buildTextField("PinCode", "PinCode", 4, kpincode),
-              buildTextField("Company Name", "Company Name", 2, kcname),
-              buildTextField("Company Address", "Company address", 5, kaddress),
+              buildTextField("Full Name",data['name'] , 2, kname),
+              buildTextField("PinCode", data['pincode'] , 4, kpincode),
+              buildTextField("Company Name", data['companyname'], 2, kcname),
+              buildTextField("Company Address", data['address'], 5, kaddress),
               const SizedBox(
                 height: 5,
               ),
@@ -162,8 +174,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         final docRef = db.collection("Users").doc(user!.uid);
                         var data;
                         await docRef.get().then(
-                          (DocumentSnapshot doc) {
-                            data = doc.data() as Map<String, dynamic>;
+                          (DocumentSnapshot doc) async {
+                            data = await doc.data() as Map<String, dynamic>;
                           },
                           onError: (e) => print("Error getting document: $e"),
                         );
@@ -171,11 +183,21 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           store.collection("Changes").doc(user.uid).set({
                             // 'email': kemail.text,
                             // 'password': kpass.text,
-                            'name':(kname.text.isNotEmpty)?kname.text:data['name'] ,
-                            'companyname':(kcname.text.isNotEmpty)?kcname.text:data['companyname'],
-                            'phone': (kphone.text.isNotEmpty)?kphone.text:data['phone'],
-                            'address': (kaddress.text.isNotEmpty)?kaddress.text:data['address'],
-                            'pincode': (kpincode.text.isNotEmpty)?kpincode.text:data['pincode'],
+                            'name': (kname.text.isNotEmpty)
+                                ? kname.text
+                                : data['name'],
+                            'companyname': (kcname.text.isNotEmpty)
+                                ? kcname.text
+                                : data['companyname'],
+                            // 'phone': (kphone.text.isNotEmpty)
+                            //     ? kphone.text
+                            //     : data['phone'],
+                            'address': (kaddress.text.isNotEmpty)
+                                ? kaddress.text
+                                : data['address'],
+                            'pincode': (kpincode.text.isNotEmpty)
+                                ? kpincode.text
+                                : data['pincode'],
                             'userType': 'p',
                             'status': 'a',
                             'change_datetime': DateTime.now()

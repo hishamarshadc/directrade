@@ -20,16 +20,12 @@ class SellerEditCard extends StatelessWidget {
         newdatadb.collection("Users").doc(docid);
     var olddata;
     var newdata = passingdocument;
-    print("!!!!!!!old!!!!!!!!!!!${olddata}!!!!!!!!!!!!!");
-    print("!!!!!!!new!!!!!!!!!!!${newdatadoc}!!!!!!!!!!!!!");
-
     final size = MediaQuery.of(context).size;
     return StreamBuilder<DocumentSnapshot>(
       stream: newdatadoc.snapshots(),
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         late final olddata = snapshot.data!;
-        print("!!!!!!!new!!!!!ksd;k!!!!!!${newdata}!!!!!!!!!!!!!");
         if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         }
@@ -168,17 +164,19 @@ class SellerEditCard extends StatelessWidget {
                               onPressed: () => {
                                     // code to approve data ie update data in Users collection and delete from changes collection
 
-                                    storeUser.collection("Users").doc(docid).update({
-                                      'name':newdata['name'],
-                                      'pincode':newdata['pincode'],
-                                      'companyname':newdata['companyname'],
-                                      'phone':newdata['phone'],
-                                   })
-                                   ,
-                                   storeUser.collection("Changes").doc(docid).delete()
-
-
-                                    
+                                    storeUser
+                                        .collection("Users")
+                                        .doc(docid)
+                                        .update({
+                                      'name': newdata['name'],
+                                      'pincode': newdata['pincode'],
+                                      'companyname': newdata['companyname'],
+                                      'phone': newdata['phone'],
+                                    }),
+                                    storeUser
+                                        .collection("Changes")
+                                        .doc(docid)
+                                        .delete()
                                   },
                               icon: const Icon(Icons.done),
                               label: const Text('Approve')),
@@ -192,9 +190,10 @@ class SellerEditCard extends StatelessWidget {
                               onPressed: () => {
                                     // code to approve data ie remove data from Changes in collection
 
-                                    storeUser.collection("Changes").doc(docid).delete()
-
-
+                                    storeUser
+                                        .collection("Changes")
+                                        .doc(docid)
+                                        .delete()
                                   },
                               icon: const Icon(Icons.close),
                               label: const Text('Reject')),
