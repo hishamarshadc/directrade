@@ -49,12 +49,12 @@ class MyApp extends StatelessWidget {
         'editcust':(context) => CustEdit(),
         'editseller':(context) => const EditSeller(),
         'sellerorderpage':(context) =>  SellerOrderListPage(),
-        'aboutus':(context) =>  const AboutPage(),
+        'aboutus':(context) =>   AboutPage(),
         'adminprofile':(context) => const AdminProfilePage(),
         'test':(context)=> DataFetch(),
         'prodviewseller':(context) => SellerProductView(),
         'addProdForm':(context) => AddProductForm(),
-        'feedback': (context) => FeedBackBox(),
+        'feedback': (context) => FeedbackBox(),
       },
       debugShowCheckedModeBanner: false,// This trailing comma makes auto-formatting nicer for build methods.
     );
