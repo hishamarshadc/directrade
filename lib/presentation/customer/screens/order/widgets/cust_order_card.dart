@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:intl/intl.dart';
+import 'package:sample_project/presentation/chat/chat_message_page.dart';
 
 class CustOrderCard extends StatelessWidget {
   const CustOrderCard(
@@ -11,12 +12,14 @@ class CustOrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final db = FirebaseFirestore.instance;
     double rating = 0;
     String formatTimestamp(Timestamp timestamp) {
       var format =
           new DateFormat('hh:mm a dd MMM yyyy'); // <- use skeleton here
       return format.format(timestamp.toDate());
     }
+
     Widget buildRating() => RatingBar.builder(
         minRating: 1,
         itemSize: 40,
@@ -26,10 +29,8 @@ class CustOrderCard extends StatelessWidget {
               color: Colors.amber,
             ),
         onRatingUpdate: (value) {
-          rating=value;
-        }
-        
-        );
+          rating = value;
+        });
 
     showRating() => showDialog(
           context: context,
@@ -39,27 +40,41 @@ class CustOrderCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('Please leave a star rating',style: TextStyle(fontSize: 20),),
+                Text(
+                  'Please leave a star rating',
+                  style: TextStyle(fontSize: 20),
+                ),
                 buildRating(),
               ],
             ),
             actions: [
-              TextButton(onPressed: (){
-                num curr_rating = productdoc['rating'];
-                num no_rating = productdoc['rating_count'];
-                num curr_no = ++no_rating;
-                num finalrating = ((curr_rating*no_rating)+rating)/(no_rating+1);
-                print(finalrating);
+              TextButton(
+                  onPressed: () {
+                    num curr_rating =productdoc['rating'];
+                    num no_rating = productdoc['rating_count'];
+                    // num curr_no = ++no_rating;
+                    num finalrating =
+                        ((curr_rating * no_rating) + rating) / (no_rating + 1);
+                    print(finalrating);
 
-                final db=FirebaseFirestore.instance;
-                db.collection("Products").doc(orderdoc['product_id']) 
-    .update({'rating' : finalrating,
-    'rating_count':FieldValue.increment(1)});
-              db.collection("Orders").doc(orderdoc.id).update({'status':'r'});
+                    db
+                        .collection('Products')
+                        .doc(orderdoc['product_id'])
+                        .update({
+                      'rating': finalrating,
+                      'rating_count': FieldValue.increment(1)
+                    });
+                    db
+                        .collection('Orders')
+                        .doc(orderdoc.id)
+                        .update({'status': 'r'});
 
-              Navigator.pop(context);
-    
-              }, child: Text('OK',style: TextStyle(fontWeight: FontWeight.bold),))
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    'OK',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ))
             ],
           ),
         );
@@ -67,7 +82,7 @@ class CustOrderCard extends StatelessWidget {
     String orderdatetime = formatTimestamp(orderdoc['datetime']);
 
     final visibility = (orderdoc['status'] == 's') ? true : false;
-    final cVisibility = (orderdoc['status']=='p')?true:false;
+    final cVisibility = (orderdoc['status'] == 'p') ? true : false;
     final size = MediaQuery.of(context).size;
     return StreamBuilder(
         stream: FirebaseFirestore.instance
@@ -116,8 +131,7 @@ class CustOrderCard extends StatelessWidget {
                                     const BorderRadius.all(Radius.circular(15)),
                                 color: Colors.blue.shade200,
                                 image: DecorationImage(
-                                  image: NetworkImage(
-                                      productdoc['image_url']),
+                                  image: NetworkImage(productdoc['image_url']),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -133,7 +147,7 @@ class CustOrderCard extends StatelessWidget {
                               Row(
                                 children: [
                                   Container(
-                                    width: size.width *.4,
+                                    width: size.width * .4,
                                     child: Text(
                                       productdoc['product_name'],
                                       overflow: TextOverflow.ellipsis,
@@ -168,7 +182,8 @@ class CustOrderCard extends StatelessWidget {
                               ),
                               SizedBox(height: size.width * .02),
                               Text(
-                                (orderdoc['status'] == 's'||orderdoc['status']=='r')
+                                (orderdoc['status'] == 's' ||
+                                        orderdoc['status'] == 'r')
                                     ? 'Status : Success'
                                     : (orderdoc['status'] == 'p')
                                         ? 'Status : Pending'
@@ -206,43 +221,78 @@ class CustOrderCard extends StatelessWidget {
                     SizedBox(height: size.width * .02),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        OutlinedButton(
-                          onPressed: () {},
-                          style: OutlinedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50))),
-                          child: const Text(
-                            'Contact Seller',
-                            style: TextStyle(color: Colors.blue),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SizedBox(
+                            height: 40,
+                            width: double.infinity,
+                            child: OutlinedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ChatMessagePage(
+                                          id: sellerdoc.id,
+                                          name: sellerdoc['name'],
+                                          passingdocument: sellerdoc),
+                                    ));
+                              },
+                              style: OutlinedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(50))),
+                              child: const Text(
+                                'Contact Seller',
+                                style: TextStyle(color: Colors.blue),
+                              ),
+                            ),
                           ),
                         ),
                         Visibility(
                           visible: visibility,
-                          child: OutlinedButton(
-                            onPressed: () {
-                              showRating();
-                            },
-                            style: OutlinedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50))),
-                            child: const Text(
-                              'Rate Order',
-                              style: TextStyle(color: Colors.green),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SizedBox(
+                              height: 40,
+                              width: double.infinity,
+                              child: OutlinedButton(
+                                onPressed: () {
+                                  showRating();
+                                },
+                                style: OutlinedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(50))),
+                                child: const Text(
+                                  'Rate Order',
+                                  style: TextStyle(color: Colors.green),
+                                ),
+                              ),
                             ),
                           ),
                         ),
                         Visibility(
                           visible: cVisibility,
-                          child: OutlinedButton(
-                            onPressed: () {},
-                            style: OutlinedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50))),
-                            child: const Text(
-                              'Cancel',
-                              style: TextStyle(color: Colors.red),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SizedBox(
+                              height: 40,
+                              width: double.infinity,
+                              child: OutlinedButton(
+                                onPressed: () {
+                                  db
+                                      .collection('Orders')
+                                      .doc(orderdoc.id)
+                                      .update({'status': 'c'});
+                                },
+                                style: OutlinedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(50))),
+                                child: const Text(
+                                  'Cancel',
+                                  style: TextStyle(color: Colors.red),
+                                ),
+                              ),
                             ),
                           ),
                         )

@@ -16,7 +16,7 @@ class _SearchAndCategoryPageState extends State<SearchAndCategoryPage> {
 
   String? cat = '';
   num? price = 0;
-  String? type='r';
+  String? type = 'r';
   // String? catvalue = 'Any Category';
   String? priceValue = 'All Price';
 
@@ -28,27 +28,39 @@ class _SearchAndCategoryPageState extends State<SearchAndCategoryPage> {
   Widget build(BuildContext context) {
     if (cat == '') {
       if (price == 0) {
-        (type=='w')?stream = FirebaseFirestore.instance.collection("Products").where('sell_type',isEqualTo:'w').snapshots():stream = FirebaseFirestore.instance.collection("Products").where('sell_type',isEqualTo:'r').snapshots();
+        (type == 'w')
+            ? stream = FirebaseFirestore.instance
+                .collection("Products")
+                .where('sell_type', isEqualTo: 'w')
+                .snapshots()
+            : stream = FirebaseFirestore.instance
+                .collection("Products")
+                .where('sell_type', isEqualTo: 'r')
+                .snapshots();
       } else if (price == 1) {
-        (type=='w')?stream = FirebaseFirestore.instance
-            .collection("Products")
-            .where('product_price', isGreaterThan: 1000)
-            .where('sell_type',isEqualTo: 'w')
-            .snapshots():stream = FirebaseFirestore.instance
-            .collection("Products")
-            .where('product_price', isGreaterThan: 1000)
-            .where('sell_type',isEqualTo: 'r')
-            .snapshots();
+        (type == 'w')
+            ? stream = FirebaseFirestore.instance
+                .collection("Products")
+                .where('product_price', isGreaterThan: 1000)
+                .where('sell_type', isEqualTo: 'w')
+                .snapshots()
+            : stream = FirebaseFirestore.instance
+                .collection("Products")
+                .where('product_price', isGreaterThan: 1000)
+                .where('sell_type', isEqualTo: 'r')
+                .snapshots();
       } else {
-        (type=='w')?stream = FirebaseFirestore.instance
-            .collection("Products")
-            .where('product_price', isLessThan: price)
-            .where('sell_type',isEqualTo: 'w')
-            .snapshots():stream = FirebaseFirestore.instance
-            .collection("Products")
-            .where('product_price', isLessThan: price)
-            .where('sell_type',isEqualTo: 'r')
-            .snapshots();
+        (type == 'w')
+            ? stream = FirebaseFirestore.instance
+                .collection("Products")
+                .where('product_price', isLessThan: price)
+                .where('sell_type', isEqualTo: 'w')
+                .snapshots()
+            : stream = FirebaseFirestore.instance
+                .collection("Products")
+                .where('product_price', isLessThan: price)
+                .where('sell_type', isEqualTo: 'r')
+                .snapshots();
       }
     } else if (cat!.isNotEmpty) {
       if (price == 0) {
@@ -56,45 +68,74 @@ class _SearchAndCategoryPageState extends State<SearchAndCategoryPage> {
         //     .collection("Products")
         //     .where('category', isEqualTo: cat)
         //     .snapshots();
-        (type=='w')?stream = FirebaseFirestore.instance
-            .collection("Products")
-            .where('category', isEqualTo: cat)
-            .where('sell_type',isEqualTo: 'w')
-            .snapshots():stream = FirebaseFirestore.instance
-            .collection("Products")
-            .where('category', isEqualTo: cat)
-            .where('sell_type',isEqualTo: 'r')
-            .snapshots();
+        (type == 'w')
+            ? stream = FirebaseFirestore.instance
+                .collection("Products")
+                .where('category', isEqualTo: cat)
+                .where('sell_type', isEqualTo: 'w')
+                .snapshots()
+            : stream = FirebaseFirestore.instance
+                .collection("Products")
+                .where('category', isEqualTo: cat)
+                .where('sell_type', isEqualTo: 'r')
+                .snapshots();
       } else if (price == 1) {
-        (type=='w')?stream = FirebaseFirestore.instance
-            .collection("Products")
-            .where('category', isEqualTo: cat)
-            .where('product_price', isGreaterThan: 1000)
-            .where('sell_type',isEqualTo: 'w')
-            .snapshots():stream = FirebaseFirestore.instance
-            .collection("Products")
-            .where('category', isEqualTo: cat)
-            .where('product_price', isGreaterThan: 1000)
-            .where('sell_type',isEqualTo: 'r')
-            .snapshots();
+        (type == 'w')
+            ? stream = FirebaseFirestore.instance
+                .collection("Products")
+                .where('category', isEqualTo: cat)
+                .where('product_price', isGreaterThan: 1000)
+                .where('sell_type', isEqualTo: 'w')
+                .snapshots()
+            : stream = FirebaseFirestore.instance
+                .collection("Products")
+                .where('category', isEqualTo: cat)
+                .where('product_price', isGreaterThan: 1000)
+                .where('sell_type', isEqualTo: 'r')
+                .snapshots();
       } else {
-        (type=='w')?stream = FirebaseFirestore.instance
-            .collection("Products")
-            .where('category', isEqualTo: cat)
-            .where('product_price', isLessThan: price)
-            .where('sell_type',isEqualTo: 'w')
-            .snapshots():stream = FirebaseFirestore.instance
-            .collection("Products")
-            .where('category', isEqualTo: cat)
-            .where('product_price', isLessThan: price)
-            .where('sell_type',isEqualTo: 'r')
-            .snapshots();
+        (type == 'w')
+            ? stream = FirebaseFirestore.instance
+                .collection("Products")
+                .where('category', isEqualTo: cat)
+                .where('product_price', isLessThan: price)
+                .where('sell_type', isEqualTo: 'w')
+                .snapshots()
+            : stream = FirebaseFirestore.instance
+                .collection("Products")
+                .where('category', isEqualTo: cat)
+                .where('product_price', isLessThan: price)
+                .where('sell_type', isEqualTo: 'r')
+                .snapshots();
       }
     }
-    print(cat);
-    print(price.toString() + type!);
 
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        elevation: 0,
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        title: const Text(
+          'DirecTrade',
+          style: TextStyle(
+            fontSize: 27,
+          ),
+        ),
+        actions: [
+          InkWell(
+            onTap: () => {Navigator.pushNamed(context, 'custprofile')},
+            child: const CircleAvatar(
+              radius: 20,
+              backgroundColor: Colors.green,
+              backgroundImage: AssetImage('assets/images/seller.jpg'),
+            ),
+          ),
+          const SizedBox(
+            width: 10,
+          )
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.lightBlue,
           foregroundColor: Colors.white,
@@ -201,7 +242,6 @@ class _SearchAndCategoryPageState extends State<SearchAndCategoryPage> {
                       onChanged: (value) => setState(() {
                         cat = value;
                       }),
-
                     ),
                   ),
                   Container(
@@ -209,30 +249,28 @@ class _SearchAndCategoryPageState extends State<SearchAndCategoryPage> {
                     margin: const EdgeInsets.only(left: 10),
                     child: DropdownButton<String>(
                       // hint: const Text('Category'),
-                      items:[
-                    DropdownMenuItem(
-                      child: Text('Any Price'),
-                      value: '0',
-                    ),
-                    DropdownMenuItem(
-                      child: Text('Less than 500'),
-                      value: '500',
-                    ),
-                    DropdownMenuItem(
-                      child: Text('Less than 1000'),
-                      value: '1000',
-                    ),
-                    DropdownMenuItem(
-                      child: Text('Greater than 1000'),
-                      value: '1',
-                    ),
-                  ],
+                      items: [
+                        DropdownMenuItem(
+                          child: Text('Any Price'),
+                          value: '0',
+                        ),
+                        DropdownMenuItem(
+                          child: Text('Less than 500'),
+                          value: '500',
+                        ),
+                        DropdownMenuItem(
+                          child: Text('Less than 1000'),
+                          value: '1000',
+                        ),
+                        DropdownMenuItem(
+                          child: Text('Greater than 1000'),
+                          value: '1',
+                        ),
+                      ],
                       value: price.toString(),
-                      onChanged: (value) => setState(
-                        () {
-                          price = num.parse(value!);
-                          }
-                      ),
+                      onChanged: (value) => setState(() {
+                        price = num.parse(value!);
+                      }),
                     ),
                   ),
                   Container(
@@ -254,7 +292,6 @@ class _SearchAndCategoryPageState extends State<SearchAndCategoryPage> {
                       onChanged: (value) => setState(() {
                         type = value;
                       }),
-
                     ),
                   ),
                 ],

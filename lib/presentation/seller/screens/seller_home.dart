@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:sample_project/presentation/customer/screens/chat/chat_list.dart';
-import 'package:sample_project/presentation/seller/screens/seller_chat/seller_chat.dart';
-import 'package:sample_project/presentation/seller/screens/seller_orders/order_tabbar.dart';
-import 'package:sample_project/presentation/seller/screens/seller_orders/seller_pending_orders.dart';
+import 'package:sample_project/presentation/chat/chat_list.dart';
+import 'package:sample_project/presentation/seller/screens/seller_orders/seller_tabbar.dart';
 import 'package:sample_project/presentation/seller/screens/seller_products/seller_product.dart';
 
 class SellerHomePage extends StatefulWidget {
