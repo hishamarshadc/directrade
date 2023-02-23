@@ -31,14 +31,16 @@ class _AddProductFormState extends State<AddProductForm> {
   final kselltype = TextEditingController();
   final kcat = TextEditingController();
 
- late var imgTemp;
+  String? dropdownValue = '';
+
+  late var imgTemp;
 
   final _imageController = TextEditingController();
 
   String? productImgUrl;
   File? image;
   UploadTask? uploadTask;
-  
+
   Future pickimagefromgallery() async {
     try {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -69,30 +71,27 @@ class _AddProductFormState extends State<AddProductForm> {
     }
   }
 
- Future<String> uploadImage(File image) async {
-  // Generate a unique file name
-  String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+  Future<String> uploadImage(File image) async {
+    // Generate a unique file name
+    String fileName = DateTime.now().millisecondsSinceEpoch.toString();
 
-  // Create a reference to the file location in Firebase Storage
-  Reference ref = FirebaseStorage.instance.ref().child('images/$fileName');
+    // Create a reference to the file location in Firebase Storage
+    Reference ref = FirebaseStorage.instance.ref().child('images/$fileName');
 
-  // Upload the file to Firebase Storage
-  uploadTask = ref.putFile(image);
+    // Upload the file to Firebase Storage
+    uploadTask = ref.putFile(image);
 
-  final snapshot = await uploadTask!.whenComplete(() {});
+    final snapshot = await uploadTask!.whenComplete(() {});
 
-  // Get the download URL for the file
-  String downloadURL = await snapshot.ref.getDownloadURL();
+    // Get the download URL for the file
+    String downloadURL = await snapshot.ref.getDownloadURL();
 
-  // Return the download URL
-  return downloadURL;
-}
+    // Return the download URL
+    return downloadURL;
+  }
 
   @override
   Widget build(BuildContext context) {
-    
-
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.lightBlue,
@@ -159,6 +158,42 @@ class _AddProductFormState extends State<AddProductForm> {
                     return null;
                   },
                   onSaved: (value) => _productName = value!,
+                ),
+                DropdownButtonFormField<String>(
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please Select a Category';
+                    }
+                    return null;
+                  },
+                  value: dropdownValue,
+                  onChanged: (String? value) {
+                    setState(() {
+                      dropdownValue = value;
+                    });
+                  },
+                  items: [
+                    DropdownMenuItem(
+                      child: Text('Select Category'),
+                      value: '',
+                    ),
+                    DropdownMenuItem(
+                      child: Text('Textiles'),
+                      value: 'textiles',
+                    ),
+                    DropdownMenuItem(
+                      child: Text('Handcrafts'),
+                      value: 'handcrafts',
+                    ),
+                    DropdownMenuItem(
+                      child: Text('Food & Beverages'),
+                      value: 'food',
+                    ),
+                    DropdownMenuItem(
+                      child: Text('Others'),
+                      value: 'others',
+                    )
+                  ],
                 ),
                 TextFormField(
                   controller: kdesc,
@@ -247,32 +282,29 @@ class _AddProductFormState extends State<AddProductForm> {
                 ElevatedButton(
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      
-                      final user=FirebaseAuth.instance.currentUser;
-                      final db=FirebaseFirestore.instance;
+                      final user = FirebaseAuth.instance.currentUser;
+                      final db = FirebaseFirestore.instance;
                       final dl = await uploadImage(imgTemp);
                       print('!!!!!!!!!!${dl}!!!!!!!!!!!');
 
-
                       db.collection("Products").doc().set({
-                                      'product_name' :kpname.text,
-                                      'description':kdesc.text,
-                                      'product_price':int.parse(kprice.text),
-                                      'product_seller_id':user?.uid,
-                                      'min_quantity':kminqty.text,
-                                      'max_quantity':kmaxqty.text,
-                                      'image_url':dl,
-                                      'rating':0.0,
-                                      'rating_count':0,
-                                      'sell_type': _isWholesale?'w':'r',
-                                      'upload_time':DateTime.now()
-                                   });
-
-
+                        'product_name': kpname.text,
+                        'product_category':dropdownValue,
+                        'description': kdesc.text,
+                        'product_price': int.parse(kprice.text),
+                        'product_seller_id': user?.uid,
+                        'min_quantity': kminqty.text,
+                        'max_quantity': kmaxqty.text,
+                        'image_url': dl,
+                        'rating': 0.0,
+                        'rating_count': 0,
+                        'sell_type': _isWholesale ? 'w' : 'r',
+                        'upload_time': DateTime.now()
+                      });
 
                       _formKey.currentState!.save();
                       Navigator.pop(context);
-    
+
                       // Add logic to save the product here
                       // ...
                     }
