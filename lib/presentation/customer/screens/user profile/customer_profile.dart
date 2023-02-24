@@ -14,21 +14,20 @@ class CustProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    docRef.get().then(
-      (DocumentSnapshot doc) async {
-        data = await doc.data() as Map<String, dynamic>;
-      },
-      onError: (e) => print("Error getting document: $e"),
-    );
 
-print(data);
-
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return  Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
-          child: Column(
+          child: StreamBuilder<DocumentSnapshot>(
+            stream: db.collection("Users").doc(user!.uid).snapshots(),
+            builder: (context, snapshot) {
+              if(snapshot.connectionState==ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(color: Colors.blue),
+            );
+}
+
+              return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
@@ -36,22 +35,21 @@ print(data);
                 flex: 2,
               ),
               const CircleAvatar(
-                radius: 50.0,
-                backgroundImage: AssetImage('assets/images/seller.jpg'),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                // '${data['name']}'.toUpperCase(),
-                '',
-                style: const TextStyle(
-                  fontSize: 30.0,
-                  fontFamily: 'Pacifico',
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
+                    radius: 50,
+                    child:Icon(Icons.person_pin,size: 60,)
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    snapshot.data!['name'].toUpperCase(),
+                    style: const TextStyle(
+                      fontSize: 30.0,
+                      fontFamily: 'Pacifico',
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
               const SizedBox(
                 height: 20.0,
                 width: 150,
@@ -259,9 +257,10 @@ print(data);
                 ),
               ),
             ],
+          );
+            }
           ),
         ),
-      ),
     );
   }
 }

@@ -47,13 +47,14 @@ class _AdminProfilePageState extends State<AdminProfilePage> {
                 children: <Widget>[
                   const Spacer(flex: 1),
                   const CircleAvatar(
-                    child:Icon(Icons.account_circle_rounded)
+                    radius: 50,
+                    child:Icon(Icons.admin_panel_settings_outlined,size: 60,)
                   ),
                   const SizedBox(
                     height: 10,
                   ),
                   Text(
-                    "snapshot.data!['name'].toUpperCase()",
+                    snapshot.data!['name'].toUpperCase(),
                     style: const TextStyle(
                       fontSize: 30.0,
                       fontFamily: 'Pacifico',
