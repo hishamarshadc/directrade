@@ -101,7 +101,7 @@ DocumentSnapshot passingdocument;
                           ),
                           Expanded(
                             child: Text(
-                              '${passingdocument['rating']!} (${passingdocument['rating_count']!})',
+                              '${passingdocument['rating'].toStringAsFixed(1)!} (${passingdocument['rating_count']!})',
                               maxLines: 1,
                               style: const TextStyle(
                                   fontSize: 15, fontWeight: FontWeight.w400),

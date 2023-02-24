@@ -5,183 +5,195 @@ import 'package:sample_project/presentation/authentication/login.dart';
 
 final user = FirebaseAuth.instance.currentUser;
 final db = FirebaseFirestore.instance;
-final docRef = db.collection("Users").doc(user!.uid);
-var data;
+// final docRef = db.collection("Users").doc(user!.uid);
+// var data;
 
 
 
-class AdminProfilePage extends StatelessWidget {
+class AdminProfilePage extends StatefulWidget {
   const AdminProfilePage({super.key});
 
   @override
+  State<AdminProfilePage> createState() => _AdminProfilePageState();
+}
+
+class _AdminProfilePageState extends State<AdminProfilePage> {
+  @override
   Widget build(BuildContext context) {
 
-    docRef.get().then(
-      (DocumentSnapshot doc) async {
-        data = await doc.data() as Map<String, dynamic>;
-      },
-      onError: (e) => print("Error getting document: $e"),
-    );
+    // docRef.get().then(
+    //   (DocumentSnapshot doc) async {
+    //     data = await doc.data() as Map<String, dynamic>;
+    //   },
+    //   onError: (e) => print("Error getting document: $e"),
+    // );
 
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return  Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              const Spacer(flex: 1),
-              const CircleAvatar(
-                radius: 50.0,
-                backgroundImage: AssetImage('assets/images/seller.jpg'),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                '${data['name']}'.toUpperCase(),
-                style: const TextStyle(
-                  fontSize: 30.0,
-                  fontFamily: 'Pacifico',
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-              const SizedBox(
-                height: 20.0,
-                width: 150,
-                child: Divider(
-                  color: Colors.black,
-                ),
-              ),
-              InkWell(
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    side: const BorderSide(
-                      color: Colors.black,
-                      
-                    )
+          child: StreamBuilder<DocumentSnapshot>(
+            stream: db.collection("Users").doc(user!.uid).snapshots(),
+            builder: (context, snapshot) {
+              if(snapshot.connectionState==ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(color: Colors.blue),
+            );
+}
+
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  const Spacer(flex: 1),
+                  const CircleAvatar(
+                    child:Icon(Icons.account_circle_rounded)
                   ),
-                    margin: const EdgeInsets.symmetric(
-                        vertical: 10.0, horizontal: 25.0),
-                    child: ListTile(
-                      title: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Spacer(
-                            flex: 3,
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    "snapshot.data!['name'].toUpperCase()",
+                    style: const TextStyle(
+                      fontSize: 30.0,
+                      fontFamily: 'Pacifico',
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20.0,
+                    width: 150,
+                    child: Divider(
+                      color: Colors.black,
+                    ),
+                  ),
+                  InkWell(
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                        side: const BorderSide(
+                          color: Colors.black,
+                          
+                        )
+                      ),
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 25.0),
+                        child: ListTile(
+                          title: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Spacer(
+                                flex: 3,
+                              ),
+                              Icon(
+                                Icons.phone,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                'Contact Us',
+                                style: TextStyle(
+                                  fontFamily: 'SourceSansPro',
+                                  fontSize: 20,
+                                ),
+                              ),
+                              Spacer(flex: 3),
+                            ],
                           ),
-                          Icon(
-                            Icons.phone,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'Contact Us',
-                            style: TextStyle(
-                              fontFamily: 'SourceSansPro',
-                              fontSize: 20,
+                        ),
+                      ),
+                      onTap: () {
+                        Navigator.pushNamed(context, '');
+                      }),
+                  const SizedBox(
+                    height: 10.0,
+                    width: 150,
+                  ),
+                  InkWell(
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                        side: const BorderSide(
+                          color: Colors.black,
+                          
+                        )
+                      ),
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 25.0),
+                      child: ListTile(
+                        title: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Spacer(
+                              flex: 3,
                             ),
-                          ),
-                          Spacer(flex: 3),
-                        ],
+                            Icon(
+                              Icons.logout_outlined,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              'Logout',
+                              style: TextStyle(
+                                fontFamily: 'SourceSansPro',
+                                fontSize: 20,
+                              ),
+                            ),
+                            Spacer(flex: 3),
+                          ],
+                        ),
                       ),
                     ),
+                    onTap: () {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => LoginPage()),
+                          ModalRoute.withName('/'));
+                    },
                   ),
-                  onTap: () {
-                    Navigator.pushNamed(context, '');
-                  }),
-              const SizedBox(
-                height: 10.0,
-                width: 150,
-              ),
-              InkWell(
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    side: const BorderSide(
+                  const Spacer(flex: 2),
+                  const SizedBox(
+                    height: 5,
+                    width: 150,
+                  ),
+                  TextButton(onPressed: () {
+                    Navigator.pushNamed(context,'aboutus');
+                  },style: TextButton.styleFrom(
+                    foregroundColor: Colors.black
+                  ), child: const Text('About Us'),),
+                  const SizedBox(
+                    height: 20.0,
+                    width: 150,
+                    child: Divider(
                       color: Colors.black,
-                      
-                    )
-                  ),
-                  margin: const EdgeInsets.symmetric(
-                      vertical: 10.0, horizontal: 25.0),
-                  child: ListTile(
-                    title: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Spacer(
-                          flex: 3,
-                        ),
-                        Icon(
-                          Icons.logout_outlined,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          'Logout',
-                          style: TextStyle(
-                            fontFamily: 'SourceSansPro',
-                            fontSize: 20,
-                          ),
-                        ),
-                        Spacer(flex: 3),
-                      ],
                     ),
                   ),
-                ),
-                onTap: () {
-                  Navigator.pushAndRemoveUntil<void>(
-                      context,
-                      MaterialPageRoute<void>(
-                          builder: (BuildContext context) => LoginPage()),
-                      ModalRoute.withName('/'));
-                },
-              ),
-              const Spacer(flex: 2),
-              const SizedBox(
-                height: 5,
-                width: 150,
-              ),
-              TextButton(onPressed: () {
-                Navigator.pushNamed(context,'aboutus');
-              },style: TextButton.styleFrom(
-                foregroundColor: Colors.black
-              ), child: const Text('About Us'),),
-              const SizedBox(
-                height: 20.0,
-                width: 150,
-                child: Divider(
-                  color: Colors.black,
-                ),
-              ),
-              Text(
-                'Logined as a Admin'.toUpperCase(),
-                style: const TextStyle(
-                  fontSize: 20.0,
-                  fontFamily: 'Pacifico',
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-              
-              const SizedBox(
-                height: 20.0,
-                width: 150,
-                child: Divider(
-                  color: Colors.black,
-                ),
-              ),
-            ],
+                  Text(
+                    'Logined as a Admin'.toUpperCase(),
+                    style: const TextStyle(
+                      fontSize: 20.0,
+                      fontFamily: 'Pacifico',
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                  
+                  const SizedBox(
+                    height: 20.0,
+                    width: 150,
+                    child: Divider(
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              );
+            }
           ),
         ),
-      ),
     );
   }
 }

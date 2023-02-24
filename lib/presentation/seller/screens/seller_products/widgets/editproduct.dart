@@ -250,7 +250,7 @@ class _EditProductFormState extends State<EditProductForm> {
                       
                       final user=FirebaseAuth.instance.currentUser;
                       final db=FirebaseFirestore.instance;
-                      final dl = await uploadImage(imgTemp);
+                      final dl = await uploadImage(image!);
                       print('!!!!!!!!!!${dl}!!!!!!!!!!!');
 
 

@@ -19,19 +19,14 @@ import 'package:sample_project/presentation/seller/screens/seller_products/widge
 import 'package:sample_project/presentation/seller/screens/seller_profile/edit_seller_profile/edit_seller_profile.dart';
 import 'package:sample_project/presentation/seller/screens/seller_profile/seller_prof.dart';
 import 'package:sample_project/presentation/testdetails.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+  SharedPreferences prefs=await SharedPreferences.getInstance();
+  var email=prefs.getString('email');
+  var type=prefs.getString('type');
+  runApp(MaterialApp(
       title: 'DirecTrade',
       theme: ThemeData(
         primarySwatch: primaryWhite,
@@ -55,6 +50,6 @@ class MyApp extends StatelessWidget {
         'feedback': (context) => FeedbackBox(),
       },
       debugShowCheckedModeBanner: false,// This trailing comma makes auto-formatting nicer for build methods.
+    )
     );
-  }
 }

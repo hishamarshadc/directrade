@@ -1,6 +1,11 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sample_project/presentation/authentication/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -27,11 +32,70 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
 
   final storeUser = FirebaseFirestore.instance;
 
+  String? productImgUrl;
+  File? image;
+  late var imgTemp;
+  UploadTask? uploadTask;
+
+   Future pickusingcamera() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.camera);
+      if (image == null) return;
+
+      final imgtemp = File(image.path);
+      imgTemp = File(image.path);
+      setState(() {
+        this.image = imgtemp;
+      });
+    } on PlatformException catch (e) {
+      return ('Failed to Pick Image: $e ');
+    }
+  }
+  
+  Future pickimagefromgallery() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null) return;
+
+      final imgtemp = File(image.path);
+      imgTemp = File(image.path);
+      setState(() {
+        this.image = imgtemp;
+      });
+    } on PlatformException catch (e) {
+      return ('failed to pick image: $e ');
+    }
+  }
+
+  Future<String> uploadImage(File image) async {
+    // Generate a unique file name
+    String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+
+    // Create a reference to the file location in Firebase Storage
+    Reference ref = FirebaseStorage.instance.ref().child('images/proof images/$fileName');
+
+    // Upload the file to Firebase Storage
+    uploadTask = ref.putFile(image);
+
+    final snapshot = await uploadTask!.whenComplete(() {});
+
+    // Get the download URL for the file
+    String downloadURL = await snapshot.ref.getDownloadURL();
+
+    // Return the download URL
+    return downloadURL;
+  }
+
+
+
+
   @override
   Widget build(BuildContext context) {
     const sizedBox = SizedBox(
       height: 20,
     );
+    var _selectedImage = true;
+
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -231,27 +295,74 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                             ),
                           ),
                           sizedBox,
-                          SizedBox(
-                            width: double.infinity,
-                            height: 60,
-                            child: OutlinedButton(
-                              style: OutlinedButton.styleFrom(
-                                // backgroundColor: Colors.white,
-                                // foregroundColor: Colors.green,
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 25),
-                                shape: RoundedRectangleBorder(
-                                    side: const BorderSide(
-                                      width: 9,
-                                      style: BorderStyle.solid,
-                                      color: Colors.black,
-                                    ),
-                                    borderRadius: BorderRadius.circular(100)),
-                              ),
-                              onPressed: () {},
-                              child: Text(
-                                'Upload Seller Proof',
-                                style: TextStyle(fontSize: 18),
+                          Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey.shade500),
+                                borderRadius: BorderRadius.circular(30),
+                                color: Colors.white),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Text(
+                                        'Upload Seller Proof Image',
+                                        style: TextStyle(
+                                            fontSize: 17,
+                                            color: Colors.grey.shade600),
+                                      ),
+                                      InkWell(
+                                        // Select from Camera
+                                        onTap: () {
+                                               pickusingcamera();
+                                        },
+                                        child: Icon(
+                                          Icons.camera_alt_outlined,
+                                          size: 30,
+                                          color: Colors.lightBlue,
+                                        ),
+                                      ),
+                                      InkWell(
+                                        //Select from Gallery
+                                        onTap: () {
+                                          pickimagefromgallery();
+                                        },
+                                        child: Icon(
+                                          Icons.image_search,
+                                          size: 30,
+                                          color: Colors.lightBlue,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  Visibility(
+                                    visible: _selectedImage,
+                                    child: (image!=null)?Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Text( image!.path.split('/').last,style: TextStyle(fontSize: 15),),
+                                            SizedBox(width: 10,),
+                                            Container(
+                                              width: 30,
+                                              height: 30,
+                                              child:Image.file(
+                                                fit: BoxFit.fill,
+                                                image!,                                        
+                                                ),
+                                            ),
+                                            Icon(
+                                              Icons.check_rounded,
+                                              color: Colors.green,
+                                              size: 30,
+                                            )
+                                          ],
+                                        ):Container(),
+                                  )
+                                ],
                               ),
                             ),
                           ),
@@ -264,6 +375,7 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                             height: 60.0,
                             child: TextButton(
                               onPressed: () async {
+
                                 SharedPreferences pref =
                                     await SharedPreferences.getInstance();
 
@@ -277,7 +389,7 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                                     final user =
                                         FirebaseAuth.instance.currentUser;
 
-                                    if (user!=null) {
+                                    if (user != null) {
                                       storeUser
                                           .collection("Users")
                                           .doc(user.uid)
@@ -286,28 +398,27 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                                         'password': kpass.text,
                                         'name': kname.text,
                                         'companyname': kcname.text,
-                                        'phone': kphone.text,
+                                        'proof_image'
+                                            'phone': kphone.text,
                                         'address': kaddress.text,
                                         'pincode': kpincode.text,
                                         'userType': 'p',
-                                        'status':'a'
+                                        'status': 'a'
                                       });
                                       pref.setString('email', kemail.text);
-                                       ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            const SnackBar(
-                                              content: customsnackbar(
-                                                errortext:
-                                                    'Application Submitted\n Try Login later',
-                                                errorcolor: Colors.yellow,
-                                              ),
-                                              elevation: 0,
-                                              behavior:
-                                                  SnackBarBehavior.floating,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                            ),
-                                          );
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content: customsnackbar(
+                                            errortext:
+                                                'Application Submitted\n Try Login later',
+                                            errorcolor: Colors.yellow,
+                                          ),
+                                          elevation: 0,
+                                          behavior: SnackBarBehavior.floating,
+                                          backgroundColor: Colors.transparent,
+                                        ),
+                                      );
                                     }
                                   } catch (e) {
                                     print(e.toString());

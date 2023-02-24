@@ -93,9 +93,9 @@ class _ChatListPageState extends State<ChatListPage> {
 
                           String name = userSnapshot.data!['name'];
                           String img='';
-                          if(userSnapshot.data!['profileImage']!=''){
-                                img=userSnapshot.data!['profileImage'];
-                          }
+                          // if(userSnapshot.data!['profileImage']!=''){
+                          //       img=userSnapshot.data!['profileImage'];
+                          // }
                           DocumentSnapshot? document = userSnapshot.data;
                           // String profileImage =
                           //     userSnapshot.data?['profileImage'];
@@ -129,12 +129,7 @@ class _ChatListPageState extends State<ChatListPage> {
 
                               return ListTile(
                                 title: Text(name),
-                                leading: (img.isEmpty)?CircleAvatar(
-                                  radius: 25,
-                                  backgroundColor: Colors.green,
-                                  backgroundImage:
-                                      NetworkImage(img),
-                                ):
+                                leading: 
                                 CircleAvatar(
                                   child: Icon(Icons.person,size: 25,),
                                 ),
