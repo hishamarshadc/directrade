@@ -24,7 +24,7 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   SharedPreferences prefs=await SharedPreferences.getInstance();
-  var email=prefs.getString('email');
+  
   var type=prefs.getString('type');
   runApp(MaterialApp(
       title: 'DirecTrade',

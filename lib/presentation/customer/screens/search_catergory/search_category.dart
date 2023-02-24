@@ -31,21 +31,25 @@ class _SearchAndCategoryPageState extends State<SearchAndCategoryPage> {
         (type == 'w')
             ? stream = FirebaseFirestore.instance
                 .collection("Products")
+                .where("status", isEqualTo: 'active')
                 .where('sell_type', isEqualTo: 'w')
                 .snapshots()
             : stream = FirebaseFirestore.instance
                 .collection("Products")
+                .where("status", isEqualTo: 'active')
                 .where('sell_type', isEqualTo: 'r')
                 .snapshots();
       } else if (price == 1) {
         (type == 'w')
             ? stream = FirebaseFirestore.instance
                 .collection("Products")
+                .where("status", isEqualTo: 'active')
                 .where('product_price', isGreaterThan: 1000)
                 .where('sell_type', isEqualTo: 'w')
                 .snapshots()
             : stream = FirebaseFirestore.instance
                 .collection("Products")
+                .where("status", isEqualTo: 'active')
                 .where('product_price', isGreaterThan: 1000)
                 .where('sell_type', isEqualTo: 'r')
                 .snapshots();
@@ -53,29 +57,29 @@ class _SearchAndCategoryPageState extends State<SearchAndCategoryPage> {
         (type == 'w')
             ? stream = FirebaseFirestore.instance
                 .collection("Products")
+                .where("status", isEqualTo: 'active')
                 .where('product_price', isLessThan: price)
                 .where('sell_type', isEqualTo: 'w')
                 .snapshots()
             : stream = FirebaseFirestore.instance
                 .collection("Products")
+                .where("status", isEqualTo: 'active')
                 .where('product_price', isLessThan: price)
                 .where('sell_type', isEqualTo: 'r')
                 .snapshots();
       }
     } else if (cat!.isNotEmpty) {
       if (price == 0) {
-        // stream = FirebaseFirestore.instance
-        //     .collection("Products")
-        //     .where('category', isEqualTo: cat)
-        //     .snapshots();
         (type == 'w')
             ? stream = FirebaseFirestore.instance
                 .collection("Products")
+                .where("status", isEqualTo: 'active')
                 .where('category', isEqualTo: cat)
                 .where('sell_type', isEqualTo: 'w')
                 .snapshots()
             : stream = FirebaseFirestore.instance
                 .collection("Products")
+                .where("status", isEqualTo: 'active')
                 .where('category', isEqualTo: cat)
                 .where('sell_type', isEqualTo: 'r')
                 .snapshots();
@@ -83,12 +87,14 @@ class _SearchAndCategoryPageState extends State<SearchAndCategoryPage> {
         (type == 'w')
             ? stream = FirebaseFirestore.instance
                 .collection("Products")
+                .where("status", isEqualTo: 'active')
                 .where('category', isEqualTo: cat)
                 .where('product_price', isGreaterThan: 1000)
                 .where('sell_type', isEqualTo: 'w')
                 .snapshots()
             : stream = FirebaseFirestore.instance
                 .collection("Products")
+                .where("status", isEqualTo: 'active')
                 .where('category', isEqualTo: cat)
                 .where('product_price', isGreaterThan: 1000)
                 .where('sell_type', isEqualTo: 'r')
@@ -97,12 +103,14 @@ class _SearchAndCategoryPageState extends State<SearchAndCategoryPage> {
         (type == 'w')
             ? stream = FirebaseFirestore.instance
                 .collection("Products")
+                .where("status", isEqualTo: 'active')
                 .where('category', isEqualTo: cat)
                 .where('product_price', isLessThan: price)
                 .where('sell_type', isEqualTo: 'w')
                 .snapshots()
             : stream = FirebaseFirestore.instance
                 .collection("Products")
+                .where("status", isEqualTo: 'active')
                 .where('category', isEqualTo: cat)
                 .where('product_price', isLessThan: price)
                 .where('sell_type', isEqualTo: 'r')
@@ -153,147 +161,109 @@ class _SearchAndCategoryPageState extends State<SearchAndCategoryPage> {
           }),
       body: Column(
         children: [
-          // Container(
-          //   color: Colors.amber,
-          //   child: Row(
-          //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-          //     children: [
-          //       const Text(
-          //         'Filters',
-          //         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          //       ),
-          //       Container(
-          //         width: MediaQuery.of(context).size.width * 0.3,
-          //         margin: const EdgeInsets.only(left: 10),
-          //         child: DropdownButton<String>(
-          //           hint: const Text('Category'),
-          //           onChanged: (value) {},
-          //           items: _catList.map((item) {
-          //             return DropdownMenuItem<String>(
-          //               value: item,
-          //               child: Text(
-          //                 item,
-          //                 style: const TextStyle(fontSize: 15),
-          //               ),
-          //             );
-          //           }).toList(),
-          //         ),
-          //       ),
-          //       Container(
-          //         width: MediaQuery.of(context).size.width * 0.3,
-          //         margin: const EdgeInsets.only(left: 10),
-          //         child: DropdownButton<String>(
-          //           hint: const Text('Price'),
-          //           onChanged: (value) {},
-          //           items: _priceList.map((item) {
-          //             return DropdownMenuItem<String>(
-          //               value: item,
-          //               child: Text(
-          //                 item,
-          //                 style: const TextStyle(fontSize: 15),
-          //               ),
-          //             );
-          //           }).toList(),
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
           Container(
             color: Colors.lightBlue,
             width: double.infinity,
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              child: Column(
                 children: [
-                  const SizedBox(width: 20),
-                  const Text(
-                    'Filters : ',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.35,
-                    margin: const EdgeInsets.only(left: 10),
-                    child: DropdownButton(
-                      // hint: const Text('Category'),
-                      value: cat,
-                      items: [
-                        DropdownMenuItem(
-                          child: Text('All Category'),
-                          value: '',
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      const SizedBox(width: 20),
+                      const Text(
+                        'Filters : ',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.35,
+                        margin: const EdgeInsets.only(left: 10),
+                        child: DropdownButton(
+                          // hint: const Text('Category'),
+                          value: cat,
+                          items: [
+                            DropdownMenuItem(
+                              child: Text('All Category'),
+                              value: '',
+                            ),
+                            DropdownMenuItem(
+                          child: Text('Textiles'),
+                          value: 'textiles',
                         ),
                         DropdownMenuItem(
-                          child: Text('Fashion'),
-                          value: 'fashion',
+                          child: Text('Handcrafts'),
+                          value: 'handcrafts',
                         ),
                         DropdownMenuItem(
-                          child: Text('Food'),
+                          child: Text('Food & \nBeverages'),
                           value: 'food',
                         ),
                         DropdownMenuItem(
                           child: Text('Others'),
                           value: 'others',
+                        )
+                          ],
+                          onChanged: (value) => setState(() {
+                            cat = value;
+                          }),
                         ),
-                      ],
-                      onChanged: (value) => setState(() {
-                        cat = value;
-                      }),
-                    ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        margin: const EdgeInsets.only(left: 10),
+                        child: DropdownButton<String>(
+                          // hint: const Text('Category'),
+                          items: [
+                            DropdownMenuItem(
+                              child: Text('Any Price'),
+                              value: '0',
+                            ),
+                            DropdownMenuItem(
+                              child: Text('Less than 500'),
+                              value: '500',
+                            ),
+                            DropdownMenuItem(
+                              child: Text('Less than 1000'),
+                              value: '1000',
+                            ),
+                            DropdownMenuItem(
+                              child: Text('Greater than 1000'),
+                              value: '1',
+                            ),
+                          ],
+                          value: price.toString(),
+                          onChanged: (value) => setState(() {
+                            price = num.parse(value!);
+                          }),
+                        ),
+                      ),
+                    ],
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.4,
-                    margin: const EdgeInsets.only(left: 10),
-                    child: DropdownButton<String>(
-                      // hint: const Text('Category'),
-                      items: [
-                        DropdownMenuItem(
-                          child: Text('Any Price'),
-                          value: '0',
+                        width: MediaQuery.of(context).size.width * 0.35,
+                        margin: const EdgeInsets.only(left: 10),
+                        child: DropdownButton(
+                          // hint: const Text('Sale Type'),
+                          value: type,
+                          items: [
+                            DropdownMenuItem(
+                              child: Text('Retail'),
+                              value: 'r',
+                            ),
+                            DropdownMenuItem(
+                              child: Text('Wholesale'),
+                              value: 'w',
+                            ),
+                          ],
+                          onChanged: (value) => setState(() {
+                            type = value;
+                          }),
                         ),
-                        DropdownMenuItem(
-                          child: Text('Less than 500'),
-                          value: '500',
-                        ),
-                        DropdownMenuItem(
-                          child: Text('Less than 1000'),
-                          value: '1000',
-                        ),
-                        DropdownMenuItem(
-                          child: Text('Greater than 1000'),
-                          value: '1',
-                        ),
-                      ],
-                      value: price.toString(),
-                      onChanged: (value) => setState(() {
-                        price = num.parse(value!);
-                      }),
-                    ),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.35,
-                    margin: const EdgeInsets.only(left: 10),
-                    child: DropdownButton(
-                      // hint: const Text('Sale Type'),
-                      value: type,
-                      items: [
-                        DropdownMenuItem(
-                          child: Text('Retail'),
-                          value: 'r',
-                        ),
-                        DropdownMenuItem(
-                          child: Text('Wholesale'),
-                          value: 'w',
-                        ),
-                      ],
-                      onChanged: (value) => setState(() {
-                        type = value;
-                      }),
-                    ),
-                  ),
+                      ),
                 ],
               ),
             ),

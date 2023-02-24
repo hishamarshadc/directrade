@@ -69,11 +69,13 @@ class _SellerProductPageState extends State<SellerProductPage> {
       (type == 'w')
           ? stream = FirebaseFirestore.instance
               .collection("Products")
+              .where("status", isEqualTo: 'active')
               .where('product_seller_id', isEqualTo: user!.uid)
               .where('sell_type', isEqualTo: 'w')
               .snapshots()
           : stream = FirebaseFirestore.instance
               .collection("Products")
+              .where("status", isEqualTo: 'active')
               .where('product_seller_id', isEqualTo: user!.uid)
               .where('sell_type', isEqualTo: 'r')
               .snapshots();
@@ -81,12 +83,14 @@ class _SellerProductPageState extends State<SellerProductPage> {
       (type == 'w')
           ? stream = FirebaseFirestore.instance
               .collection("Products")
+              .where("status", isEqualTo: 'active')
               .where('product_seller_id', isEqualTo: user!.uid)
               .where('product_price', isGreaterThan: 1000)
               .where('sell_type', isEqualTo: 'w')
               .snapshots()
           : stream = FirebaseFirestore.instance
               .collection("Products")
+              .where("status", isEqualTo: 'active')
               .where('product_seller_id', isEqualTo: user!.uid)
               .where('product_price', isGreaterThan: 1000)
               .where('sell_type', isEqualTo: 'r')
@@ -95,12 +99,14 @@ class _SellerProductPageState extends State<SellerProductPage> {
       (type == 'w')
           ? stream = FirebaseFirestore.instance
               .collection("Products")
+              .where("status", isEqualTo: 'active')
               .where('product_seller_id', isEqualTo: user!.uid)
               .where('product_price', isLessThan: price)
               .where('sell_type', isEqualTo: 'w')
               .snapshots()
           : stream = FirebaseFirestore.instance
               .collection("Products")
+              .where("status", isEqualTo: 'active')
               .where('product_seller_id', isEqualTo: user!.uid)
               .where('product_price', isLessThan: price)
               .where('sell_type', isEqualTo: 'r')
@@ -115,12 +121,14 @@ class _SellerProductPageState extends State<SellerProductPage> {
       (type == 'w')
           ? stream = FirebaseFirestore.instance
               .collection("Products")
-              // .where('product_seller_id', isEqualTo: user!.uid)
+              .where("status", isEqualTo: 'active')
+              .where('product_seller_id', isEqualTo: user!.uid)
               .where('category', isEqualTo: cat)
               .where('sell_type', isEqualTo: 'w')
               .snapshots()
           : stream = FirebaseFirestore.instance
               .collection("Products")
+              .where("status", isEqualTo: 'active')
               .where('category', isEqualTo: cat)
               .where('sell_type', isEqualTo: 'r')
               .where('product_seller_id', isEqualTo: user!.uid)
@@ -129,6 +137,7 @@ class _SellerProductPageState extends State<SellerProductPage> {
       (type == 'w')
           ? stream = FirebaseFirestore.instance
               .collection("Products")
+              .where("status", isEqualTo: 'active')
               .where('product_seller_id', isEqualTo: user!.uid)
               .where('category', isEqualTo: cat)
               .where('product_price', isGreaterThan: 1000)
@@ -136,6 +145,7 @@ class _SellerProductPageState extends State<SellerProductPage> {
               .snapshots()
           : stream = FirebaseFirestore.instance
               .collection("Products")
+              .where("status", isEqualTo: 'active')
               .where('product_seller_id', isEqualTo: user!.uid)
               .where('category', isEqualTo: cat)
               .where('product_price', isGreaterThan: 1000)
@@ -145,6 +155,7 @@ class _SellerProductPageState extends State<SellerProductPage> {
       (type == 'w')
           ? stream = FirebaseFirestore.instance
               .collection("Products")
+              .where("status", isEqualTo: 'active')
               .where('product_seller_id', isEqualTo: user!.uid)
               .where('category', isEqualTo: cat)
               .where('product_price', isLessThan: price)
@@ -152,6 +163,7 @@ class _SellerProductPageState extends State<SellerProductPage> {
               .snapshots()
           : stream = FirebaseFirestore.instance
               .collection("Products")
+              .where("status", isEqualTo: 'active')
               .where('product_seller_id', isEqualTo: user!.uid)
               .where('category', isEqualTo: cat)
               .where('product_price', isLessThan: price)
@@ -269,17 +281,21 @@ class _SellerProductPageState extends State<SellerProductPage> {
                           value: '',
                         ),
                         DropdownMenuItem(
-                          child: Text('Fashion'),
-                          value: 'fashion',
-                        ),
-                        DropdownMenuItem(
-                          child: Text('Food'),
-                          value: 'food',
-                        ),
-                        DropdownMenuItem(
-                          child: Text('Others'),
-                          value: 'others',
-                        ),
+                      child: Text('Textiles'),
+                      value: 'textiles',
+                    ),
+                    DropdownMenuItem(
+                      child: Text('Handcrafts'),
+                      value: 'handcrafts',
+                    ),
+                    DropdownMenuItem(
+                      child: Text('Food & Beverages'),
+                      value: 'food',
+                    ),
+                    DropdownMenuItem(
+                      child: Text('Others'),
+                      value: 'others',
+                    )
                       ],
                       onChanged: (value) => setState(() {
                         cat = value;
