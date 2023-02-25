@@ -9,44 +9,47 @@ final docRef = db.collection("Users").doc(user!.uid);
 var data;
 
 class SellerProfilePage extends StatelessWidget {
-  const SellerProfilePage({super.key});
-
+   const SellerProfilePage({super.key});
+  
   @override
   Widget build(BuildContext context) {
 
-    docRef.get().then(
-      (DocumentSnapshot doc) async {
-        data = await doc.data() as Map<String, dynamic>;
-      },
-      onError: (e) => print("Error getting document: $e"),
-    );
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return  Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
-          child: Column(
+          child: StreamBuilder<DocumentSnapshot>(
+            stream: db.collection("Users").doc(user!.uid).snapshots(),
+            builder: (context, snapshot) {
+              if(snapshot.connectionState==ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(color: Colors.blue),
+            );
+}
+
+              return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              const Spacer(flex: 1),
+              const Spacer(
+                flex: 2,
+              ),
               const CircleAvatar(
-                radius: 50.0,
-                backgroundImage: AssetImage('assets/images/seller.jpg'),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                '${data['name']}'.toUpperCase(),
-                style: const TextStyle(
-                  fontSize: 30.0,
-                  fontFamily: 'Pacifico',
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
+                    radius: 50,
+                    child:Icon(Icons.person_pin,size: 60,)
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    snapshot.data!['name'].toUpperCase(),
+                    style: const TextStyle(
+                      fontSize: 30.0,
+                      fontFamily: 'Pacifico',
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
               const SizedBox(
                 height: 20.0,
                 width: 150,
@@ -55,12 +58,13 @@ class SellerProfilePage extends StatelessWidget {
                 ),
               ),
               InkWell(
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        side: const BorderSide(
-                          color: Colors.black,
-                        )),
+                  child: Card(shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    side: const BorderSide(
+                      color: Colors.black,
+                      
+                    )
+                  ),
                     margin: const EdgeInsets.symmetric(
                         vertical: 10.0, horizontal: 25.0),
                     child: ListTile(
@@ -97,12 +101,13 @@ class SellerProfilePage extends StatelessWidget {
                 width: 150,
               ),
               InkWell(
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        side: const BorderSide(
-                          color: Colors.black,
-                        )),
+                  child: Card(shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    side: const BorderSide(
+                      color: Colors.black,
+                      
+                    )
+                  ),
                     margin: const EdgeInsets.symmetric(
                         vertical: 10.0, horizontal: 25.0),
                     child: ListTile(
@@ -174,12 +179,13 @@ class SellerProfilePage extends StatelessWidget {
               //   width: 150,
               // ),
               InkWell(
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                      side: const BorderSide(
-                        color: Colors.black,
-                      )),
+                child: Card(shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    side: const BorderSide(
+                      color: Colors.black,
+                      
+                    )
+                  ),
                   margin: const EdgeInsets.symmetric(
                       vertical: 10.0, horizontal: 25.0),
                   child: ListTile(
@@ -215,27 +221,27 @@ class SellerProfilePage extends StatelessWidget {
                       ModalRoute.withName('/'));
                 },
               ),
-              const Spacer(flex: 2),
+              const Spacer(
+                flex: 3,
+              ),
               const SizedBox(
                 height: 5,
                 width: 150,
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, 'aboutus');
-                },
-                child: const Text('About Us'),
-                style: TextButton.styleFrom(foregroundColor: Colors.black),
-              ),
+              TextButton(onPressed: () {
+                Navigator.pushNamed(context,'aboutus');
+              },style: TextButton.styleFrom(
+                foregroundColor: Colors.black
+              ), child: const Text('About Us'),),
               const SizedBox(
                 height: 20.0,
                 width: 150,
                 child: Divider(
-                  color: Colors.black,
+                  color: Colors.white,
                 ),
               ),
               Text(
-                'Logined as a seller'.toUpperCase(),
+                'Logined as a Seller'.toUpperCase(),
                 style: const TextStyle(
                   fontSize: 20.0,
                   fontFamily: 'Pacifico',
@@ -243,18 +249,18 @@ class SellerProfilePage extends StatelessWidget {
                   color: Colors.black,
                 ),
               ),
-
               const SizedBox(
                 height: 20.0,
                 width: 150,
                 child: Divider(
-                  color: Colors.black,
+                  color: Colors.white,
                 ),
               ),
             ],
+          );
+            }
           ),
         ),
-      ),
     );
   }
 }
