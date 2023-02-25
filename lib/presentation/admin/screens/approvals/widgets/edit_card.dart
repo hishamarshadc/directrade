@@ -71,41 +71,102 @@ class SellerEditCard extends StatelessWidget {
                               color: Colors.red.shade500,
                               fontFamily: 'Roboto',
                               fontSize: 20,
-                              fontWeight: FontWeight.bold),
+                              fontWeight: FontWeight.w500),
                         ),
                       ),
-                      Text(
-                        'Name : ${olddata['name']}',
-                        style: TextStyle(
-                          color: (olddata['name'] == newdata['name'])
-                              ? Colors.black
-                              : Colors.red,
-                        ),
-                      ),
-                      Text(
-                        'Business Address : ${olddata['companyname']}',
-                        style: TextStyle(
-                          color:
-                              (olddata['companyname'] == newdata['companyname'])
-                                  ? Colors.black
-                                  : Colors.red,
-                        ),
-                      ),
-                      Text(
-                        'PIN Code : ${olddata['pincode']}',
-                        style: TextStyle(
-                          color: (olddata['pincode'] == newdata['pincode'])
-                              ? Colors.black
-                              : Colors.red,
-                        ),
-                      ),
-                      Text(
-                        'Phone : ${olddata['phone']}',
-                        style: TextStyle(
-                          color: (olddata['phone'] == newdata['phone'])
-                              ? Colors.black
-                              : Colors.red,
-                        ),
+                      SizedBox(height: size.width * .01),
+                      DataTable(
+                        border: TableBorder.all(
+                            width: 0.02,
+                            borderRadius: BorderRadius.all(Radius.circular(2))),
+                        columns: const [
+                          DataColumn(
+                            label: Text(
+                              'Field',
+                              style: TextStyle(
+                                  fontSize: 20, color: Colors.lightBlue),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              'Details',
+                              style: TextStyle(
+                                  fontSize: 20, color: Colors.lightBlue),
+                            ),
+                          ),
+                        ],
+                        rows: [
+                          DataRow(cells: [
+                            DataCell(Text(
+                              'Name',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16),
+                            )),
+                            DataCell(
+                              Text(
+                                '${olddata['name']}',
+                                style: TextStyle(
+                                  color: (olddata['name'] == newdata['name'])
+                                      ? Colors.black
+                                      : Colors.red,
+                                ),
+                              ),
+                            )
+                          ]),
+                          DataRow(cells: [
+                            DataCell(Text(
+                              'Business Address',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16),
+                            )),
+                            DataCell(
+                              Text(
+                                '${olddata['companyname']}',
+                                style: TextStyle(
+                                  color: (olddata['companyname'] ==
+                                          newdata['companyname'])
+                                      ? Colors.black
+                                      : Colors.red,
+                                ),
+                              ),
+                            )
+                          ]),
+                          DataRow(cells: [
+                            DataCell(Text(
+                              'Pin Code',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16),
+                            )),
+                            DataCell(
+                              Text(
+                                '${olddata['pincode']}',
+                                style: TextStyle(
+                                  color:
+                                      (olddata['pincode'] == newdata['pincode'])
+                                          ? Colors.black
+                                          : Colors.red,
+                                ),
+                              ),
+                            )
+                          ]),
+                          // DataRow(cells: [
+                          //   DataCell(Text(
+                          //     'Phone Number',
+                          //     style: TextStyle(
+                          //         fontWeight: FontWeight.bold, fontSize: 16),
+                          //   )),
+                          //   DataCell(
+                          //     Text(
+                          //       '${olddata['phone']}',
+                          //       style: TextStyle(
+                          //         color: (olddata['phone'] == newdata['phone'])
+                          //             ? Colors.black
+                          //             : Colors.red,
+                          //       ),
+                          //     ),
+                          //   )
+                          // ]),
+                        ],
                       ),
                       SizedBox(height: size.width * .02),
                       Center(
@@ -115,41 +176,102 @@ class SellerEditCard extends StatelessWidget {
                               color: Colors.green.shade300,
                               fontFamily: 'Roboto',
                               fontSize: 20,
-                              fontWeight: FontWeight.bold),
+                              fontWeight: FontWeight.w500),
                         ),
                       ),
-                      Text(
-                        'Name : ${newdata['name']}',
-                        style: TextStyle(
-                          color: (olddata['name'] == newdata['name'])
-                              ? Colors.black
-                              : Colors.green,
-                        ),
-                      ),
-                      Text(
-                        'Business Address : ${newdata['companyname']}',
-                        style: TextStyle(
-                          color:
-                              (olddata['companyname'] == newdata['companyname'])
-                                  ? Colors.black
-                                  : Colors.green,
-                        ),
-                      ),
-                      Text(
-                        'PIN Code : ${newdata['pincode']}',
-                        style: TextStyle(
-                          color: (olddata['pincode'] == newdata['pincode'])
-                              ? Colors.black
-                              : Colors.green,
-                        ),
-                      ),
-                      Text(
-                        'Phone : ${newdata['phone']}',
-                        style: TextStyle(
-                          color: (olddata['phone'] == newdata['phone'])
-                              ? Colors.black
-                              : Colors.green,
-                        ),
+                      SizedBox(height: size.width * .01),
+                      DataTable(
+                        border: TableBorder.all(
+                            width: 0.02,
+                            borderRadius: BorderRadius.all(Radius.circular(2))),
+                        columns: const [
+                          DataColumn(
+                            label: Text(
+                              'Field',
+                              style: TextStyle(
+                                  fontSize: 20, color: Colors.lightBlue),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              'Details',
+                              style: TextStyle(
+                                  fontSize: 20, color: Colors.lightBlue),
+                            ),
+                          ),
+                        ],
+                        rows: [
+                          DataRow(cells: [
+                            DataCell(Text(
+                              'Name',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16),
+                            )),
+                            DataCell(
+                              Text(
+                                '${newdata['name']}',
+                                style: TextStyle(
+                                  color: (olddata['name'] == newdata['name'])
+                                      ? Colors.black
+                                      : Colors.green,
+                                ),
+                              ),
+                            )
+                          ]),
+                          DataRow(cells: [
+                            DataCell(Text(
+                              'Business Address',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16),
+                            )),
+                            DataCell(
+                              Text(
+                                '${newdata['companyname']}',
+                                style: TextStyle(
+                                  color: (olddata['companyname'] ==
+                                          newdata['companyname'])
+                                      ? Colors.black
+                                      : Colors.green,
+                                ),
+                              ),
+                            )
+                          ]),
+                          DataRow(cells: [
+                            DataCell(Text(
+                              'Pin Code',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16),
+                            )),
+                            DataCell(
+                              Text(
+                                '${newdata['pincode']}',
+                                style: TextStyle(
+                                  color:
+                                      (olddata['pincode'] == newdata['pincode'])
+                                          ? Colors.black
+                                          : Colors.green,
+                                ),
+                              ),
+                            )
+                          ]),
+                          // DataRow(cells: [
+                          //   DataCell(Text(
+                          //     'Phone Number',
+                          //     style: TextStyle(
+                          //         fontWeight: FontWeight.bold, fontSize: 16),
+                          //   )),
+                          //   DataCell(
+                          //     Text(
+                          //       '${olddata['phone']}',
+                          //       style: TextStyle(
+                          //         color: (olddata['phone'] == newdata['phone'])
+                          //             ? Colors.black
+                          //             : Colors.green,
+                          //       ),
+                          //     ),
+                          //   )
+                          // ]),
+                        ],
                       ),
                       SizedBox(height: size.width * .02),
                       Row(
@@ -171,7 +293,6 @@ class SellerEditCard extends StatelessWidget {
                                       'name': newdata['name'],
                                       'pincode': newdata['pincode'],
                                       'companyname': newdata['companyname'],
-                                      'phone': newdata['phone'],
                                     }),
                                     storeUser
                                         .collection("Changes")
