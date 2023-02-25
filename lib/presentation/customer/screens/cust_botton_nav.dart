@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sample_project/presentation/chat/chat_list.dart';
+import 'package:sample_project/presentation/customer/screens/homepage/customer_home.dart';
 import 'package:sample_project/presentation/customer/screens/order/cust_tabbar.dart';
 import 'package:sample_project/presentation/customer/screens/search_catergory/search_category.dart';
 // import 'package:sample_project/screens/product.dart';
@@ -13,6 +14,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final pages = [
+    CustHomePage(),
     const SearchAndCategoryPage(),
     const CustOrderTabBar(),
     ChatListPage(),
@@ -32,6 +34,10 @@ class _HomePageState extends State<HomePage> {
             BottomNavigationBarItem(
               icon: Icon(Icons.home, size: 25),
               label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search, size: 25),
+              label: 'Products',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.shopping_cart, size: 25),

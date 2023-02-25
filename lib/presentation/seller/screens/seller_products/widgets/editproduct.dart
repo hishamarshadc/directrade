@@ -250,7 +250,7 @@ class _EditProductFormState extends State<EditProductForm> {
                       
                       final user=FirebaseAuth.instance.currentUser;
                       final db=FirebaseFirestore.instance;
-                      final dl = await uploadImage(imgTemp);
+                      final dl = await uploadImage(image!);
                       print('!!!!!!!!!!${dl}!!!!!!!!!!!');
 
 
@@ -265,7 +265,8 @@ class _EditProductFormState extends State<EditProductForm> {
                                       'rating':0.0,
                                       'rating_count':0,
                                       'sell_type': _isWholesale?'w':'r',
-                                      'upload_time':DateTime.now()
+                                      'upload_time':DateTime.now(),
+                                      'status':'active'
                                    });
 
 

@@ -14,7 +14,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
   final pages = [
     const ApprovalTabBar(),
     const ViewTabBar(),
-    const FeedbackHome(),
+    // const FeedbackHome(),
   ];
 
   int selectedIndex = 0;
@@ -36,10 +36,6 @@ class _AdminHomePageState extends State<AdminHomePage> {
             BottomNavigationBarItem(
               icon: Icon(Icons.person_pin_rounded, size: 25),
               label: 'View Users',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.feedback_outlined, size: 25),
-              label: 'Feedbacks',
             ),
           ],
           currentIndex: selectedIndex,

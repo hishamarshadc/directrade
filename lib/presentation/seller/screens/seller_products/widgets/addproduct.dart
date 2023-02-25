@@ -284,7 +284,7 @@ class _AddProductFormState extends State<AddProductForm> {
                     if (_formKey.currentState!.validate()) {
                       final user = FirebaseAuth.instance.currentUser;
                       final db = FirebaseFirestore.instance;
-                      final dl = await uploadImage(imgTemp);
+                      final dl = await uploadImage(image!);
                       print('!!!!!!!!!!${dl}!!!!!!!!!!!');
 
                       db.collection("Products").doc().set({
@@ -299,7 +299,8 @@ class _AddProductFormState extends State<AddProductForm> {
                         'rating': 0.0,
                         'rating_count': 0,
                         'sell_type': _isWholesale ? 'w' : 'r',
-                        'upload_time': DateTime.now()
+                        'upload_time': DateTime.now(),
+                        'status':'active'
                       });
 
                       _formKey.currentState!.save();

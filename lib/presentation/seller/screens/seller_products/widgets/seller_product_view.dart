@@ -84,7 +84,7 @@ class SellerProductView extends StatelessWidget {
                                     Icons.star,
                                     color: Colors.amber,
                                   ),
-                                  Text('${passingdocument['rating']!} ( ${passingdocument['rating_count']} Ratings )'),
+                                  Text('${passingdocument['rating'].toStringAsFixed(1)!} ( ${passingdocument['rating_count']} Ratings )'),
                                 ],
                               )
                             ],

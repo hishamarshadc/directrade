@@ -132,7 +132,7 @@ void decrement() {
                                     Icons.star,
                                     color: Colors.amber,
                                   ),
-                                  Text('${widget.passingdocument['rating']} ( ${widget.passingdocument['rating_count']} Ratings )'),
+                                  Text('${widget.passingdocument['rating'].toStringAsFixed(1)} ( ${widget.passingdocument['rating_count']} Ratings )'),
                                 ],
                               )
                             ],

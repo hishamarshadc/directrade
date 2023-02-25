@@ -4,13 +4,33 @@ import 'package:sample_project/presentation/seller/screens/seller_products/widge
 import 'package:sample_project/presentation/user_model.dart';
 
 class SellerProductCard extends StatelessWidget {
-  SellerProductCard({Key? key, required this.passingdocument}) : super(key: key);
-DocumentSnapshot passingdocument;
-//  List<String> sellerList=[
-//       'Anshid O',
-//       'Acee'
+  SellerProductCard({Key? key, required this.passingdocument})
+      : super(key: key);
+  DocumentSnapshot passingdocument;
 
-//  ]
+
+
+  Future<void> deactivateProductAndCancelOrders(String productId) async {
+    final productRef =
+        FirebaseFirestore.instance.collection("Products").doc(productId);
+    final pendingOrdersQuery = FirebaseFirestore.instance
+        .collection("Orders")
+        .where("product_id", isEqualTo: productId)
+        .where("status", isEqualTo: "pending");
+
+    final batch = FirebaseFirestore.instance.batch();
+    final pendingOrders = await pendingOrdersQuery.get();
+
+    batch.update(productRef, {"status": "inactive"});
+
+    for (final order in pendingOrders.docs) {
+      final orderRef =
+          FirebaseFirestore.instance.collection("Orders").doc(order.id);
+      batch.update(orderRef, {"status": "c"});
+    }
+
+    await batch.commit();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,9 +71,9 @@ DocumentSnapshot passingdocument;
                 Row(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top:8.0,left:10),
+                      padding: const EdgeInsets.only(top: 8.0, left: 10),
                       child: SizedBox(
-                        width: size.width*.5,
+                        width: size.width * .5,
                         child: Text(
                           passingdocument['product_name']!,
                           overflow: TextOverflow.ellipsis,
@@ -62,29 +82,30 @@ DocumentSnapshot passingdocument;
                         ),
                       ),
                     ),
-                    
                   ],
                 ),
-                SizedBox(height: size.width*.02),
+                SizedBox(height: size.width * .02),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                  SizedBox(width: size.width * .03),
+                    SizedBox(width: size.width * .03),
                     Container(
-                      width: size.width*.35,
+                      width: size.width * .35,
                       child: Text(
                         'Rs.${passingdocument['product_price']!}/unit',
-                        style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                        style: const TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    
                   ],
                 ),
-                SizedBox(height: size.width*.015),
+                SizedBox(height: size.width * .015),
                 Row(
                   children: [
-                    SizedBox(width: size.width*.03,),
-                      Container(
+                    SizedBox(
+                      width: size.width * .03,
+                    ),
+                    Container(
                       width: size.width * .2,
                       height: size.width * .06,
                       decoration: BoxDecoration(
@@ -93,7 +114,9 @@ DocumentSnapshot passingdocument;
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SizedBox(width: 5,),
+                          SizedBox(
+                            width: 5,
+                          ),
                           const Icon(
                             Icons.star_sharp,
                             size: 12,
@@ -101,7 +124,7 @@ DocumentSnapshot passingdocument;
                           ),
                           Expanded(
                             child: Text(
-                              '${passingdocument['rating']!} (${passingdocument['rating_count']!})',
+                              '${passingdocument['rating'].toStringAsFixed(1)!} (${passingdocument['rating_count']!})',
                               maxLines: 1,
                               style: const TextStyle(
                                   fontSize: 15, fontWeight: FontWeight.w400),
@@ -110,7 +133,9 @@ DocumentSnapshot passingdocument;
                         ],
                       ),
                     ),
-                    SizedBox(width: size.width*.09,),
+                    SizedBox(
+                      width: size.width * .09,
+                    ),
                     Container(
                       width: size.width * .2,
                       height: size.width * .06,
@@ -119,7 +144,7 @@ DocumentSnapshot passingdocument;
                           borderRadius: BorderRadius.circular(5)),
                       child: Center(
                         child: Text(
-                          (passingdocument['sell_type'] =='w')
+                          (passingdocument['sell_type'] == 'w')
                               ? 'Wholesale'
                               : 'Retail',
                           style: const TextStyle(
@@ -129,12 +154,17 @@ DocumentSnapshot passingdocument;
                     )
                   ],
                 ),
-                SizedBox(height: size.width*.015),
+                SizedBox(height: size.width * .015),
                 Row(
                   children: [
                     OutlinedButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => SellerProductView(passingdocument: passingdocument),));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SellerProductView(
+                                  passingdocument: passingdocument),
+                            ));
                       },
                       style: OutlinedButton.styleFrom(
                           shape: RoundedRectangleBorder(
@@ -144,11 +174,33 @@ DocumentSnapshot passingdocument;
                         style: TextStyle(color: Colors.blue),
                       ),
                     ),
-                    SizedBox(width:size.width * .03),
+                    SizedBox(width: size.width * .03),
                     OutlinedButton(
                         onPressed: () {
-                          final db=FirebaseFirestore.instance;
-                          // db.collection('Products').doc(passingdocument.id).delete();
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Text("Confirm Delete"),
+                                content: Text("Product deletion will automatically cancel all the existing orders of the product"),
+                                actions: [
+                                  TextButton(
+                                    child: Text("CANCEL"),
+                                    onPressed: () {
+                                       Navigator.of(context).pop();
+                                    },
+                                  ),
+                                  TextButton(
+                                    child: Text("OK"),
+                                    onPressed: () {
+                                       deactivateProductAndCancelOrders(passingdocument.id);
+                                       Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
                         },
                         style: OutlinedButton.styleFrom(
                             shape: RoundedRectangleBorder(
@@ -264,7 +316,7 @@ DocumentSnapshot passingdocument;
             //       color: Colors.red, borderRadius: BorderRadius.circular(10)),
             //   child: Center(child: Icon(Icons.delete)),
             // )
-        
+
             // ElevatedButton(onPressed: (){},
             // style: ElevatedButton.styleFrom(
             //   backgroundColor: Colors.white,

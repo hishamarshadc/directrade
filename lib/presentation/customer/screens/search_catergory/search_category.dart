@@ -31,21 +31,25 @@ class _SearchAndCategoryPageState extends State<SearchAndCategoryPage> {
         (type == 'w')
             ? stream = FirebaseFirestore.instance
                 .collection("Products")
+                .where("status", isEqualTo: 'active')
                 .where('sell_type', isEqualTo: 'w')
                 .snapshots()
             : stream = FirebaseFirestore.instance
                 .collection("Products")
+                .where("status", isEqualTo: 'active')
                 .where('sell_type', isEqualTo: 'r')
                 .snapshots();
       } else if (price == 1) {
         (type == 'w')
             ? stream = FirebaseFirestore.instance
                 .collection("Products")
+                .where("status", isEqualTo: 'active')
                 .where('product_price', isGreaterThan: 1000)
                 .where('sell_type', isEqualTo: 'w')
                 .snapshots()
             : stream = FirebaseFirestore.instance
                 .collection("Products")
+                .where("status", isEqualTo: 'active')
                 .where('product_price', isGreaterThan: 1000)
                 .where('sell_type', isEqualTo: 'r')
                 .snapshots();
@@ -53,29 +57,29 @@ class _SearchAndCategoryPageState extends State<SearchAndCategoryPage> {
         (type == 'w')
             ? stream = FirebaseFirestore.instance
                 .collection("Products")
+                .where("status", isEqualTo: 'active')
                 .where('product_price', isLessThan: price)
                 .where('sell_type', isEqualTo: 'w')
                 .snapshots()
             : stream = FirebaseFirestore.instance
                 .collection("Products")
+                .where("status", isEqualTo: 'active')
                 .where('product_price', isLessThan: price)
                 .where('sell_type', isEqualTo: 'r')
                 .snapshots();
       }
     } else if (cat!.isNotEmpty) {
       if (price == 0) {
-        // stream = FirebaseFirestore.instance
-        //     .collection("Products")
-        //     .where('category', isEqualTo: cat)
-        //     .snapshots();
         (type == 'w')
             ? stream = FirebaseFirestore.instance
                 .collection("Products")
+                .where("status", isEqualTo: 'active')
                 .where('category', isEqualTo: cat)
                 .where('sell_type', isEqualTo: 'w')
                 .snapshots()
             : stream = FirebaseFirestore.instance
                 .collection("Products")
+                .where("status", isEqualTo: 'active')
                 .where('category', isEqualTo: cat)
                 .where('sell_type', isEqualTo: 'r')
                 .snapshots();
@@ -83,12 +87,14 @@ class _SearchAndCategoryPageState extends State<SearchAndCategoryPage> {
         (type == 'w')
             ? stream = FirebaseFirestore.instance
                 .collection("Products")
+                .where("status", isEqualTo: 'active')
                 .where('category', isEqualTo: cat)
                 .where('product_price', isGreaterThan: 1000)
                 .where('sell_type', isEqualTo: 'w')
                 .snapshots()
             : stream = FirebaseFirestore.instance
                 .collection("Products")
+                .where("status", isEqualTo: 'active')
                 .where('category', isEqualTo: cat)
                 .where('product_price', isGreaterThan: 1000)
                 .where('sell_type', isEqualTo: 'r')
@@ -97,12 +103,14 @@ class _SearchAndCategoryPageState extends State<SearchAndCategoryPage> {
         (type == 'w')
             ? stream = FirebaseFirestore.instance
                 .collection("Products")
+                .where("status", isEqualTo: 'active')
                 .where('category', isEqualTo: cat)
                 .where('product_price', isLessThan: price)
                 .where('sell_type', isEqualTo: 'w')
                 .snapshots()
             : stream = FirebaseFirestore.instance
                 .collection("Products")
+                .where("status", isEqualTo: 'active')
                 .where('category', isEqualTo: cat)
                 .where('product_price', isLessThan: price)
                 .where('sell_type', isEqualTo: 'r')
@@ -127,8 +135,12 @@ class _SearchAndCategoryPageState extends State<SearchAndCategoryPage> {
             onTap: () => {Navigator.pushNamed(context, 'custprofile')},
             child: const CircleAvatar(
               radius: 20,
-              backgroundColor: Colors.green,
-              backgroundImage: AssetImage('assets/images/seller.jpg'),
+              backgroundColor: Colors.black,
+              foregroundColor: Colors.white,
+              child: Icon(
+                Icons.person_pin,
+                size: 30,
+              ),
             ),
           ),
           const SizedBox(
@@ -153,52 +165,6 @@ class _SearchAndCategoryPageState extends State<SearchAndCategoryPage> {
           }),
       body: Column(
         children: [
-          // Container(
-          //   color: Colors.amber,
-          //   child: Row(
-          //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-          //     children: [
-          //       const Text(
-          //         'Filters',
-          //         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          //       ),
-          //       Container(
-          //         width: MediaQuery.of(context).size.width * 0.3,
-          //         margin: const EdgeInsets.only(left: 10),
-          //         child: DropdownButton<String>(
-          //           hint: const Text('Category'),
-          //           onChanged: (value) {},
-          //           items: _catList.map((item) {
-          //             return DropdownMenuItem<String>(
-          //               value: item,
-          //               child: Text(
-          //                 item,
-          //                 style: const TextStyle(fontSize: 15),
-          //               ),
-          //             );
-          //           }).toList(),
-          //         ),
-          //       ),
-          //       Container(
-          //         width: MediaQuery.of(context).size.width * 0.3,
-          //         margin: const EdgeInsets.only(left: 10),
-          //         child: DropdownButton<String>(
-          //           hint: const Text('Price'),
-          //           onChanged: (value) {},
-          //           items: _priceList.map((item) {
-          //             return DropdownMenuItem<String>(
-          //               value: item,
-          //               child: Text(
-          //                 item,
-          //                 style: const TextStyle(fontSize: 15),
-          //               ),
-          //             );
-          //           }).toList(),
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
           Container(
             color: Colors.lightBlue,
             width: double.infinity,
@@ -216,7 +182,7 @@ class _SearchAndCategoryPageState extends State<SearchAndCategoryPage> {
                         fontWeight: FontWeight.bold),
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.35,
+                    width: MediaQuery.of(context).size.width * 0.3,
                     margin: const EdgeInsets.only(left: 10),
                     child: DropdownButton(
                       // hint: const Text('Category'),
@@ -227,17 +193,21 @@ class _SearchAndCategoryPageState extends State<SearchAndCategoryPage> {
                           value: '',
                         ),
                         DropdownMenuItem(
-                          child: Text('Fashion'),
-                          value: 'fashion',
+                          child: Text('Textiles'),
+                          value: 'textiles',
                         ),
                         DropdownMenuItem(
-                          child: Text('Food'),
+                          child: Text('Handcrafts'),
+                          value: 'handcrafts',
+                        ),
+                        DropdownMenuItem(
+                          child: Text('Food & \nBeverages'),
                           value: 'food',
                         ),
                         DropdownMenuItem(
                           child: Text('Others'),
                           value: 'others',
-                        ),
+                        )
                       ],
                       onChanged: (value) => setState(() {
                         cat = value;
@@ -245,7 +215,7 @@ class _SearchAndCategoryPageState extends State<SearchAndCategoryPage> {
                     ),
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.4,
+                    width: MediaQuery.of(context).size.width * 0.3,
                     margin: const EdgeInsets.only(left: 10),
                     child: DropdownButton<String>(
                       // hint: const Text('Category'),
@@ -255,15 +225,15 @@ class _SearchAndCategoryPageState extends State<SearchAndCategoryPage> {
                           value: '0',
                         ),
                         DropdownMenuItem(
-                          child: Text('Less than 500'),
+                          child: Text('Less than\nRs.500'),
                           value: '500',
                         ),
                         DropdownMenuItem(
-                          child: Text('Less than 1000'),
+                          child: Text('Less than\nRs.1000'),
                           value: '1000',
                         ),
                         DropdownMenuItem(
-                          child: Text('Greater than 1000'),
+                          child: Text('Greater than\nRs.1000'),
                           value: '1',
                         ),
                       ],

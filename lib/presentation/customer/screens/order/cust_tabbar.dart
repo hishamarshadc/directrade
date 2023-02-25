@@ -27,15 +27,21 @@ class _CustOrderTabBarState extends State<CustOrderTabBar> {
             ),
           ),
           actions: [
-            IconButton(
-              iconSize: 35,
-              onPressed: () {
-                Navigator.pushNamed(context, 'custprofile');
-              },
-              icon: const Icon(
-                Icons.account_circle_outlined,
+            InkWell(
+            onTap: () => {Navigator.pushNamed(context, 'custprofile')},
+            child: const CircleAvatar(
+              radius: 20,
+              backgroundColor: Colors.black,
+              foregroundColor: Colors.white,
+              child: Icon(
+                Icons.person_pin,
+                size: 30,
               ),
             ),
+          ),
+          const SizedBox(
+            width: 10,
+          )
           ],
         bottom: TabBar(tabs: const [
           Tab(
