@@ -18,14 +18,12 @@ class EditSeller extends StatefulWidget {
 class _EditSellerState extends State<EditSeller> {
   @override
   Widget build(BuildContext context) {
-
     docRef.get().then(
       (DocumentSnapshot doc) async {
         data = await doc.data() as Map<String, dynamic>;
       },
       onError: (e) => print("Error getting document: $e"),
     );
-
 
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -67,186 +65,180 @@ class _EditProfilePageState extends State<EditProfilePage> {
           },
         ),
       ),
-      body: Container(
-        padding: const EdgeInsets.only(left: 16, right: 16),
-        child: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).unfocus();
-          },
-          child: ListView(
-            children: [
-              const SizedBox(
-                height: 5,
-              ),
-              const Text(
-                "Edit Profile",
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Center(
-                child: Stack(
+      body: StreamBuilder<DocumentSnapshot>(
+          stream: db.collection("Users").doc(user!.uid).snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(color: Colors.blue),
+              );
+            }
+            return Container(
+              padding: const EdgeInsets.only(left: 16, right: 16),
+              child: GestureDetector(
+                onTap: () {
+                  FocusScope.of(context).unfocus();
+                },
+                child: ListView(
                   children: [
-                    Container(
-                      width: 130,
-                      height: 130,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              width: 4,
-                              color: Theme.of(context).scaffoldBackgroundColor),
-                          boxShadow: [
-                            BoxShadow(
-                                spreadRadius: 2,
-                                blurRadius: 10,
-                                color: Colors.black.withOpacity(0.1),
-                                offset: const Offset(0, 10))
-                          ],
-                          shape: BoxShape.circle,
-                          image: const DecorationImage(
-                              fit: BoxFit.cover,
-                              image: AssetImage('assets/images/seller.jpg'))),
+                    const SizedBox(
+                      height: 5,
                     ),
-                    Positioned(
-                        bottom: 0,
-                        right: 0,
-                        child: InkWell(
-                          onTap: () {},
-                          child: Container(
-                            height: 40,
-                            width: 40,
+                    const Text(
+                      "Edit Profile",
+                      style:
+                          TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Center(
+                      child: Stack(
+                        children: [
+                          Container(
+                            width: 130,
+                            height: 130,
                             decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                width: 4,
-                                color:
-                                    Theme.of(context).scaffoldBackgroundColor,
-                              ),
-                              color: Colors.black,
-                            ),
-                            child: const Icon(
-                              Icons.edit,
-                              color: Colors.white,
-                            ),
+                                border: Border.all(
+                                    width: 4,
+                                    color: Theme.of(context)
+                                        .scaffoldBackgroundColor),
+                                boxShadow: [
+                                  BoxShadow(
+                                      spreadRadius: 2,
+                                      blurRadius: 10,
+                                      color: Colors.black.withOpacity(0.1),
+                                      offset: const Offset(0, 10))
+                                ],
+                                shape: BoxShape.circle,
+                                image: const DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: AssetImage(
+                                        'assets/images/seller.jpg'))),
                           ),
-                        )),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 35,
+                    ),
+                    buildTextField("Full Name", data['name'], 2, kname),
+                    buildTextField("PinCode", data['pincode'], 4, kpincode),
+                    buildTextField(
+                        "Company Name", data['companyname'], 2, kcname),
+                    buildTextField(
+                        "Company Address", data['address'], 5, kaddress),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(horizontal: 50),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)),
+                          ),
+                          onPressed: () {},
+                          child: const Text("CANCEL",
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  letterSpacing: 2.2,
+                                  color: Colors.black)),
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.black,
+                            padding: const EdgeInsets.symmetric(horizontal: 50),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)),
+                          ),
+                          onPressed: () async {
+                            try {
+                              final user = FirebaseAuth.instance.currentUser;
+                              final store = FirebaseFirestore.instance;
+                              final db = FirebaseFirestore.instance;
+                              final docRef =
+                                  db.collection("Users").doc(user!.uid);
+                              var data;
+                              await docRef.get().then(
+                                (DocumentSnapshot doc) async {
+                                  data =
+                                      await doc.data() as Map<String, dynamic>;
+                                },
+                                onError: (e) =>
+                                    print("Error getting document: $e"),
+                              );
+                              if (user != null) {
+                                store.collection("Changes").doc(user.uid).set({
+                                  // 'email': kemail.text,
+                                  // 'password': kpass.text,
+                                  'name': (kname.text.isNotEmpty)
+                                      ? kname.text
+                                      : data['name'],
+                                  'companyname': (kcname.text.isNotEmpty)
+                                      ? kcname.text
+                                      : data['companyname'],
+                                  // 'phone': (kphone.text.isNotEmpty)
+                                  //     ? kphone.text
+                                  //     : data['phone'],
+                                  'address': (kaddress.text.isNotEmpty)
+                                      ? kaddress.text
+                                      : data['address'],
+                                  'pincode': (kpincode.text.isNotEmpty)
+                                      ? kpincode.text
+                                      : data['pincode'],
+                                  'userType': 'p',
+                                  'status': 'a',
+                                  'change_datetime': DateTime.now()
+                                });
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: customsnackbar(
+                                      errortext:
+                                          'Your changes will be updated after reviewing',
+                                      errorcolor: Colors.yellow,
+                                    ),
+                                    elevation: 0,
+                                    behavior: SnackBarBehavior.floating,
+                                    backgroundColor: Colors.transparent,
+                                  ),
+                                );
+                              }
+                            } catch (e) {
+                              print(e);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: customsnackbar(
+                                    errortext: 'An Error Occured : $e',
+                                    errorcolor: Colors.yellow,
+                                  ),
+                                  elevation: 0,
+                                  behavior: SnackBarBehavior.floating,
+                                  backgroundColor: Colors.transparent,
+                                ),
+                              );
+                            }
+                          },
+                          child: const Text(
+                            " SAVE ",
+                            style: TextStyle(
+                                fontSize: 16,
+                                letterSpacing: 2.2,
+                                color: Colors.white),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 35,
+                    ),
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 35,
-              ),
-              buildTextField("Full Name",data['name'] , 2, kname),
-              buildTextField("PinCode", data['pincode'] , 4, kpincode),
-              buildTextField("Company Name", data['companyname'], 2, kcname),
-              buildTextField("Company Address", data['address'], 5, kaddress),
-              const SizedBox(
-                height: 5,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(horizontal: 50),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                    ),
-                    onPressed: () {},
-                    child: const Text("CANCEL",
-                        style: TextStyle(
-                            fontSize: 16,
-                            letterSpacing: 2.2,
-                            color: Colors.black)),
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,
-                      padding: const EdgeInsets.symmetric(horizontal: 50),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                    ),
-                    onPressed: () async {
-                      try {
-                        final user = FirebaseAuth.instance.currentUser;
-                        final store = FirebaseFirestore.instance;
-                        final db = FirebaseFirestore.instance;
-                        final docRef = db.collection("Users").doc(user!.uid);
-                        var data;
-                        await docRef.get().then(
-                          (DocumentSnapshot doc) async {
-                            data = await doc.data() as Map<String, dynamic>;
-                          },
-                          onError: (e) => print("Error getting document: $e"),
-                        );
-                        if (user != null) {
-                          store.collection("Changes").doc(user.uid).set({
-                            // 'email': kemail.text,
-                            // 'password': kpass.text,
-                            'name': (kname.text.isNotEmpty)
-                                ? kname.text
-                                : data['name'],
-                            'companyname': (kcname.text.isNotEmpty)
-                                ? kcname.text
-                                : data['companyname'],
-                            // 'phone': (kphone.text.isNotEmpty)
-                            //     ? kphone.text
-                            //     : data['phone'],
-                            'address': (kaddress.text.isNotEmpty)
-                                ? kaddress.text
-                                : data['address'],
-                            'pincode': (kpincode.text.isNotEmpty)
-                                ? kpincode.text
-                                : data['pincode'],
-                            'userType': 'p',
-                            'status': 'a',
-                            'change_datetime': DateTime.now()
-                          });
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: customsnackbar(
-                                errortext:
-                                    'Your changes will be updated after reviewing',
-                                errorcolor: Colors.yellow,
-                              ),
-                              elevation: 0,
-                              behavior: SnackBarBehavior.floating,
-                              backgroundColor: Colors.transparent,
-                            ),
-                          );
-                        }
-                      } catch (e) {
-                        print(e);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: customsnackbar(
-                              errortext: 'An Error Occured : $e',
-                              errorcolor: Colors.yellow,
-                            ),
-                            elevation: 0,
-                            behavior: SnackBarBehavior.floating,
-                            backgroundColor: Colors.transparent,
-                          ),
-                        );
-                      }
-                    },
-                    child: const Text(
-                      " SAVE ",
-                      style: TextStyle(
-                          fontSize: 16,
-                          letterSpacing: 2.2,
-                          color: Colors.white),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 35,
-              ),
-            ],
-          ),
-        ),
-      ),
+            );
+          }),
     );
   }
 
@@ -323,8 +315,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
             hintText: placeholder,
             hintStyle: const TextStyle(
               fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
+              fontWeight: FontWeight.w300,
+              color: Colors.grey,
             )),
       ),
     );
