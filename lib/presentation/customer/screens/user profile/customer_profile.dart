@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sample_project/presentation/authentication/login.dart';
+import 'package:sample_project/splash.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final user = FirebaseAuth.instance.currentUser;
 final db = FirebaseFirestore.instance;
@@ -213,11 +215,13 @@ class CustProfilePage extends StatelessWidget {
                     ),
                   ),
                 ),
-                onTap: () {
+                onTap: () async{
+                  final pref = await SharedPreferences.getInstance();
+                  await pref.clear();
                   Navigator.pushAndRemoveUntil<void>(
                       context,
                       MaterialPageRoute<void>(
-                          builder: (BuildContext context) => LoginPage()),
+                          builder: (BuildContext context) => ScreenSplash()),
                       ModalRoute.withName('/'));
                 },
               ),

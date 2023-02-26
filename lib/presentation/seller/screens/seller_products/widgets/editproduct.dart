@@ -31,6 +31,8 @@ class _EditProductFormState extends State<EditProductForm> {
   final kselltype = TextEditingController();
   final kcat = TextEditingController();
 
+  String? dropdownValue = '';
+
  late var imgTemp;
 
   final _imageController = TextEditingController();
@@ -172,6 +174,42 @@ class _EditProductFormState extends State<EditProductForm> {
                   },
                   onSaved: (value) => _productDesc = value!,
                 ),
+                DropdownButtonFormField<String>(
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please Select a Category';
+                    }
+                    return null;
+                  },
+                  value: dropdownValue,
+                  onChanged: (String? value) {
+                    setState(() {
+                      dropdownValue = value;
+                    });
+                  },
+                  items: [
+                    DropdownMenuItem(
+                      child: Text('Select Category'),
+                      value: '',
+                    ),
+                    DropdownMenuItem(
+                      child: Text('Textiles'),
+                      value: 'textiles',
+                    ),
+                    DropdownMenuItem(
+                      child: Text('Handcrafts'),
+                      value: 'handcrafts',
+                    ),
+                    DropdownMenuItem(
+                      child: Text('Food & Beverages'),
+                      value: 'food',
+                    ),
+                    DropdownMenuItem(
+                      child: Text('Others'),
+                      value: 'others',
+                    )
+                  ],
+                ),
                 TextFormField(
                   controller: kprice,
                   keyboardType: TextInputType.number,
@@ -183,6 +221,19 @@ class _EditProductFormState extends State<EditProductForm> {
                     return null;
                   },
                   onSaved: (value) => _productPrice = int.parse(value!),
+                ),
+                TextFormField(
+                  controller: kminqty,
+                  keyboardType: TextInputType.number,
+                  decoration:
+                      InputDecoration(labelText: 'Minimum Quantity to Order'),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter the minimum quantity';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) => _minQuantity = int.parse(value!),
                 ),
                 TextFormField(
                   controller: kmaxqty,
@@ -199,19 +250,6 @@ class _EditProductFormState extends State<EditProductForm> {
                     return null;
                   },
                   onSaved: (value) => _maxQuantity = int.parse(value!),
-                ),
-                TextFormField(
-                  controller: kminqty,
-                  keyboardType: TextInputType.number,
-                  decoration:
-                      InputDecoration(labelText: 'Minimum Quantity to Order'),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter the minimum quantity';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) => _minQuantity = int.parse(value!),
                 ),
                 SizedBox(
                   height: 10,
@@ -258,6 +296,7 @@ class _EditProductFormState extends State<EditProductForm> {
                                       'product_name' :kpname.text,
                                       'description':kdesc.text,
                                       'product_price':int.parse(kprice.text),
+                                      'category':dropdownValue,
                                       'product_seller_id':user?.uid,
                                       'min_quantity':kminqty.text,
                                       'max_quantity':kmaxqty.text,

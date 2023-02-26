@@ -156,16 +156,19 @@ class LoginPage extends StatelessWidget {
                                                 user, 'userType');
                                         String status = await getCurrentUserData(user,'status');
 
-                                        pref.setString('email', kemail.text);
+                                        // pref.setString('email', kemail.text);
                                         if(status=='a'){
                                           //account active
                                         if (userType == 'c') {
+                                            pref.setString('type','customer');
                                           Navigator.popAndPushNamed(
                                               context, 'home');
                                         } else if (userType == 's') {
+                                            pref.setString('type','seller');
                                           Navigator.popAndPushNamed(
                                               context, 'sellerhome');
                                         } else if (userType == 'a') {
+                                            pref.setString('type','admin');
                                           Navigator.popAndPushNamed(
                                               context, 'adminhome');
                                         }else if(userType=='p'){
@@ -259,7 +262,7 @@ class LoginPage extends StatelessWidget {
                             ),
                             TextButton(
                               onPressed: () {
-                                Navigator.pushNamed(context, 'custreg');
+                                Navigator.popAndPushNamed(context, 'custreg');
                               },
                               child: const Text(
                                 'Sign Up',

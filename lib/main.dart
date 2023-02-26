@@ -19,19 +19,17 @@ import 'package:sample_project/presentation/seller/screens/seller_products/widge
 import 'package:sample_project/presentation/seller/screens/seller_profile/edit_seller_profile/edit_seller_profile.dart';
 import 'package:sample_project/presentation/seller/screens/seller_profile/seller_prof.dart';
 import 'package:sample_project/presentation/testdetails.dart';
+import 'package:sample_project/splash.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  SharedPreferences prefs=await SharedPreferences.getInstance();
-  
-  var type=prefs.getString('type');
   runApp(MaterialApp(
       title: 'DirecTrade',
       theme: ThemeData(
         primarySwatch: primaryWhite,
       ),
-      home: LoginPage(),
+      home: ScreenSplash(),
       routes: {
         'custreg':(context) => CustRegisterPage(),
         'sellreg' :(context) => const SellerRegisterPage(),

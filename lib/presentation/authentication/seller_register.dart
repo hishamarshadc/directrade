@@ -462,7 +462,7 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                               ),
                               TextButton(
                                 onPressed: () {
-                                  Navigator.pop(context);
+                                  Navigator.popAndPushNamed(context, 'custreg');
                                 },
                                 child: const Text(
                                   'Customer Register',
