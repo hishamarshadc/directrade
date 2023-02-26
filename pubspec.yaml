@@ -46,6 +46,7 @@ dependencies:
   cloud_firestore: ^4.3.2
   image_picker: ^0.8.6+1
   firebase_storage: ^11.0.13
+  lottie: ^2.2.0
 
 dev_dependencies:
   flutter_test:

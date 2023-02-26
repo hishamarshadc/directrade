@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sample_project/presentation/admin/screens/approvals/widgets/edit_card.dart';
+import 'package:lottie/lottie.dart';
 
 class SellerEditsPage extends StatelessWidget {
   const SellerEditsPage({super.key});
@@ -39,11 +40,7 @@ class SellerEditsPage extends StatelessWidget {
                     }),
               );
             } else {
-              return Center(
-                child: const Text(
-                  'empty',
-                ),
-              );
+              return Lottie.network('https://assets4.lottiefiles.com/private_files/lf30_e3pteeho.json');
             }
         }
       },
