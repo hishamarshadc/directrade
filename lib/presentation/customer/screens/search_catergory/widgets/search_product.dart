@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sample_project/presentation/customer/screens/search_catergory/widgets/product_full_view.dart';
-import 'package:sample_project/presentation/customer/screens/search_catergory/widgets/product_tile.dart';
 import 'package:sample_project/presentation/customer/screens/search_catergory/widgets/search_tile.dart';
 
 class SearchProductPage extends StatefulWidget {
@@ -17,7 +16,7 @@ class _SearchProductPageState extends State<SearchProductPage> {
   Widget build(BuildContext context) {
 
     dynamic streamSearch =
-        FirebaseFirestore.instance.collection("Products").snapshots();
+        FirebaseFirestore.instance.collection("Products").where('status',isEqualTo: 'active').snapshots();
 
     return SafeArea(
       child: Scaffold(

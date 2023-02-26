@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.search, size: 25),
-              label: 'Products',
+              label: 'Products &\n  Search',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.shopping_cart, size: 25),

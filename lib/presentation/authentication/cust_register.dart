@@ -260,7 +260,9 @@ class _CustRegisterPageState extends State<CustRegisterPage> {
                                 width: 1,
                               ),
                               TextButton(
-                                onPressed: () => Navigator.pop(context),
+                                onPressed: () {
+                                    Navigator.popAndPushNamed(context, 'login');
+                                } ,
                                 child: const Text(
                                   'User Login',
                                   style: TextStyle(
@@ -278,7 +280,7 @@ class _CustRegisterPageState extends State<CustRegisterPage> {
                               ),
                               TextButton(
                                 onPressed: () {
-                                  Navigator.pushNamed(context, 'sellreg');
+                                  Navigator.popAndPushNamed(context, 'sellreg');
                                 },
                                 child: const Text(
                                   'Seller Register',

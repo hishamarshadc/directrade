@@ -99,14 +99,14 @@ class SellerEditCard extends StatelessWidget {
                               : Colors.red,
                         ),
                       ),
-                      Text(
-                        'Phone : ${olddata['phone']}',
-                        style: TextStyle(
-                          color: (olddata['phone'] == newdata['phone'])
-                              ? Colors.black
-                              : Colors.red,
-                        ),
-                      ),
+                      // Text(
+                      //   'Phone : ${olddata['phone']}',
+                      //   style: TextStyle(
+                      //     color: (olddata['phone'] == newdata['phone'])
+                      //         ? Colors.black
+                      //         : Colors.red,
+                      //   ),
+                      // ),
                       SizedBox(height: size.width * .02),
                       Center(
                         child: Text(
@@ -143,14 +143,14 @@ class SellerEditCard extends StatelessWidget {
                               : Colors.green,
                         ),
                       ),
-                      Text(
-                        'Phone : ${newdata['phone']}',
-                        style: TextStyle(
-                          color: (olddata['phone'] == newdata['phone'])
-                              ? Colors.black
-                              : Colors.green,
-                        ),
-                      ),
+                      // Text(
+                      //   'Phone : ${newdata['phone']}',
+                      //   style: TextStyle(
+                      //     color: (olddata['phone'] == newdata['phone'])
+                      //         ? Colors.black
+                      //         : Colors.green,
+                      //   ),
+                      // ),
                       SizedBox(height: size.width * .02),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -171,7 +171,6 @@ class SellerEditCard extends StatelessWidget {
                                       'name': newdata['name'],
                                       'pincode': newdata['pincode'],
                                       'companyname': newdata['companyname'],
-                                      'phone': newdata['phone'],
                                     }),
                                     storeUser
                                         .collection("Changes")

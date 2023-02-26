@@ -1,12 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:sample_project/presentation/admin/screens/view_users/widgets/seller_card.dart';
 import 'package:sample_project/presentation/seller/screens/seller_products/widgets/addproduct.dart';
 import 'package:sample_project/presentation/seller/screens/seller_products/widgets/seller_product_card.dart';
-import 'package:sample_project/presentation/user_model.dart';
 
-final user = FirebaseAuth.instance.currentUser;
+final curruser = FirebaseAuth.instance.currentUser;
 
 class SellerProductPage extends StatefulWidget {
   const SellerProductPage({super.key});
@@ -63,20 +61,20 @@ class _SellerProductPageState extends State<SellerProductPage> {
   @override
   Widget build(BuildContext context) {
   
-  if(user!=null){
+  if(curruser!=null){
     if (cat == '') {
     if (price == 0) {
       (type == 'w')
           ? stream = FirebaseFirestore.instance
               .collection("Products")
               .where("status", isEqualTo: 'active')
-              .where('product_seller_id', isEqualTo: user!.uid)
+              .where('product_seller_id', isEqualTo: curruser!.uid)
               .where('sell_type', isEqualTo: 'w')
               .snapshots()
           : stream = FirebaseFirestore.instance
               .collection("Products")
               .where("status", isEqualTo: 'active')
-              .where('product_seller_id', isEqualTo: user!.uid)
+              .where('product_seller_id', isEqualTo: curruser!.uid)
               .where('sell_type', isEqualTo: 'r')
               .snapshots();
     } else if (price == 1) {
@@ -84,14 +82,14 @@ class _SellerProductPageState extends State<SellerProductPage> {
           ? stream = FirebaseFirestore.instance
               .collection("Products")
               .where("status", isEqualTo: 'active')
-              .where('product_seller_id', isEqualTo: user!.uid)
+              .where('product_seller_id', isEqualTo: curruser!.uid)
               .where('product_price', isGreaterThan: 1000)
               .where('sell_type', isEqualTo: 'w')
               .snapshots()
           : stream = FirebaseFirestore.instance
               .collection("Products")
               .where("status", isEqualTo: 'active')
-              .where('product_seller_id', isEqualTo: user!.uid)
+              .where('product_seller_id', isEqualTo: curruser!.uid)
               .where('product_price', isGreaterThan: 1000)
               .where('sell_type', isEqualTo: 'r')
               .snapshots();
@@ -100,14 +98,14 @@ class _SellerProductPageState extends State<SellerProductPage> {
           ? stream = FirebaseFirestore.instance
               .collection("Products")
               .where("status", isEqualTo: 'active')
-              .where('product_seller_id', isEqualTo: user!.uid)
+              .where('product_seller_id', isEqualTo: curruser!.uid)
               .where('product_price', isLessThan: price)
               .where('sell_type', isEqualTo: 'w')
               .snapshots()
           : stream = FirebaseFirestore.instance
               .collection("Products")
               .where("status", isEqualTo: 'active')
-              .where('product_seller_id', isEqualTo: user!.uid)
+              .where('product_seller_id', isEqualTo: curruser!.uid)
               .where('product_price', isLessThan: price)
               .where('sell_type', isEqualTo: 'r')
               .snapshots();
@@ -122,7 +120,7 @@ class _SellerProductPageState extends State<SellerProductPage> {
           ? stream = FirebaseFirestore.instance
               .collection("Products")
               .where("status", isEqualTo: 'active')
-              .where('product_seller_id', isEqualTo: user!.uid)
+              .where('product_seller_id', isEqualTo: curruser!.uid)
               .where('category', isEqualTo: cat)
               .where('sell_type', isEqualTo: 'w')
               .snapshots()
@@ -131,14 +129,14 @@ class _SellerProductPageState extends State<SellerProductPage> {
               .where("status", isEqualTo: 'active')
               .where('category', isEqualTo: cat)
               .where('sell_type', isEqualTo: 'r')
-              .where('product_seller_id', isEqualTo: user!.uid)
+              .where('product_seller_id', isEqualTo: curruser!.uid)
               .snapshots();
     } else if (price == 1) {
       (type == 'w')
           ? stream = FirebaseFirestore.instance
               .collection("Products")
               .where("status", isEqualTo: 'active')
-              .where('product_seller_id', isEqualTo: user!.uid)
+              .where('product_seller_id', isEqualTo: curruser!.uid)
               .where('category', isEqualTo: cat)
               .where('product_price', isGreaterThan: 1000)
               .where('sell_type', isEqualTo: 'w')
@@ -146,7 +144,7 @@ class _SellerProductPageState extends State<SellerProductPage> {
           : stream = FirebaseFirestore.instance
               .collection("Products")
               .where("status", isEqualTo: 'active')
-              .where('product_seller_id', isEqualTo: user!.uid)
+              .where('product_seller_id', isEqualTo: curruser!.uid)
               .where('category', isEqualTo: cat)
               .where('product_price', isGreaterThan: 1000)
               .where('sell_type', isEqualTo: 'r')
@@ -156,7 +154,7 @@ class _SellerProductPageState extends State<SellerProductPage> {
           ? stream = FirebaseFirestore.instance
               .collection("Products")
               .where("status", isEqualTo: 'active')
-              .where('product_seller_id', isEqualTo: user!.uid)
+              .where('product_seller_id', isEqualTo: curruser!.uid)
               .where('category', isEqualTo: cat)
               .where('product_price', isLessThan: price)
               .where('sell_type', isEqualTo: 'w')
@@ -164,7 +162,7 @@ class _SellerProductPageState extends State<SellerProductPage> {
           : stream = FirebaseFirestore.instance
               .collection("Products")
               .where("status", isEqualTo: 'active')
-              .where('product_seller_id', isEqualTo: user!.uid)
+              .where('product_seller_id', isEqualTo: curruser!.uid)
               .where('category', isEqualTo: cat)
               .where('product_price', isLessThan: price)
               .where('sell_type', isEqualTo: 'r')
@@ -173,6 +171,7 @@ class _SellerProductPageState extends State<SellerProductPage> {
   }
   }
 
+print(curruser?.uid);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -270,7 +269,7 @@ class _SellerProductPageState extends State<SellerProductPage> {
                         fontWeight: FontWeight.bold),
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.35,
+                    width: MediaQuery.of(context).size.width * 0.3,
                     margin: const EdgeInsets.only(left: 10),
                     child: DropdownButton(
                       // hint: const Text('Category'),
@@ -289,7 +288,7 @@ class _SellerProductPageState extends State<SellerProductPage> {
                       value: 'handcrafts',
                     ),
                     DropdownMenuItem(
-                      child: Text('Food & Beverages'),
+                      child: Text('Food & \nBeverages'),
                       value: 'food',
                     ),
                     DropdownMenuItem(
@@ -303,7 +302,7 @@ class _SellerProductPageState extends State<SellerProductPage> {
                     ),
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.4,
+                    width: MediaQuery.of(context).size.width * 0.35,
                     margin: const EdgeInsets.only(left: 10),
                     child: DropdownButton<String>(
                       // hint: const Text('Category'),
@@ -313,15 +312,15 @@ class _SellerProductPageState extends State<SellerProductPage> {
                           value: '0',
                         ),
                         DropdownMenuItem(
-                          child: Text('Less than 500'),
+                          child: Text('Less than \nRs.500'),
                           value: '500',
                         ),
                         DropdownMenuItem(
-                          child: Text('Less than 1000'),
+                          child: Text('Less than \nRs.1000'),
                           value: '1000',
                         ),
                         DropdownMenuItem(
-                          child: Text('Greater than 1000'),
+                          child: Text('Greater than \nRs.1000'),
                           value: '1',
                         ),
                       ],

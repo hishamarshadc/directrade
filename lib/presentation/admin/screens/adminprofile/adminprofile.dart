@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sample_project/presentation/authentication/login.dart';
+import 'package:sample_project/splash.dart';
 
 final user = FirebaseAuth.instance.currentUser;
 final db = FirebaseFirestore.instance;
@@ -152,7 +153,7 @@ class _AdminProfilePageState extends State<AdminProfilePage> {
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                              builder: (BuildContext context) => LoginPage()),
+                              builder: (BuildContext context) => ScreenSplash()),
                           ModalRoute.withName('/'));
                     },
                   ),

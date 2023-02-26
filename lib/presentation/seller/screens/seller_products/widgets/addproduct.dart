@@ -289,7 +289,7 @@ class _AddProductFormState extends State<AddProductForm> {
 
                       db.collection("Products").doc().set({
                         'product_name': kpname.text,
-                        'product_category':dropdownValue,
+                        'category':dropdownValue,
                         'description': kdesc.text,
                         'product_price': int.parse(kprice.text),
                         'product_seller_id': user?.uid,

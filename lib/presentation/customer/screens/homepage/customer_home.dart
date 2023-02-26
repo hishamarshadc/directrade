@@ -9,41 +9,41 @@ class CustHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar:  AppBar(
+        elevation: 0,
+          automaticallyImplyLeading: false,
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+          title: const Text(
+            'DirecTrade',
+            style: TextStyle(
+              fontSize: 27,
+            ),
+          ),
+          actions: [
+            InkWell(
+            onTap: () => {Navigator.pushNamed(context, 'custprofile')},
+            child: const CircleAvatar(
+              radius: 20,
+              backgroundColor: Colors.black,
+              foregroundColor: Colors.white,
+              child: Icon(
+                Icons.person_pin,
+                size: 30,
+              ),
+            ),
+          ),
+          const SizedBox(
+            width: 10,
+          )
+          ]
+          ),
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Column(
           children: [
             SizedBox(
-              width: double.infinity,
-              height: 100,
-              child: ListView.builder(
-                  itemCount: _choices.length,
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 2.0),
-                      child: Container(
-                        width: 80,
-                        height: 80,
-                        child: Card(
-                          color: Colors.black,
-                          child: Container(
-                            child: Center(
-                              child: Text(
-                                _choices[index].name,
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                          ),
-                          shape: CircleBorder(),
-                        ),
-                      ),
-                    );
-                  }),
-            ),
-            SizedBox(
-              height: 10,
+              height: 30,
             ),
             SizedBox(
               width: double.infinity,
