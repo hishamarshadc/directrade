@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sample_project/core/fetchData.dart';
@@ -6,6 +7,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
+
+  List<String> emails = [];
+
   final formKey = GlobalKey<FormState>();
   TextEditingController kemail = TextEditingController();
   TextEditingController kpass = TextEditingController();
@@ -125,13 +129,23 @@ class LoginPage extends StatelessWidget {
                                 overlayColor: MaterialStateProperty.all(
                                     Colors.transparent)),
                             onPressed: () async {
+                              await FirebaseFirestore.instance
+                                  .collection('Rejected')
+                                  .get()
+                                  .then((value) {
+                                value.docs.forEach((element) {
+                                  emails.add(element['email']);
+                                  print(element['email']);
+                                });
+                              });
+
                               if (formKey.currentState!.validate()) {
                                 if (kemail.text.isEmpty || kpass.text.isEmpty) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
                                       content: customsnackbar(
                                         errortext:
-                                            'Please enter your email/password',
+                                            'Please Enter Your Email/Password',
                                         errorcolor: Colors.red,
                                       ),
                                       elevation: 0,
@@ -154,25 +168,27 @@ class LoginPage extends StatelessWidget {
                                         String userType =
                                             await getCurrentUserData(
                                                 user, 'userType');
-                                        String status = await getCurrentUserData(user,'status');
+                                        // String status =
+                                        //     await getCurrentUserData(
+                                        //         user, 'status');
 
                                         // pref.setString('email', kemail.text);
-                                        if(status=='a'){
-                                          //account active
+                                        // if (status == 'a') {
+                                        //account active
                                         if (userType == 'c') {
-                                            pref.setString('type','customer');
+                                          pref.setString('type', 'customer');
                                           Navigator.popAndPushNamed(
                                               context, 'home');
                                         } else if (userType == 's') {
-                                            pref.setString('type','seller');
+                                          pref.setString('type', 'seller');
                                           Navigator.popAndPushNamed(
                                               context, 'sellerhome');
                                         } else if (userType == 'a') {
-                                            pref.setString('type','admin');
+                                          pref.setString('type', 'admin');
                                           Navigator.popAndPushNamed(
                                               context, 'adminhome');
-                                        }else if(userType=='p'){
-                                           ScaffoldMessenger.of(context)
+                                        } else if (userType == 'p') {
+                                          ScaffoldMessenger.of(context)
                                               .showSnackBar(
                                             const SnackBar(
                                               content: customsnackbar(
@@ -188,56 +204,47 @@ class LoginPage extends StatelessWidget {
                                             ),
                                           );
                                         }
-                                        }else if(status=='r'){
-                                            //rejected Application case
-                                             ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            const SnackBar(
-                                              content: customsnackbar(
-                                                errortext:
-                                                    'Your Appliation has been Rejected\nYou may reapply in future.',
-                                                errorcolor: Colors.yellow,
-                                              ),
-                                              elevation: 0,
-                                              behavior:
-                                                  SnackBarBehavior.floating,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                            ),
-                                          );
-                                        }else if (status=='i') {
-                                          //inactive case
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            const SnackBar(
-                                              content: customsnackbar(
-                                                errortext:
-                                                    'Account is Suspended !\nPlease Contact our Office',
-                                                errorcolor: Colors.yellow,
-                                              ),
-                                              elevation: 0,
-                                              behavior:
-                                                  SnackBarBehavior.floating,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                            ),
-                                          );
-                                        }
                                       }
                                     } catch (e) {
                                       print(e.toString());
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        const SnackBar(
-                                          content: customsnackbar(
-                                            errortext: 'Wrong Email/Password',
-                                            errorcolor: Colors.red,
+                                      if (emails.contains(kemail.text)) {
+                                        await FirebaseFirestore.instance
+                                            .collection('Rejected')
+                                            .get()
+                                            .then((value) {
+                                          value.docs.forEach((element) {
+                                            emails.add(element['email']);
+                                            print(element['email']);
+                                          });
+                                        });
+
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                            content: customsnackbar(
+                                              errortext:
+                                                  'Your Appliation has been Rejected\nYou may reapply in future.',
+                                              errorcolor: Colors.yellow,
+                                            ),
+                                            elevation: 0,
+                                            behavior: SnackBarBehavior.floating,
+                                            backgroundColor: Colors.transparent,
                                           ),
-                                          elevation: 0,
-                                          behavior: SnackBarBehavior.floating,
-                                          backgroundColor: Colors.transparent,
-                                        ),
-                                      );
+                                        );
+                                      } else {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                            content: customsnackbar(
+                                              errortext: 'Wrong Email/Password',
+                                              errorcolor: Colors.red,
+                                            ),
+                                            elevation: 0,
+                                            behavior: SnackBarBehavior.floating,
+                                            backgroundColor: Colors.transparent,
+                                          ),
+                                        );
+                                      }
                                     }
                                   }
                                 }
@@ -318,13 +325,15 @@ class NewSnackbar extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(errortext.toUpperCase(),
-                        style: const TextStyle(
-                          fontSize: 15,
-                          fontFamily: 'roboto',
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),),
+                    Text(
+                      errortext.toUpperCase(),
+                      style: const TextStyle(
+                        fontSize: 15,
+                        fontFamily: 'roboto',
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
                     // const Spacer(),
                     // Text(
                     //   errortext,
@@ -372,7 +381,6 @@ class NewSnackbar extends StatelessWidget {
   }
 }
 
-
 class customsnackbar extends StatelessWidget {
   const customsnackbar({
     Key? key,
@@ -411,14 +419,14 @@ class customsnackbar extends StatelessWidget {
                           fontSize: 18,
                           fontFamily: 'roboto',
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: Colors.black,
                         )),
                     const Spacer(),
                     Text(
                       errortext,
                       style: const TextStyle(
                         fontSize: 12,
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,

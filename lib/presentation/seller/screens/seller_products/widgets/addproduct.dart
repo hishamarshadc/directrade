@@ -281,6 +281,22 @@ class _AddProductFormState extends State<AddProductForm> {
                 ),
                 ElevatedButton(
                   onPressed: () async {
+                    print(image);
+                    if (image==null){
+                      ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: customsnackbar(
+                                        errortext:
+                                            'Please Select an Image !',
+                                        errorcolor: Colors.lightBlue,
+                                      ),
+                                      elevation: 0,
+                                      behavior: SnackBarBehavior.floating,
+                                      backgroundColor: Colors.transparent,
+                                    ),
+                                  );
+                    }
+                    else{
                     if (_formKey.currentState!.validate()) {
                       final user = FirebaseAuth.instance.currentUser;
                       final db = FirebaseFirestore.instance;
@@ -302,12 +318,28 @@ class _AddProductFormState extends State<AddProductForm> {
                         'upload_time': DateTime.now(),
                         'status':'active'
                       });
+                    
 
                       _formKey.currentState!.save();
                       Navigator.pop(context);
 
                       // Add logic to save the product here
                       // ...
+
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: NewSnackbar(
+                                        errortext:
+                                            'Product added successfully',
+                                        errorcolor: Colors.green,
+                                      ),
+                                      elevation: 0,
+                                      behavior: SnackBarBehavior.floating,
+                                      backgroundColor: Colors.transparent,
+                                    ),
+                                  );
+                    }
                     }
                   },
                   child: Text('Save'),

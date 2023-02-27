@@ -136,6 +136,14 @@ class _CustRegisterPageState extends State<CustRegisterPage> {
                           TextFormField(
                             controller: kaddress,
                             keyboardType: TextInputType.text,
+                            validator: (value) {
+                              if(value!.isEmpty){
+                                //  r'^[0-9]{10}$' pattern plain match number with length 10
+                                return "Enter a valid PIN code";
+                            }else{
+                               return null;
+                            }
+                            },
                             decoration: InputDecoration(
                               prefixIcon:
                                   const Icon(Icons.home_filled, color: Colors.black),
@@ -149,7 +157,7 @@ class _CustRegisterPageState extends State<CustRegisterPage> {
                           TextFormField(
                             controller: kpincode,
                             validator: (value){
-                            if(value!.isEmpty || !RegExp(r'^[1-9][0-9]{5}$').hasMatch(value)){
+                            if(value!.isEmpty ||value==null|| !RegExp(r'^[1-9][0-9]{5}$').hasMatch(value)){
                                 //  r'^[0-9]{10}$' pattern plain match number with length 10
                                 return "Enter a valid PIN code";
                             }else{
@@ -231,7 +239,7 @@ class _CustRegisterPageState extends State<CustRegisterPage> {
                                       'userType':'c',
                                       'status':'a'
                                    });
-                                    pref.setString('email', kemail.text);
+                                    pref.setString('type','customer');
                                     Navigator.popAndPushNamed(context, 'home');
                                    }
                                   
@@ -239,6 +247,9 @@ class _CustRegisterPageState extends State<CustRegisterPage> {
                                   catch(e){
                                     print(e.toString());
                                   }
+                                }
+                                else{
+                                  
                                 }
                                 
                               },

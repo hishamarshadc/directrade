@@ -10,6 +10,10 @@ import 'package:sample_project/presentation/authentication/login.dart';
 import 'package:sample_project/presentation/seller/screens/seller_products/seller_product.dart';
 
 class EditProductForm extends StatefulWidget {
+  final productId;
+
+  const EditProductForm({super.key,required this.productId});
+
   @override
   _EditProductFormState createState() => _EditProductFormState();
 }
@@ -33,14 +37,14 @@ class _EditProductFormState extends State<EditProductForm> {
 
   String? dropdownValue = '';
 
- late var imgTemp;
+  late var imgTemp;
 
   final _imageController = TextEditingController();
 
   String? productImgUrl;
   File? image;
   UploadTask? uploadTask;
-  
+
   Future pickimagefromgallery() async {
     try {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -71,35 +75,32 @@ class _EditProductFormState extends State<EditProductForm> {
     }
   }
 
- Future<String> uploadImage(File image) async {
-  // Generate a unique file name
-  String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+  Future<String> uploadImage(File image) async {
+    // Generate a unique file name
+    String fileName = DateTime.now().millisecondsSinceEpoch.toString();
 
-  // Create a reference to the file location in Firebase Storage
-  Reference ref = FirebaseStorage.instance.ref().child('images/$fileName');
+    // Create a reference to the file location in Firebase Storage
+    Reference ref = FirebaseStorage.instance.ref().child('images/$fileName');
 
-  // Upload the file to Firebase Storage
-  uploadTask = ref.putFile(image);
+    // Upload the file to Firebase Storage
+    uploadTask = ref.putFile(image);
 
-  final snapshot = await uploadTask!.whenComplete(() {});
+    final snapshot = await uploadTask!.whenComplete(() {});
 
-  // Get the download URL for the file
-  String downloadURL = await snapshot.ref.getDownloadURL();
+    // Get the download URL for the file
+    String downloadURL = await snapshot.ref.getDownloadURL();
 
-  // Return the download URL
-  return downloadURL;
-}
+    // Return the download URL
+    return downloadURL;
+  }
 
   @override
   Widget build(BuildContext context) {
-    
-
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.lightBlue,
         centerTitle: true,
-        title: Text("Add Product"),
+        title: Text("Edit Product"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -284,37 +285,60 @@ class _EditProductFormState extends State<EditProductForm> {
                 ),
                 ElevatedButton(
                   onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      
-                      final user=FirebaseAuth.instance.currentUser;
-                      final db=FirebaseFirestore.instance;
-                      final dl = await uploadImage(image!);
-                      print('!!!!!!!!!!${dl}!!!!!!!!!!!');
+                    if (image == null) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: customsnackbar(
+                                        errortext:
+                                            'Please Select an Image !',
+                                        errorcolor: Colors.red,
+                                      ),
+                                      elevation: 0,
+                                      behavior: SnackBarBehavior.floating,
+                                      backgroundColor: Colors.transparent,
+                                    ),
+                                  );
+                    } else {
+                      if (_formKey.currentState!.validate()) {
+                        final user = FirebaseAuth.instance.currentUser;
+                        final db = FirebaseFirestore.instance;
+                        final dl = await uploadImage(image!);
+                        print('!!!!!!!!!!${dl}!!!!!!!!!!!');
 
+                        db.collection("Products").doc(widget.productId).update({
+                          'product_name': kpname.text,
+                          'description': kdesc.text,
+                          'product_price': int.parse(kprice.text),
+                          'category': dropdownValue,
+                          'product_seller_id': user?.uid,
+                          'min_quantity': kminqty.text,
+                          'max_quantity': kmaxqty.text,
+                          'image_url': dl,
+                          'rating': 0.0,
+                          'rating_count': 0,
+                          'sell_type': _isWholesale ? 'w' : 'r',
+                          'upload_time': DateTime.now(),
+                          'status': 'active'
+                        });
 
-                      db.collection("Products").doc().set({
-                                      'product_name' :kpname.text,
-                                      'description':kdesc.text,
-                                      'product_price':int.parse(kprice.text),
-                                      'category':dropdownValue,
-                                      'product_seller_id':user?.uid,
-                                      'min_quantity':kminqty.text,
-                                      'max_quantity':kmaxqty.text,
-                                      'image_url':dl,
-                                      'rating':0.0,
-                                      'rating_count':0,
-                                      'sell_type': _isWholesale?'w':'r',
-                                      'upload_time':DateTime.now(),
-                                      'status':'active'
-                                   });
-
-
-
-                      _formKey.currentState!.save();
-                      Navigator.pop(context);
-    
-                      // Add logic to save the product here
-                      // ...
+                        _formKey.currentState!.save();
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: NewSnackbar(
+                                        errortext:
+                                            'Product Edited successfully',
+                                        errorcolor: Colors.green,
+                                      ),
+                                      elevation: 0,
+                                      behavior: SnackBarBehavior.floating,
+                                      backgroundColor: Colors.transparent,
+                                    ),
+                                  );
+                        // Add logic to save the product here
+                        // ...
+                      }
                     }
                   },
                   child: Text('Save'),

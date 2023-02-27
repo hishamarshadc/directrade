@@ -118,9 +118,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     const SizedBox(
                       height: 35,
                     ),
-                    buildTextField("Full Name", data['name'], 2, kname),
-                    buildTextField("PinCode", data['pincode'], 4, kpincode),
-                    buildTextField("Address", data['address'], 5, kaddress),
+                    buildTextField("Full Name", snapshot.data!['name'], 2, kname),
+                    buildTextField("PinCode", snapshot.data!['pincode'], 4, kpincode),
+                    buildTextField("Address",snapshot.data!['address'], 5, kaddress),
                     const SizedBox(
                       height: 5,
                     ),

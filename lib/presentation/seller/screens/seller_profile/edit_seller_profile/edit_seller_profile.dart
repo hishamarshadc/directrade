@@ -53,17 +53,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        // backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
         elevation: 1,
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.black,
-          ),
-          onPressed: () {
-            Navigator.pushNamed(context, 'sellerprofile');
-          },
-        ),
+        automaticallyImplyLeading: true,
+        title: const Text(
+                      "Edit Profile",
+                      style:
+                          TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+                    ),
       ),
       body: StreamBuilder<DocumentSnapshot>(
           stream: db.collection("Users").doc(user!.uid).snapshots(),
@@ -83,11 +82,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   children: [
                     const SizedBox(
                       height: 5,
-                    ),
-                    const Text(
-                      "Edit Profile",
-                      style:
-                          TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
                     ),
                     const SizedBox(
                       height: 15,
@@ -111,10 +105,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                       offset: const Offset(0, 10))
                                 ],
                                 shape: BoxShape.circle,
-                                image: const DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: AssetImage(
-                                        'assets/images/seller.jpg'))),
+                                
+                                // image: const DecorationImage(
+                                //     fit: BoxFit.cover,
+                                //     image: AssetImage(
+                                //         'assets/images/seller.jpg'),
+                                //         ),
+                                
+                                        ),
                           ),
                         ],
                       ),
@@ -122,12 +120,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     const SizedBox(
                       height: 35,
                     ),
-                    buildTextField("Full Name", data['name'], 2, kname),
-                    buildTextField("PinCode", data['pincode'], 4, kpincode),
+                    buildTextField("Full Name", snapshot.data!['name'], 2, kname),
+                    buildTextField("PinCode", snapshot.data!['pincode'], 4, kpincode),
                     buildTextField(
-                        "Company Name", data['companyname'], 2, kcname),
+                        "Company Name", snapshot.data!['companyname'], 2, kcname),
                     buildTextField(
-                        "Company Address", data['address'], 5, kaddress),
+                        "Company Address", snapshot.data!['address'], 5, kaddress),
                     const SizedBox(
                       height: 5,
                     ),
