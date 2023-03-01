@@ -1,22 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sample_project/presentation/customer/screens/order/widgets/cust_order_card.dart';
 
 class CustOrderCancelPage extends StatelessWidget {
   const CustOrderCancelPage({super.key});
-  
-
 
   @override
   Widget build(BuildContext context) {
-    final user=FirebaseAuth.instance.currentUser;
+    final size = MediaQuery.of(context).size;
+
+    final user = FirebaseAuth.instance.currentUser;
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance
           .collection("Orders")
-          .where('customer_id', isEqualTo: user?.uid )
-          .where('status',isEqualTo: 'c')
-          .orderBy('datetime',descending: true)
+          .where('customer_id', isEqualTo: user?.uid)
+          .where('status', isEqualTo: 'c')
+          .orderBy('datetime', descending: true)
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
@@ -61,15 +62,15 @@ class CustOrderCancelPage extends StatelessWidget {
                             // Extract data from the snapshot and display it
                             final productdoc = snapshot.data!;
 
-                            return CustOrderCard(orderdoc: orderdoc,productdoc: productdoc);
+                            return CustOrderCard(
+                                orderdoc: orderdoc, productdoc: productdoc);
                           });
                     }),
               );
             } else {
               return Center(
-                child: const Text(
-                  'No Orders',
-                ),
+                child: Lottie.asset('assets/lottie/empty_box.json',
+                    width: size.width * .75),
               );
             }
         }
@@ -77,5 +78,3 @@ class CustOrderCancelPage extends StatelessWidget {
     );
   }
 }
-
-

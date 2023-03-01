@@ -54,7 +54,7 @@ class _ScreenSplashState extends State<ScreenSplash> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Image.asset('assets/icon/dtslogan.jpeg'),
+          Image.asset('assets/images/slogan logo.png'),
           CircularProgressIndicator(
             color: Colors.lightBlue,
           )

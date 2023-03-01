@@ -344,7 +344,7 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                                     child: (image!=null)?Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
-                                            Text( image!.path.split('/').last,style: TextStyle(fontSize: 15),),
+                                            Text( image!.path.split('/').last,style: TextStyle(fontSize: 15),overflow: TextOverflow.ellipsis,),
                                             SizedBox(width: 10,),
                                             Container(
                                               width: 30,
@@ -381,13 +381,14 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
 
                                 if (kemail.text.isNotEmpty &&
                                     kpass.text.isNotEmpty &&
-                                    formKey.currentState!.validate()) {
+                                    formKey.currentState!.validate()&&_selectedImage) {
                                   try {
                                     await auth.createUserWithEmailAndPassword(
                                         email: kemail.text,
                                         password: kpass.text);
                                     final user =
                                         FirebaseAuth.instance.currentUser;
+                                    final proofimage= await  uploadImage(image!);
 
                                     if (user != null) {
                                       storeUser
@@ -398,14 +399,13 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                                         'password': kpass.text,
                                         'name': kname.text,
                                         'companyname': kcname.text,
-                                        'proof_image'
-                                            'phone': kphone.text,
+                                        'proof_image':proofimage,
+                                        'phone': kphone.text,
                                         'address': kaddress.text,
                                         'pincode': kpincode.text,
                                         'userType': 'p',
                                         'status': 'a'
                                       });
-                                      pref.setString('email', kemail.text);
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
                                         const SnackBar(
@@ -420,7 +420,8 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                                         ),
                                       );
                                     }
-                                  } catch (e) {
+                                  }
+                                   catch (e) {
                                     print(e.toString());
                                   }
                                 }

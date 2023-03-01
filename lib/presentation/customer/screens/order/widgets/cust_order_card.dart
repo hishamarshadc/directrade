@@ -235,7 +235,7 @@ class CustOrderCard extends StatelessWidget {
                                     MaterialPageRoute(
                                       builder: (context) => ChatMessagePage(
                                           id: sellerdoc.id,
-                                          name: sellerdoc['name'],
+                                          // name: sellerdoc['name'],
                                           passingdocument: sellerdoc),
                                     ));
                               },

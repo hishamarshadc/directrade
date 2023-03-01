@@ -8,7 +8,6 @@
 //   DocumentSnapshot passingdocument;
 //   WaitingCard({Key? key, required this.passingdocument}) : super(key: key);
 
-  
 //   @override
 //   Widget build(BuildContext context) {
 
@@ -94,31 +93,88 @@
 //     );
 //   }
 // }
-
-
-
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:sample_project/core/colors/Colors.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:sample_project/presentation/admin/screens/approvals/seller_approval.dart';
 import 'package:sample_project/presentation/testdetails.dart';
+
+import '../../../../authentication/login.dart';
 
 class WaitingCard extends StatelessWidget {
   DocumentSnapshot passingdocument;
   WaitingCard({Key? key, required this.passingdocument}) : super(key: key);
+  List<String> emails = [];
 
-  void _approveSeller() {
-    store.collection("Users").doc(passingdocument.id).update({
+  void _approveSeller() async {
+   try{
+     FirebaseFirestore.instance.collection("Users").doc(passingdocument.id).update({
       'userType': 's',
       'status': 'a',
     });
+
+    await FirebaseFirestore.instance.collection('Rejected').get().then((value) {
+      value.docs.forEach((element) {
+        emails.add(element['email']);
+        print(element['email']);
+      });
+    });
+    if (emails.contains(passingdocument['email'])) {
+      FirebaseFirestore.instance
+          .collection('Rejected')
+          .doc(passingdocument['email'])
+          .delete();
+    }
+    }catch (e) {
+  print('Error deleting user: $e');
+}
   }
 
-  void _rejectSeller() {
-    store.collection("Users").doc(passingdocument.id).update({
-      'status': 'r',
+  void _rejectSeller(BuildContext context) async {
+    await FirebaseFirestore.instance.collection('Rejected').get().then((value) {
+      value.docs.forEach((element) {
+        emails.add(element['email']);
+        print(element['email']);
+      });
     });
+    if (!emails.contains(passingdocument['email'])) {
+      try {
+        await FirebaseFirestore.instance
+            .collection('Rejected')
+            .doc(passingdocument['email'])
+            .set({'email': passingdocument['email']});
+        FirebaseFirestore.instance
+            .collection('Users')
+            .doc(passingdocument.id)
+            .delete();
+        User? user = await FirebaseAuth.instance
+            .userChanges()
+            .firstWhere((user) => user!.uid == passingdocument.id);
+        print(user!.uid);
+
+        await user.delete();
+      } catch (e) {
+        print('Error deleting user: $e');
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: customsnackbar(
+            errortext: 'Please enter your email/password',
+            errorcolor: Colors.red,
+          ),
+          elevation: 0,
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Colors.transparent,
+        ),
+      );
+    }
+
+    // store.collection("Users").doc(passingdocument.id).update({
+    //   'status': 'r',
+    // });
   }
 
   Widget _buildSellerDetails() {
@@ -198,7 +254,9 @@ class WaitingCard extends StatelessWidget {
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.green),
                   ),
-                  onPressed: _approveSeller,
+                  onPressed: () {
+                    _approveSeller();
+                  },
                   icon: const Icon(Icons.done),
                   label: const Text('Approve'),
                 ),
@@ -208,7 +266,9 @@ class WaitingCard extends StatelessWidget {
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.red),
                   ),
-                  onPressed: _rejectSeller,
+                  onPressed: () {
+                    _rejectSeller(context);
+                  },
                   icon: const Icon(Icons.close),
                   label: const Text('Reject'),
                 ),
@@ -221,4 +281,3 @@ class WaitingCard extends StatelessWidget {
     );
   }
 }
-

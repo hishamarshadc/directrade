@@ -1,7 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sample_project/presentation/chat/chat_message_page.dart';
 
 class ChatListPage extends StatefulWidget {
@@ -12,9 +12,13 @@ class ChatListPage extends StatefulWidget {
 class _ChatListPageState extends State<ChatListPage> {
   @override
   Widget build(BuildContext context) {
-    final user=FirebaseAuth.instance.currentUser;
+    final size = MediaQuery.of(context).size;
+
+    final user = FirebaseAuth.instance.currentUser;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
         title: Text('Recent Chats'),
       ),
       body: StreamBuilder<QuerySnapshot>(
@@ -39,42 +43,44 @@ class _ChatListPageState extends State<ChatListPage> {
                   if (toSnapshot.connectionState == ConnectionState.waiting) {
                     return Center(child: CircularProgressIndicator());
                   }
-                  if(toSnapshot.hasError){
+                  if (toSnapshot.hasError) {
                     return Text('Error:${toSnapshot.error}');
                   }
-                  if(fromSnapshot.hasError){
+                  if (fromSnapshot.hasError) {
                     return Text('Error:${fromSnapshot.error}');
                   }
                   List<String> chattedUsers = [];
-                  if(toSnapshot.data==null&&fromSnapshot.data==null){
-                        chattedUsers = [];
-                  }else if(fromSnapshot.data==null){
-                          toSnapshot.data!.docs.forEach((doc) {
-                    if (!chattedUsers.contains(doc['fromId'])) {
-                      chattedUsers.add(doc['fromId']);
-                    }
-                  });              
-                  }else if(toSnapshot.data==null){
-                      fromSnapshot.data!.docs.forEach((doc) {
-                    if (!chattedUsers.contains(doc['toId'])) {
-                      chattedUsers.add(doc['toId']);
-                    }
-                  });
-                  }else{
+                  if (toSnapshot.data == null && fromSnapshot.data == null) {
+                    chattedUsers = [];
+                  } else if (fromSnapshot.data == null) {
                     toSnapshot.data!.docs.forEach((doc) {
-                    if (!chattedUsers.contains(doc['fromId'])) {
-                      chattedUsers.add(doc['fromId']);
-                    }
-                  }); 
-                  fromSnapshot.data!.docs.forEach((doc) {
-                    if (!chattedUsers.contains(doc['toId'])) {
-                      chattedUsers.add(doc['toId']);
-                    }
-                  });
+                      if (!chattedUsers.contains(doc['fromId'])) {
+                        chattedUsers.add(doc['fromId']);
+                      }
+                    });
+                  } else if (toSnapshot.data == null) {
+                    fromSnapshot.data!.docs.forEach((doc) {
+                      if (!chattedUsers.contains(doc['toId'])) {
+                        chattedUsers.add(doc['toId']);
+                      }
+                    });
+                  } else {
+                    toSnapshot.data!.docs.forEach((doc) {
+                      if (!chattedUsers.contains(doc['fromId'])) {
+                        chattedUsers.add(doc['fromId']);
+                      }
+                    });
+                    fromSnapshot.data!.docs.forEach((doc) {
+                      if (!chattedUsers.contains(doc['toId'])) {
+                        chattedUsers.add(doc['toId']);
+                      }
+                    });
                   }
 
                   if (chattedUsers.isEmpty) {
-                    return Center(child: Text('No Chats'));
+                    return Center(
+                        child: Lottie.asset('assets/lottie/empty_box.json',
+                            width: size.width * .75));
                   }
 
                   return ListView.builder(
@@ -92,7 +98,7 @@ class _ChatListPageState extends State<ChatListPage> {
                           }
 
                           String name = userSnapshot.data!['name'];
-                          String img='';
+                          String img = '';
                           // if(userSnapshot.data!['profileImage']!=''){
                           //       img=userSnapshot.data!['profileImage'];
                           // }
@@ -103,20 +109,19 @@ class _ChatListPageState extends State<ChatListPage> {
                           return StreamBuilder<QuerySnapshot>(
                             stream: FirebaseFirestore.instance
                                 .collection('Messages')
-                                .where('fromId',
-                                    isEqualTo: chattedUsers[index])
-                                .where('toId',isEqualTo:
-                                        user!.uid)
+                                .where('fromId', isEqualTo: chattedUsers[index])
+                                .where('toId', isEqualTo: user!.uid)
                                 .orderBy('time', descending: true)
                                 .limit(1)
                                 .snapshots(),
                             builder: (context, lastMessageSnapshot) {
-                              if(lastMessageSnapshot.hasError){
+                              if (lastMessageSnapshot.hasError) {
                                 print(lastMessageSnapshot.error);
                               }
                               if (lastMessageSnapshot.connectionState ==
                                   ConnectionState.waiting) {
-                                return Center(child: CircularProgressIndicator());
+                                return Center(
+                                    child: CircularProgressIndicator());
                               }
 
                               String lastMessage = '';
@@ -129,13 +134,22 @@ class _ChatListPageState extends State<ChatListPage> {
 
                               return ListTile(
                                 title: Text(name),
-                                leading: 
-                                CircleAvatar(
-                                  child: Icon(Icons.person,size: 25,),
+                                leading: CircleAvatar(
+                                  child: Icon(
+                                    Icons.person,
+                                    size: 25,
+                                  ),
                                 ),
                                 subtitle: Text(lastMessage),
                                 onTap: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => ChatMessagePage(id:chattedUsers[index],name:name,passingdocument: document!),));
+                                  
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ChatMessagePage(
+                                            id: chattedUsers[index],
+                                            passingdocument: document!),
+                                      ));
                                   // navigate to chat screen for the selected user
                                 },
                               );

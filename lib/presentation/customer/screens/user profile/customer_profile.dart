@@ -15,8 +15,6 @@ class CustProfilePage extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-
-
     return  Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
@@ -49,6 +47,18 @@ class CustProfilePage extends StatelessWidget {
                       fontSize: 30.0,
                       fontFamily: 'Pacifico',
                       fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    snapshot.data!['email'],
+                    style: const TextStyle(
+                      fontSize: 16.0,
+                      fontFamily: 'Roboto',
+                      fontWeight: FontWeight.w400,
                       color: Colors.black,
                     ),
                   ),

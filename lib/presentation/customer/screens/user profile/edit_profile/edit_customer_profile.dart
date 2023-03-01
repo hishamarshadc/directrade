@@ -4,38 +4,38 @@ import 'package:flutter/material.dart';
 import 'package:sample_project/presentation/authentication/login.dart';
 import 'package:sample_project/presentation/customer/screens/user%20profile/customer_profile.dart';
 
+// class CustEdit extends StatefulWidget {
+//   const CustEdit({super.key});
+
+//   @override
+//   State<CustEdit> createState() => _CustEditState();
+// }
+
+// class _CustEditState extends State<CustEdit> {
+//   @override
+//   Widget build(BuildContext context) {
+//   //   docRef.get().then(
+//   //     (DocumentSnapshot doc) async {
+//   //       data = await doc.data() as Map<String, dynamic>;
+//   //     },
+//   //     onError: (e) => print("Error getting document: $e"),
+//   //   );
+
+//     return const MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       home: CustEdit(),
+//     );
+//   }
+// }
+
 class CustEdit extends StatefulWidget {
   const CustEdit({super.key});
 
   @override
-  State<CustEdit> createState() => _CustEditState();
+  _CustEditState createState() => _CustEditState();
 }
 
 class _CustEditState extends State<CustEdit> {
-  @override
-  Widget build(BuildContext context) {
-    docRef.get().then(
-      (DocumentSnapshot doc) async {
-        data = await doc.data() as Map<String, dynamic>;
-      },
-      onError: (e) => print("Error getting document: $e"),
-    );
-
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: EditProfilePage(),
-    );
-  }
-}
-
-class EditProfilePage extends StatefulWidget {
-  const EditProfilePage({super.key});
-
-  @override
-  _EditProfilePageState createState() => _EditProfilePageState();
-}
-
-class _EditProfilePageState extends State<EditProfilePage> {
   final kpass = TextEditingController();
   final cpass = TextEditingController();
   final kname = TextEditingController();
@@ -49,7 +49,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: true,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        foregroundColor: Colors.black,
+        title: const Text(
+          "Edit Profile",
+          style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+        ),
         elevation: 1,
         leading: IconButton(
           icon: const Icon(
@@ -57,7 +63,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             color: Colors.black,
           ),
           onPressed: () {
-            Navigator.pushNamed(context, 'custprofile');
+            Navigator.pop(context);
           },
         ),
       ),
@@ -77,14 +83,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 },
                 child: ListView(
                   children: [
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    const Text(
-                      "Edit Profile",
-                      style:
-                          TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
-                    ),
+                    // const SizedBox(
+                    //   height: 5,
+                    // ),
+                    // const Text(
+                    //   "Edit Profile",
+                    //   style:
+                    //       TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+                    // ),
                     const SizedBox(
                       height: 15,
                     ),
@@ -95,22 +101,26 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             width: 130,
                             height: 130,
                             decoration: BoxDecoration(
-                                border: Border.all(
-                                    width: 4,
-                                    color: Theme.of(context)
-                                        .scaffoldBackgroundColor),
-                                boxShadow: [
-                                  BoxShadow(
-                                      spreadRadius: 2,
-                                      blurRadius: 10,
-                                      color: Colors.black.withOpacity(0.1),
-                                      offset: const Offset(0, 10))
-                                ],
-                                shape: BoxShape.circle,
-                                image: const DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: AssetImage(
-                                        'assets/images/seller.jpg'))),
+                                color: Colors.lightBlue,
+                                borderRadius: BorderRadius.circular(100)),
+                            // decoration: BoxDecoration(
+                            //     border: Border.all(
+                            //         width: 4,
+                            //         color: Theme.of(context)
+                            //             .scaffoldBackgroundColor),
+                            //     boxShadow: [
+                            //       BoxShadow(
+                            //           spreadRadius: 2,
+                            //           blurRadius: 10,
+                            //           color: Colors.black.withOpacity(0.1),
+                            //           offset: const Offset(0, 10))
+                            //     ],
+                            //     shape: BoxShape.circle,
+                            //     image: const DecorationImage(
+                            //         fit: BoxFit.cover,
+                            //         image: AssetImage(
+                            //             'assets/images/seller.jpg'))),
+                            child: Icon(Icons.edit_note_rounded, size: 60),
                           ),
                         ],
                       ),
@@ -118,9 +128,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     const SizedBox(
                       height: 35,
                     ),
-                    buildTextField("Full Name", data['name'], 2, kname),
-                    buildTextField("PinCode", data['pincode'], 4, kpincode),
-                    buildTextField("Address", data['address'], 5, kaddress),
+                    buildTextField(
+                        "Full Name", snapshot.data!['name'], 2, kname),
+                    buildTextField(
+                        "Phone Number", snapshot.data!['phone'], 3, kphone),
+                    buildTextField(
+                        "PinCode", snapshot.data!['pincode'], 4, kpincode),
+                    buildTextField(
+                        "Address", snapshot.data!['address'], 5, kaddress),
                     const SizedBox(
                       height: 5,
                     ),

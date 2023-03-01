@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class FeedbackBox extends StatelessWidget {
+  final cmail=Uri.parse('mailto:project.directrade@gmail.com');
+  final cphone=Uri.parse('tel:+919207631619');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
         title: Text('Contact Us'),
       ),
       body: Center(
@@ -19,20 +24,27 @@ class FeedbackBox extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _buildContactButton(
-                  icon: Icons.email,
-                  text: 'Email',
-                  color: Colors.black,
+                InkWell(
+                  onTap: () {
+                    launchUrl(
+                      cmail
+                    );
+                  },
+                  child: _buildContactButton(
+                    icon: Icons.email,
+                    text: 'Email',
+                    color: Colors.black,
+                  ),
                 ),
-                _buildContactButton(
-                  icon: Icons.phone,
-                  text: 'Phone',
-                  color: Colors.blue,
-                ),
-                _buildContactButton(
-                  icon: Icons.chat,
-                  text: 'WhatsApp',
-                  color: Colors.green.shade400,
+                InkWell(
+                  onTap: () {
+                    launchUrl(cphone);
+                  },
+                  child: _buildContactButton(
+                    icon: Icons.phone,
+                    text: 'Phone',
+                    color: Colors.blue,
+                  ),
                 ),
               ],
             ),
@@ -42,15 +54,11 @@ class FeedbackBox extends StatelessWidget {
                 SizedBox(height: 20),
                 _buildContactField(
                   label: 'Email',
-                  value: 'Nijas@dt.com',
+                  value: 'project.directrade@gmail.com',
                 ),
                 _buildContactField(
                   label: 'Phone',
-                  value: '+913028471482',
-                ),
-                _buildContactField(
-                  label: 'WhatsApp URL',
-                  value: 'https://dummywhatsappurl.com',
+                  value: '+91 9207631619',
                 ),
               ],
             ),

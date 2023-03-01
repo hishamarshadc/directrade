@@ -114,7 +114,8 @@ class _SearchProductPageState extends State<SearchProductPage> {
                                 if(document['product_name'].toString().toLowerCase().startsWith(_search.toLowerCase())){
                                   print(data['product_name']);
                                   print(_search);
-                                    return StreamBuilder<DocumentSnapshot>(
+                                    return 
+                                    StreamBuilder<DocumentSnapshot>(
                                   stream: FirebaseFirestore.instance
                                       .collection('Users')
                                       .doc(document['product_seller_id'])

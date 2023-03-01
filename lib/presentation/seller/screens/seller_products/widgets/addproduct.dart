@@ -6,6 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sample_project/presentation/authentication/login.dart';
 import 'package:sample_project/presentation/seller/screens/seller_products/seller_product.dart';
 
@@ -109,13 +110,11 @@ class _AddProductFormState extends State<AddProductForm> {
                   child: image != null
                       ? Image.file(
                           image!,
-                          width: 100,
-                          height: 100,
+                          width: 150,
+                          height: 150,
                           fit: BoxFit.cover,
                         )
-                      : FlutterLogo(
-                          size: 160,
-                        ),
+                      : Lottie.asset('assets/lottie/product_img_lottie.json',height: 150),
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
                       border: Border.all(
@@ -281,6 +280,22 @@ class _AddProductFormState extends State<AddProductForm> {
                 ),
                 ElevatedButton(
                   onPressed: () async {
+                    print(image);
+                    if (image==null){
+                      ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: customsnackbar(
+                                        errortext:
+                                            'Please Select an Image !',
+                                        errorcolor: Colors.lightBlue,
+                                      ),
+                                      elevation: 0,
+                                      behavior: SnackBarBehavior.floating,
+                                      backgroundColor: Colors.transparent,
+                                    ),
+                                  );
+                    }
+                    else{
                     if (_formKey.currentState!.validate()) {
                       final user = FirebaseAuth.instance.currentUser;
                       final db = FirebaseFirestore.instance;
@@ -302,12 +317,28 @@ class _AddProductFormState extends State<AddProductForm> {
                         'upload_time': DateTime.now(),
                         'status':'active'
                       });
+                    
 
                       _formKey.currentState!.save();
                       Navigator.pop(context);
 
                       // Add logic to save the product here
                       // ...
+
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: NewSnackbar(
+                                        errortext:
+                                            'Product added successfully',
+                                        errorcolor: Colors.green,
+                                      ),
+                                      elevation: 0,
+                                      behavior: SnackBarBehavior.floating,
+                                      backgroundColor: Colors.transparent,
+                                    ),
+                                  );
+                    }
                     }
                   },
                   child: Text('Save'),

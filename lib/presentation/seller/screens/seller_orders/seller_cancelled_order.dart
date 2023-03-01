@@ -1,23 +1,23 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sample_project/presentation/seller/screens/seller_orders/widgets/seller_order_card.dart';
-
 
 class SellerOrderCancelled extends StatelessWidget {
   SellerOrderCancelled({super.key});
-  final user=FirebaseAuth.instance.currentUser;
+  final user = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
 
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance
           .collection('Orders')
-          .where('seller_id', isEqualTo: user?.uid )
-          .orderBy('datetime',descending: true)
-          .where('status',isEqualTo:'c')
+          .where('seller_id', isEqualTo: user?.uid)
+          .orderBy('datetime', descending: true)
+          .where('status', isEqualTo: 'c')
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
@@ -63,21 +63,23 @@ class SellerOrderCancelled extends StatelessWidget {
 
                             return Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: SellerOrderCard(orderdoc: orderdoc,productdoc: productdoc,),
+                              child: SellerOrderCard(
+                                orderdoc: orderdoc,
+                                productdoc: productdoc,
+                              ),
                             );
                           });
                     }),
               );
             } else {
               return Center(
-                child: const Text(
-                  'No Orders',
-                ),
+                child: Lottie.asset('assets/lottie/empty_box.json',
+                    width: size.width * .75),
               );
             }
         }
       },
-    );  
+    );
     // ListView.builder(
     //       itemBuilder: (context, index) => const Padding(
     //         padding: EdgeInsets.all(8.0),

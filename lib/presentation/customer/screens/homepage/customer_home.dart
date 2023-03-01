@@ -1,7 +1,9 @@
 
 
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:sample_project/presentation/customer/screens/search_catergory/widgets/product_full_view.dart';
 // import 'package:sample_project/presentation/customer/screens/search_catergory/widgets/product_full_view.dart';
 import 'package:sample_project/presentation/customer/widgets/item.dart';
 
@@ -80,60 +82,113 @@ class CustHomePage extends StatelessWidget {
                         .subtitle1
                         ?.copyWith(fontWeight: FontWeight.bold),
                   )),
-                  Text("Show more")
                 ],
               ),
             ),
             SizedBox(
               height: 150,
-              child: ListView.builder(
+              child: StreamBuilder(
+              stream:FirebaseFirestore.instance.collection('Products').where('status',isEqualTo: 'active').orderBy('rating',descending: true).snapshots(),
+              builder:(context, snapshot) {
+                if (snapshot.hasError) {
+                      return Center(child: Text('Error: ${snapshot.error}'));
+                    }
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting:
+                        return const Center(
+                          child: CircularProgressIndicator(color: Colors.blue),
+                        );
+                      default:
+                        if (snapshot.data!.docs.isNotEmpty) {
+                          return ListView.builder(
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
-                  itemCount: 10,
+                  itemCount: snapshot.data!.docs.length,
                   physics: ScrollPhysics(),
                   itemBuilder: (context, index) {
-                    return GestureDetector(
-                      // onTap: () => Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(builder: (context) => ProductFullViewPage(
-                      //     title: 'Embroidary Threads',
-                      //     imageUrl: 'assets/images/color threads.jpeg',
-                      //   ),
-                      //   ),
-                      // ),
+                  DocumentSnapshot document=snapshot.data!.docs[index];
+
+                       return StreamBuilder<DocumentSnapshot>(
+                                  stream: FirebaseFirestore.instance
+                                      .collection('Users')
+                                      .doc(document['product_seller_id'])
+                                      .snapshots(),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<DocumentSnapshot>
+                                          snapshot) {
+                                    if (snapshot.hasError) {
+                                      return Text('Error: ${snapshot.error}');
+                                    }
+
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return const Center(
+                                        child: CircularProgressIndicator(
+                                            color: Colors.blue),
+                                      );
+                                    }
+
+                                    if (!snapshot.hasData) {
+                                      return Text('Document does not exist');
+                                    }
+                                    // Extract data from the snapshot and display it
+                                    final sellerdata = snapshot.data!;
+                                    return GestureDetector(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ProductFullViewPage(
+                          passingdocument: document,
+                          sellerdata:sellerdata ,
+                          minQuantity: int.parse(
+                                                document['min_quantity']),
+                        ),
+                        ),
+                      ),
                       child: Column(
                         children: [
-                          Hero(
-                            tag: "$index",
-                            child: Container(
+                            Container(
                               margin: EdgeInsets.only(
                                   right: 8, left: 8, top: 0, bottom: 0),
                               width: 100,
                               height: 100,
-                              decoration: const BoxDecoration(
+                              decoration:  BoxDecoration(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(14)),
                                 color: Colors.black,
                                 image: DecorationImage(
-                                  image: AssetImage(
-                                      "assets/images/color threads.jpeg"),
+                                  image: NetworkImage(
+                                      document['image_url']),
                                      fit: BoxFit.cover,
                                 ),
                               ),
                             ),
-                          ),
+                          
                           const SizedBox(
                             height: 10,
                           ),
-                          const Text("Embroidary"),
+                           Text(document['product_name']),
                           const SizedBox(
                             height: 8,
                           ),
-                          const Text('Rs.100 /-',style: TextStyle(fontSize: 11,fontWeight:FontWeight.bold,),),
+                          Text('Rs.${document['product_price']} /-',style: TextStyle(fontSize: 11,fontWeight:FontWeight.bold,),),
                         ],
                       ),
                     );
-                  }),
+                  });
+                  }
+                  );
+                        }
+                        else{
+                          return Center(
+                            child: const Text(
+                              'No Products',
+                            ),
+                          );
+                        }
+              }
+
+              } 
+              )
             ),
             Padding(
               padding: const EdgeInsets.all(10.0),
@@ -147,57 +202,114 @@ class CustHomePage extends StatelessWidget {
                         .subtitle1
                         ?.copyWith(fontWeight: FontWeight.bold),
                   )),
-                  Text("Show more")
+
                 ],
               ),
             ),
             SizedBox(
               height: 150,
-              child: ListView.builder(
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemCount: 10,
-                physics: const ScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    // onTap: () => Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(builder: (context) => ProductFullViewPage(
-                    //       title: 'Decorator Bags',
-                    //       imageUrl: 'assets/images/decorators.jpeg',
-                    //     ),
-                    //     ),
-                    //   ),
-                    child: Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(
-                              right: 8, left: 8, top: 0, bottom: 0),
-                          width: 100,
-                          height: 100,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                            color: Colors.blue.shade200,
-                            image: const DecorationImage(
-                              image:
-                                  AssetImage("assets/images/decorators.jpeg"),
-                                  fit: BoxFit.cover,
+              child:StreamBuilder(
+              stream:FirebaseFirestore.instance.collection('Products').where('status',isEqualTo: 'active').orderBy('upload_time',descending: true).snapshots(),
+              builder:(context, snapshot) {
+                if (snapshot.hasError) {
+                      return Center(child: Text('Error: ${snapshot.error}'));
+                    }
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting:
+                        return const Center(
+                          child: CircularProgressIndicator(color: Colors.blue),
+                        );
+                      default:
+                        if (snapshot.data!.docs.isNotEmpty) {
+                          return ListView.builder(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemCount: snapshot.data!.docs.length,
+                  physics: ScrollPhysics(),
+                  itemBuilder: (context, index) {
+                  DocumentSnapshot document=snapshot.data!.docs[index];
+
+                       return StreamBuilder<DocumentSnapshot>(
+                                  stream: FirebaseFirestore.instance
+                                      .collection('Users')
+                                      .doc(document['product_seller_id'])
+                                      .snapshots(),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<DocumentSnapshot>
+                                          snapshot) {
+                                    if (snapshot.hasError) {
+                                      return Text('Error: ${snapshot.error}');
+                                    }
+
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return const Center(
+                                        child: CircularProgressIndicator(
+                                            color: Colors.blue),
+                                      );
+                                    }
+
+                                    if (!snapshot.hasData) {
+                                      return Text('Document does not exist');
+                                    }
+                                    // Extract data from the snapshot and display it
+                                    final sellerdata = snapshot.data!;
+                                    return GestureDetector(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ProductFullViewPage(
+                          passingdocument: document,
+                          sellerdata:sellerdata ,
+                          minQuantity: int.parse(
+                                                document['min_quantity']),
+                        ),
+                        ),
+                      ),
+                      child: Column(
+                        children: [
+                            Container(
+                              margin: EdgeInsets.only(
+                                  right: 8, left: 8, top: 0, bottom: 0),
+                              width: 100,
+                              height: 100,
+                              decoration:  BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(14)),
+                                color: Colors.black,
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                      document['image_url']),
+                                     fit: BoxFit.cover,
+                                ),
+                              ),
                             ),
+                          
+                          const SizedBox(
+                            height: 10,
                           ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        const Text("Hand Crafts"),
-                        const SizedBox(
+                           Text(document['product_name']),
+                          const SizedBox(
                             height: 8,
                           ),
-                          const Text('Rs.90/-',style: TextStyle(fontSize: 11,fontWeight:FontWeight.bold,),),
-                      ],
-                    ),
+                          Text('Rs.${document['product_price']} /-',style: TextStyle(fontSize: 11,fontWeight:FontWeight.bold,),),
+                        ],
+                      ),
+                    );
+                  });
+                  }
                   );
-                },
-              ),
+                        }
+                        else{
+                          return Center(
+                            child: const Text(
+                              'No Products',
+                            ),
+                          );
+                        }
+              }
+
+              } 
+              )
             ),
           ],
         ),

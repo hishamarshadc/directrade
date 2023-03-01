@@ -3,13 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sample_project/presentation/authentication/login.dart';
 import 'package:sample_project/splash.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final user = FirebaseAuth.instance.currentUser;
 final db = FirebaseFirestore.instance;
 // final docRef = db.collection("Users").doc(user!.uid);
 // var data;
-
-
 
 class AdminProfilePage extends StatefulWidget {
   const AdminProfilePage({super.key});
@@ -21,7 +20,6 @@ class AdminProfilePage extends StatefulWidget {
 class _AdminProfilePageState extends State<AdminProfilePage> {
   @override
   Widget build(BuildContext context) {
-
     // docRef.get().then(
     //   (DocumentSnapshot doc) async {
     //     data = await doc.data() as Map<String, dynamic>;
@@ -29,18 +27,17 @@ class _AdminProfilePageState extends State<AdminProfilePage> {
     //   onError: (e) => print("Error getting document: $e"),
     // );
 
-
-    return  Scaffold(
-        backgroundColor: Colors.white,
-        body: SafeArea(
-          child: StreamBuilder<DocumentSnapshot>(
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: StreamBuilder<DocumentSnapshot>(
             stream: db.collection("Users").doc(user!.uid).snapshots(),
             builder: (context, snapshot) {
-              if(snapshot.connectionState==ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(color: Colors.blue),
-            );
-}
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(color: Colors.blue),
+                );
+              }
 
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -48,9 +45,11 @@ class _AdminProfilePageState extends State<AdminProfilePage> {
                 children: <Widget>[
                   const Spacer(flex: 1),
                   const CircleAvatar(
-                    radius: 50,
-                    child:Icon(Icons.admin_panel_settings_outlined,size: 60,)
-                  ),
+                      radius: 50,
+                      child: Icon(
+                        Icons.admin_panel_settings_outlined,
+                        size: 60,
+                      )),
                   const SizedBox(
                     height: 10,
                   ),
@@ -71,57 +70,12 @@ class _AdminProfilePageState extends State<AdminProfilePage> {
                     ),
                   ),
                   InkWell(
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        side: const BorderSide(
-                          color: Colors.black,
-                          
-                        )
-                      ),
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 25.0),
-                        child: ListTile(
-                          title: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Spacer(
-                                flex: 3,
-                              ),
-                              Icon(
-                                Icons.phone,
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                'Contact Us',
-                                style: TextStyle(
-                                  fontFamily: 'SourceSansPro',
-                                  fontSize: 20,
-                                ),
-                              ),
-                              Spacer(flex: 3),
-                            ],
-                          ),
-                        ),
-                      ),
-                      onTap: () {
-                        Navigator.pushNamed(context, '');
-                      }),
-                  const SizedBox(
-                    height: 10.0,
-                    width: 150,
-                  ),
-                  InkWell(
                     child: Card(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        side: const BorderSide(
-                          color: Colors.black,
-                          
-                        )
-                      ),
+                          borderRadius: BorderRadius.circular(30),
+                          side: const BorderSide(
+                            color: Colors.black,
+                          )),
                       margin: const EdgeInsets.symmetric(
                           vertical: 10.0, horizontal: 25.0),
                       child: ListTile(
@@ -149,11 +103,14 @@ class _AdminProfilePageState extends State<AdminProfilePage> {
                         ),
                       ),
                     ),
-                    onTap: () {
+                    onTap: () async {
+                      final pref = await SharedPreferences.getInstance();
+                      await pref.clear();
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                              builder: (BuildContext context) => ScreenSplash()),
+                              builder: (BuildContext context) =>
+                                  ScreenSplash()),
                           ModalRoute.withName('/'));
                     },
                   ),
@@ -162,11 +119,13 @@ class _AdminProfilePageState extends State<AdminProfilePage> {
                     height: 5,
                     width: 150,
                   ),
-                  TextButton(onPressed: () {
-                    Navigator.pushNamed(context,'aboutus');
-                  },style: TextButton.styleFrom(
-                    foregroundColor: Colors.black
-                  ), child: const Text('About Us'),),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, 'aboutus');
+                    },
+                    style: TextButton.styleFrom(foregroundColor: Colors.black),
+                    child: const Text('About Us'),
+                  ),
                   const SizedBox(
                     height: 20.0,
                     width: 150,
@@ -183,7 +142,6 @@ class _AdminProfilePageState extends State<AdminProfilePage> {
                       color: Colors.black,
                     ),
                   ),
-                  
                   const SizedBox(
                     height: 20.0,
                     width: 150,
@@ -193,9 +151,8 @@ class _AdminProfilePageState extends State<AdminProfilePage> {
                   ),
                 ],
               );
-            }
-          ),
-        ),
+            }),
+      ),
     );
   }
 }
