@@ -8,6 +8,8 @@ class SellerEditsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance
           .collection("Changes")
@@ -40,7 +42,9 @@ class SellerEditsPage extends StatelessWidget {
                     }),
               );
             } else {
-              return Lottie.network('https://assets4.lottiefiles.com/private_files/lf30_e3pteeho.json');
+              return Center(
+                  child: Lottie.asset('assets/lottie/empty_box.json',
+                      width: size.width * .75));
             }
         }
       },

@@ -6,6 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sample_project/presentation/authentication/login.dart';
 import 'package:sample_project/presentation/seller/screens/seller_products/seller_product.dart';
 
@@ -113,13 +114,11 @@ class _EditProductFormState extends State<EditProductForm> {
                   child: image != null
                       ? Image.file(
                           image!,
-                          width: 100,
-                          height: 100,
+                          width: 150,
+                          height: 150,
                           fit: BoxFit.cover,
                         )
-                      : FlutterLogo(
-                          size: 160,
-                        ),
+                      : Lottie.asset('assets/lottie/product_img_lottie.json',height: 150),
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
                       border: Border.all(

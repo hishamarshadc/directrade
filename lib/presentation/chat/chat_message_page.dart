@@ -5,11 +5,11 @@ import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 
 class ChatMessagePage extends StatefulWidget {
-  ChatMessagePage({super.key, required this.id, required this.name,required this.passingdocument});
+  ChatMessagePage({super.key, required this.id,required this.passingdocument});
   DocumentSnapshot passingdocument;
   String id;
-  String name;
-  String image = '';
+  // String name;
+  // String image = '';
   
 
   @override
@@ -23,18 +23,17 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
   final storeUser = FirebaseFirestore.instance;
 
   List<Message> messages = [];
-  // .reversed.toList();
-
-  // _ChatMessagePageState(this.name);
 
   @override
   Widget build(BuildContext context) {
+    final size=MediaQuery.of(context).size;
+
     return Scaffold(
         appBar: AppBar(
             backgroundColor: Colors.white,
             foregroundColor: Colors.black,
             title: Text(
-              widget.name,
+              widget.passingdocument['companyname'],
               style: const TextStyle(
                 fontSize: 27,
               ),
@@ -46,7 +45,7 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
                   Navigator.pushNamed(context, 'chatsellerdetails');
                 },
                 icon: const CircleAvatar(
-                  backgroundImage: AssetImage('assets/images/seller.jpg'),
+                  child: Icon(Icons.person_pin),
                 ),
               ),
             ]),
@@ -119,20 +118,23 @@ Column(
                         alignment: message.isSentByMe
                             ? Alignment.centerRight
                             : Alignment.centerLeft,
-                        child: Card(
-                          elevation: 8,
-                          child: Padding(
-                            padding: const EdgeInsets.all(12),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(message.text),
-                                SizedBox(height: 3,),
-                                Text(DateFormat.jm().format(message.date),style: const TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 10),
-                                            textAlign: TextAlign.end,)
-                              ],
+                        child: Container(
+                          width: message.text.length > 50 ? size.width * 0.8 : null,
+                          child: Card(
+                            elevation: 8,
+                            child: Padding(
+                              padding: const EdgeInsets.all(12),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(message.text),
+                                  SizedBox(height: 3,),
+                                  Text(DateFormat.jm().format(message.date),style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 10),
+                                              textAlign: TextAlign.end,)
+                                ],
+                              ),
                             ),
                           ),
                         ),

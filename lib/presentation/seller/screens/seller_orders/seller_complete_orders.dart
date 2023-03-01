@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sample_project/presentation/seller/screens/seller_orders/widgets/seller_order_card.dart';
 
 
@@ -11,6 +12,7 @@ class SellerOrderComplete extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+        final size=MediaQuery.of(context).size;
 
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance
@@ -70,9 +72,7 @@ class SellerOrderComplete extends StatelessWidget {
               );
             } else {
               return Center(
-                child: const Text(
-                  'No Orders',
-                ),
+                child: Lottie.asset('assets/lottie/empty_box.json',width:size.width*.75),
               );
             }
         }

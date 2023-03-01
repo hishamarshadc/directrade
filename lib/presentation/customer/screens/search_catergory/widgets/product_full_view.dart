@@ -65,7 +65,7 @@ void decrement() {
           foregroundColor: Colors.black,
           title: Text(
             'Product Details',
-            style: TextStyle(fontSize: 30),
+            style: TextStyle(fontSize: 25),
           ),
         ),
         body: Column(
@@ -151,7 +151,7 @@ void decrement() {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (ctx) => ChatMessagePage(
                                             id:widget.sellerdata.id,
-                                            name:widget.sellerdata['name'],
+                                            // name:widget.sellerdata['companyname'],
                                             passingdocument: widget.sellerdata,
                                       )));
                             },

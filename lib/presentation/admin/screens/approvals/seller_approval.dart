@@ -1,6 +1,7 @@
 // import 'package:flutter/cupertino.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 import 'package:sample_project/presentation/admin/screens/approvals/widgets/waiting_card.dart';
 
@@ -12,15 +13,8 @@ class SellerApprovalPage extends StatelessWidget {
   const SellerApprovalPage({super.key});
 
   @override
-//   Widget build(BuildContext context) {
-//     return ListView.builder(
-//       itemBuilder: (context, index) => const WaitingCard(),
-//       itemCount: 2000,
-//     );
-//   }
-// }
-
   Widget build(BuildContext context) {
+    final size=MediaQuery.of(context).size;
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance.collection("Users").where('userType',isEqualTo:'p').snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -49,9 +43,7 @@ class SellerApprovalPage extends StatelessWidget {
               );
             } else {
               return Center(
-                child: const Text(
-                  'empty',
-                ),
+                child: Lottie.asset('assets/lottie/empty_box.json',width:size.width*.75)
               );
             }
         }

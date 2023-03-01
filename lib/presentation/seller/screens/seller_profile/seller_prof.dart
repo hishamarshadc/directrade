@@ -55,6 +55,18 @@ class SellerProfilePage extends StatelessWidget {
                       color: Colors.black,
                     ),
                   ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    snapshot.data!['email'],
+                    style: const TextStyle(
+                      fontSize: 16.0,
+                      fontFamily: 'Roboto',
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
+                    ),
+                  ),
               const SizedBox(
                 height: 20.0,
                 width: 150,

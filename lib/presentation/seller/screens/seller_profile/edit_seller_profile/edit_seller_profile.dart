@@ -3,43 +3,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sample_project/presentation/authentication/login.dart';
 
-final user = FirebaseAuth.instance.currentUser;
-final db = FirebaseFirestore.instance;
-final docRef = db.collection("Users").doc(user!.uid);
-var data;
-
 class EditSeller extends StatefulWidget {
   const EditSeller({super.key});
 
   @override
-  State<EditSeller> createState() => _EditSellerState();
+  _EditSellerState createState() => _EditSellerState();
 }
 
 class _EditSellerState extends State<EditSeller> {
-  @override
-  Widget build(BuildContext context) {
-    docRef.get().then(
-      (DocumentSnapshot doc) async {
-        data = await doc.data() as Map<String, dynamic>;
-      },
-      onError: (e) => print("Error getting document: $e"),
-    );
-
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: EditProfilePage(),
-    );
-  }
-}
-
-class EditProfilePage extends StatefulWidget {
-  const EditProfilePage({super.key});
-
-  @override
-  _EditProfilePageState createState() => _EditProfilePageState();
-}
-
-class _EditProfilePageState extends State<EditProfilePage> {
   final kpass = TextEditingController();
   final cpass = TextEditingController();
   final kname = TextEditingController();
@@ -48,6 +19,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
   final kphone = TextEditingController();
   final kaddress = TextEditingController();
   final kpincode = TextEditingController();
+
+  final user = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -59,13 +32,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
         elevation: 1,
         automaticallyImplyLeading: true,
         title: const Text(
-                      "Edit Profile",
-                      style:
-                          TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
-                    ),
+          "Edit Profile",
+          style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+        ),
       ),
       body: StreamBuilder<DocumentSnapshot>(
-          stream: db.collection("Users").doc(user!.uid).snapshots(),
+          stream: FirebaseFirestore.instance
+              .collection("Users")
+              .doc(user!.uid)
+              .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
@@ -93,26 +68,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             width: 130,
                             height: 130,
                             decoration: BoxDecoration(
-                                border: Border.all(
-                                    width: 4,
-                                    color: Theme.of(context)
-                                        .scaffoldBackgroundColor),
-                                boxShadow: [
-                                  BoxShadow(
-                                      spreadRadius: 2,
-                                      blurRadius: 10,
-                                      color: Colors.black.withOpacity(0.1),
-                                      offset: const Offset(0, 10))
-                                ],
-                                shape: BoxShape.circle,
-                                
-                                // image: const DecorationImage(
-                                //     fit: BoxFit.cover,
-                                //     image: AssetImage(
-                                //         'assets/images/seller.jpg'),
-                                //         ),
-                                
-                                        ),
+                                color: Colors.lightBlue,
+                                borderRadius: BorderRadius.circular(100)),
+                            child: Icon(Icons.edit_note_rounded, size: 60),
                           ),
                         ],
                       ),
@@ -120,12 +78,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     const SizedBox(
                       height: 35,
                     ),
-                    buildTextField("Full Name", snapshot.data!['name'], 2, kname),
-                    buildTextField("PinCode", snapshot.data!['pincode'], 4, kpincode),
                     buildTextField(
-                        "Company Name", snapshot.data!['companyname'], 2, kcname),
+                        "Full Name", snapshot.data!['name'], 2, kname),
                     buildTextField(
-                        "Company Address", snapshot.data!['address'], 5, kaddress),
+                        "Phone Number", snapshot.data!['phone'], 3, kphone),
+                    buildTextField("Company Name",
+                        snapshot.data!['companyname'], 2, kcname),
+                    buildTextField("Company Address", snapshot.data!['address'],
+                        5, kaddress),
+                    buildTextField(
+                        "PinCode", snapshot.data!['pincode'], 4, kpincode),
                     const SizedBox(
                       height: 5,
                     ),
@@ -175,6 +137,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   'name': (kname.text.isNotEmpty)
                                       ? kname.text
                                       : data['name'],
+                                  'phone': (kphone.text.isNotEmpty)
+                                      ? kphone.text
+                                      : data['phone'],
                                   'companyname': (kcname.text.isNotEmpty)
                                       ? kcname.text
                                       : data['companyname'],
@@ -280,7 +245,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               break;
             case 3:
               {
-                if (value!.isNotEmpty ||
+                if (value!.isEmpty ||
                     !RegExp(r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$')
                         .hasMatch(value)) {
                   //  r'^[0-9]{10}$' pattern plain match number with length 10

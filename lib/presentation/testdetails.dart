@@ -30,7 +30,6 @@ class DataFetch extends StatelessWidget {
   const DataFetch({super.key});
   @override
   Widget build(BuildContext context) {
-    // getData();
     return Container(
         child: Center(
       child: Container(

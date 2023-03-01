@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sample_project/presentation/seller/screens/seller_products/widgets/addproduct.dart';
 import 'package:sample_project/presentation/seller/screens/seller_products/widgets/seller_product_card.dart';
 
@@ -60,6 +61,8 @@ class _SellerProductPageState extends State<SellerProductPage> {
 
   @override
   Widget build(BuildContext context) {
+        final size=MediaQuery.of(context).size;
+
   
   if(curruser!=null){
     if (cat == '') {
@@ -387,9 +390,7 @@ print(curruser?.uid);
                               });
                         } else {
                           return Center(
-                            child: const Text(
-                              'No Products',
-                            ),
+                            child: Lottie.asset('assets/lottie/empty_box.json',width:size.width*.75),
                           );
                         }
                     }
