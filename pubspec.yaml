@@ -90,6 +90,7 @@ flutter:
     - assets/icon/dtslogan.jpeg
     - assets/lottie/product_img_lottie.json
     - assets/lottie/empty_box.json
+    - assets/lottie/loadig_screen.json
 
   #   - images/a_dot_ham.jpeg
 

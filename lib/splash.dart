@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sample_project/presentation/admin/screens/admin_home.dart';
 import 'package:sample_project/presentation/authentication/login.dart';
 import 'package:sample_project/presentation/customer/screens/cust_botton_nav.dart';
@@ -55,9 +56,7 @@ class _ScreenSplashState extends State<ScreenSplash> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Image.asset('assets/images/slogan logo.png'),
-          CircularProgressIndicator(
-            color: Colors.lightBlue,
-          )
+          Lottie.asset('assets/lottie/loadig_screen.json',width:60)
         ],
       ),
     );

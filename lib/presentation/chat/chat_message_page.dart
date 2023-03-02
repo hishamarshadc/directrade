@@ -33,7 +33,7 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
             backgroundColor: Colors.white,
             foregroundColor: Colors.black,
             title: Text(
-              widget.passingdocument['companyname'],
+              (widget.passingdocument['userType']=='s')?widget.passingdocument['companyname']:widget.passingdocument['name'],
               style: const TextStyle(
                 fontSize: 27,
               ),

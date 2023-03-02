@@ -344,8 +344,12 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                                     child: (image!=null)?Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
-                                            Text( image!.path.split('/').last,style: TextStyle(fontSize: 15),overflow: TextOverflow.ellipsis,),
-                                            SizedBox(width: 10,),
+                                            SizedBox(
+                                              width: 150,
+                                              child: Text( image!.path.split('/').last,style: TextStyle(fontSize: 15),overflow: TextOverflow.ellipsis,),
+                                            
+                                            ),
+                                             SizedBox(width: 10,),
                                             Container(
                                               width: 30,
                                               height: 30,

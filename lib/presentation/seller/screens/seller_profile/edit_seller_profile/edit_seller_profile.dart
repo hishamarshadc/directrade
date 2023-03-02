@@ -21,6 +21,14 @@ class _EditSellerState extends State<EditSeller> {
   final kpincode = TextEditingController();
 
   final user = FirebaseAuth.instance.currentUser;
+  // List<String> cnames=[]; 
+  //   @override
+  // void initState() {
+  //   // TODO: implement initState
+
+  //   super.initState();
+  // }
+
 
   @override
   Widget build(BuildContext context) {
@@ -136,22 +144,22 @@ class _EditSellerState extends State<EditSeller> {
                                   // 'password': kpass.text,
                                   'name': (kname.text.isNotEmpty)
                                       ? kname.text
-                                      : data['name'],
+                                      : snapshot.data!['name'],
                                   'phone': (kphone.text.isNotEmpty)
                                       ? kphone.text
-                                      : data['phone'],
+                                      : snapshot.data!['phone'],
                                   'companyname': (kcname.text.isNotEmpty)
                                       ? kcname.text
-                                      : data['companyname'],
+                                      : snapshot.data!['companyname'],
                                   // 'phone': (kphone.text.isNotEmpty)
                                   //     ? kphone.text
                                   //     : data['phone'],
                                   'address': (kaddress.text.isNotEmpty)
                                       ? kaddress.text
-                                      : data['address'],
+                                      : snapshot.data!['address'],
                                   'pincode': (kpincode.text.isNotEmpty)
                                       ? kpincode.text
-                                      : data['pincode'],
+                                      : snapshot.data!['pincode'],
                                   'userType': 'p',
                                   'status': 'a',
                                   'change_datetime': DateTime.now()

@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sample_project/core/fetchData.dart';
-import 'package:sample_project/presentation/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatelessWidget {
@@ -41,24 +40,13 @@ class LoginPage extends StatelessWidget {
                             height: size.width * .2,
                           ),
                           Center(
-                            child: InkWell(
-                              onLongPress: () {
-                                Navigator.pushNamed(context, 'home');
-                              },
-                              onDoubleTap: () {
-                                Navigator.pushNamed(context, 'adminhome');
-                              },
-                              onTap: () {
-                                Navigator.pushNamed(context, 'sellerhome');
-                              },
-                              child: const CircleAvatar(
-                                radius: 50,
-                                backgroundColor: Colors.lightBlue,
-                                child: Icon(
-                                  Icons.login_rounded,
-                                  color: Colors.white,
-                                  size: 40,
-                                ),
+                            child: const CircleAvatar(
+                              radius: 50,
+                              backgroundColor: Colors.lightBlue,
+                              child: Icon(
+                                Icons.login_rounded,
+                                color: Colors.white,
+                                size: 40,
                               ),
                             ),
                           ),

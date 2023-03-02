@@ -2,10 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:sample_project/presentation/seller/screens/seller_products/widgets/addproduct.dart';
 import 'package:sample_project/presentation/seller/screens/seller_products/widgets/seller_product_card.dart';
 
-final curruser = FirebaseAuth.instance.currentUser;
 
 class SellerProductPage extends StatefulWidget {
   const SellerProductPage({super.key});
@@ -16,7 +14,7 @@ class SellerProductPage extends StatefulWidget {
 
 class _SellerProductPageState extends State<SellerProductPage> {
   Stream<QuerySnapshot<Object?>>? stream;
-
+  final curruser = FirebaseAuth.instance.currentUser;
   String? cat = '';
   num? price = 0;
   String? type = 'r';

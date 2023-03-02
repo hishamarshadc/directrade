@@ -240,8 +240,8 @@ class WaitingCard extends StatelessWidget {
             _buildSellerDetails(),
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child: Image.asset(
-                'assets/images/seller.jpg',
+              child: Image.network(
+                passingdocument['proof_image'],
                 fit: BoxFit.cover,
               ),
             ),

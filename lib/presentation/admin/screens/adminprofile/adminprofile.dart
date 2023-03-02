@@ -104,6 +104,7 @@ class _AdminProfilePageState extends State<AdminProfilePage> {
                       ),
                     ),
                     onTap: () async {
+                      await FirebaseAuth.instance.signOut();
                       final pref = await SharedPreferences.getInstance();
                       await pref.clear();
                       Navigator.pushAndRemoveUntil(
