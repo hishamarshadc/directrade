@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sample_project/presentation/seller/screens/seller_products/widgets/seller_product_view.dart';
-import 'package:sample_project/presentation/user_model.dart';
 
 class SellerProductCard extends StatelessWidget {
   SellerProductCard({Key? key, required this.passingdocument})

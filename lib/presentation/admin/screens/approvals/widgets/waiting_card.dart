@@ -94,21 +94,19 @@
 //   }
 // }
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:sample_project/core/colors/Colors.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:sample_project/presentation/admin/screens/approvals/seller_approval.dart';
-import 'package:sample_project/presentation/testdetails.dart';
 
 import '../../../../authentication/login.dart';
 
+// ignore: must_be_immutable
 class WaitingCard extends StatelessWidget {
   DocumentSnapshot passingdocument;
   WaitingCard({Key? key, required this.passingdocument}) : super(key: key);
   List<String> emails = [];
-
+  final adminuser=FirebaseAuth.instance.currentUser;
   void _approveSeller() async {
    try{
      FirebaseFirestore.instance.collection("Users").doc(passingdocument.id).update({
@@ -154,8 +152,19 @@ class WaitingCard extends StatelessWidget {
             .userChanges()
             .firstWhere((user) => user!.uid == passingdocument.id);
         print(user!.uid);
+        // print(user.);
 
         await user.delete();
+        
+        // await FirebaseAuth.instance.signInWithEmailAndPassword(
+        //                                   email:passingdocument['email'],
+        //                                   password: passingdocument['password']);
+        // await FirebaseAuth.instance.currentUser!.delete();
+        
+        // await FirebaseAuth.instance.signInWithEmailAndPassword(
+        //                                   email:'mariajose@gmail.com',
+        //                                   password: '123456');
+
       } catch (e) {
         print('Error deleting user: $e');
       }

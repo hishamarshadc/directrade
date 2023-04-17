@@ -1,11 +1,7 @@
-
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sample_project/presentation/customer/screens/search_catergory/widgets/product_full_view.dart';
 // import 'package:sample_project/presentation/customer/screens/search_catergory/widgets/product_full_view.dart';
-import 'package:sample_project/presentation/customer/widgets/item.dart';
 
 class CustHomePage extends StatelessWidget {
   @override
@@ -123,8 +119,8 @@ class CustHomePage extends StatelessWidget {
                                     if (snapshot.connectionState ==
                                         ConnectionState.waiting) {
                                       return const Center(
-                                        child: CircularProgressIndicator(
-                                            color: Colors.blue),
+                                        // child: CircularProgressIndicator(
+                                        //     color: Colors.blue),
                                       );
                                     }
 
@@ -244,8 +240,8 @@ class CustHomePage extends StatelessWidget {
                                     if (snapshot.connectionState ==
                                         ConnectionState.waiting) {
                                       return const Center(
-                                        child: CircularProgressIndicator(
-                                            color: Colors.blue),
+                                        // child: CircularProgressIndicator(
+                                        //     color: Colors.blue),
                                       );
                                     }
 
@@ -291,7 +287,12 @@ class CustHomePage extends StatelessWidget {
                           const SizedBox(
                             height: 8,
                           ),
-                          Text('Rs.${document['product_price']} /-',style: TextStyle(fontSize: 11,fontWeight:FontWeight.bold,),),
+                          Row(
+                            children: [
+                              Text('Rs.${document['product_price']} /-',style: TextStyle(fontSize: 11,fontWeight:FontWeight.bold,),),
+                              
+                            ],
+                          ),
                         ],
                       ),
                     );
@@ -316,13 +317,4 @@ class CustHomePage extends StatelessWidget {
       ),
     );
   }
-
-  final List<Item> _choices = [
-    Item("All", Icon(Icons.clear_all_rounded)),
-    Item("Men", Icon(Icons.person)),
-    Item("Women", Icon(Icons.emoji_people_sharp)),
-    Item("Fashion", Icon(Icons.shopping_bag)),
-    Item("Baby", Icon(Icons.child_care)),
-    Item("Kids", Icon(Icons.face_sharp))
-  ];
 }

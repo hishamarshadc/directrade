@@ -100,7 +100,7 @@ class CustCard extends StatelessWidget {
         child: ExpansionTile(
           leading: const CircleAvatar(
             radius: 40,
-            child: Icon(Icons.currency_rupee_outlined),
+            child: Icon(Icons.account_circle),
           ),
           title: Text(
             '${passingdocument['name']}'.toUpperCase(),

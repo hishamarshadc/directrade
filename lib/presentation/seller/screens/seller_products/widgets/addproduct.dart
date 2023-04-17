@@ -8,7 +8,6 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sample_project/presentation/authentication/login.dart';
-import 'package:sample_project/presentation/seller/screens/seller_products/seller_product.dart';
 
 class AddProductForm extends StatefulWidget {
   @override

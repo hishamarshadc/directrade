@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
@@ -56,14 +58,6 @@ class SellerProductView extends StatelessWidget {
                                       style: TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.w400),
-                                    )),
-                                SizedBox(
-                                    width: size.width * .5,
-                                    child: Text(
-                                      'Sold by Awesome Designers',
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w500),
                                     )),
                               ],
                             ),

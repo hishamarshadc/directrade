@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sample_project/presentation/authentication/login.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sample_project/presentation/authentication/seller_verification.dart';
 
 class SellerRegisterPage extends StatefulWidget {
   const SellerRegisterPage({super.key});
@@ -224,7 +224,7 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                           sizedBox,
                           TextFormField(
                             controller: kaddress,
-                            keyboardType: TextInputType.emailAddress,
+                            keyboardType: TextInputType.text,
                             decoration: InputDecoration(
                               prefixIcon: const Icon(Icons.list_alt_rounded,
                                   color: Colors.black),
@@ -380,8 +380,6 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                             child: TextButton(
                               onPressed: () async {
 
-                                SharedPreferences pref =
-                                    await SharedPreferences.getInstance();
 
                                 if (kemail.text.isNotEmpty &&
                                     kpass.text.isNotEmpty &&
@@ -395,27 +393,45 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                                     final proofimage= await  uploadImage(image!);
 
                                     if (user != null) {
-                                      storeUser
-                                          .collection("Users")
-                                          .doc(user.uid)
-                                          .set({
-                                        'email': kemail.text,
-                                        'password': kpass.text,
-                                        'name': kname.text,
-                                        'companyname': kcname.text,
-                                        'proof_image':proofimage,
-                                        'phone': kphone.text,
-                                        'address': kaddress.text,
-                                        'pincode': kpincode.text,
-                                        'userType': 'p',
-                                        'status': 'a'
-                                      });
-                                      ScaffoldMessenger.of(context)
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              SellerEmailVerificationScreen(
+                                            name: kname.text,
+                                            cname: kcname.text,
+                                            proofimage: proofimage,
+                                            email: kemail.text,
+                                            password: kpass.text,
+                                            phone: kphone.text,
+                                            address: kaddress.text,
+                                            pincode: kpincode.text,
+                                          ),
+                                        ),
+                                      );
+                                      
+                                      // ScaffoldMessenger.of(context)
+                                      //     .showSnackBar(
+                                      //   const SnackBar(
+                                      //     content: customsnackbar(
+                                      //       errortext:
+                                      //           'Application Submitted\n Try Login later',
+                                      //       errorcolor: Colors.yellow,
+                                      //     ),
+                                      //     elevation: 0,
+                                      //     behavior: SnackBarBehavior.floating,
+                                      //     backgroundColor: Colors.transparent,
+                                      //   ),
+                                      // );
+                                    }
+                                  } on FirebaseAuthException catch (e){
+                                    if(e.code=="email-already-in-use"){
+                                        ScaffoldMessenger.of(context)
                                           .showSnackBar(
                                         const SnackBar(
                                           content: customsnackbar(
                                             errortext:
-                                                'Application Submitted\n Try Login later',
+                                                'Email is Already Used!\nTry another Email.',
                                             errorcolor: Colors.yellow,
                                           ),
                                           elevation: 0,
@@ -424,10 +440,9 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                                         ),
                                       );
                                     }
-                                  }
-                                   catch (e) {
+                                  }catch (e) {
                                     print(e.toString());
-                                  }
+                                  } 
                                 }
                               },
                               child: const Text(

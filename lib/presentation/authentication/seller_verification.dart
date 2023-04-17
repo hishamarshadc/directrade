@@ -3,35 +3,39 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-// ignore: must_be_immutable
-class CustEmailVerificationScreen extends StatefulWidget {
-  CustEmailVerificationScreen(
+import 'package:sample_project/presentation/authentication/login.dart';
+class SellerEmailVerificationScreen extends StatefulWidget {
+  SellerEmailVerificationScreen(
       {required this.name,
+      required this.cname,
       required this.email,
+      required this.password,
       required this.phone,
       required this.pincode,
       required this.address,
+      required this.proofimage,
       super.key});
+  String proofimage;
+  String cname;
   String name;
   String email;
+  String password;
   String phone;
   String pincode;
   String address;
 
-
   @override
-  State<CustEmailVerificationScreen> createState() =>
+  State<SellerEmailVerificationScreen> createState() =>
       _EmailVerificationScreenState();
 }
 
-class _EmailVerificationScreenState extends State<CustEmailVerificationScreen> {
-
-    bool isEmailVerified = false;
+class _EmailVerificationScreenState
+    extends State<SellerEmailVerificationScreen> {
+  bool isEmailVerified = false;
   Timer? timer;
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
     FirebaseAuth.instance.currentUser?.sendEmailVerification();
     timer =
@@ -48,25 +52,40 @@ class _EmailVerificationScreenState extends State<CustEmailVerificationScreen> {
     if (isEmailVerified) {
       final user = FirebaseAuth.instance.currentUser;
       if (user != null) {
-        SharedPreferences pref = await SharedPreferences.getInstance();
+        // SharedPreferences pref = await SharedPreferences.getInstance();
         FirebaseFirestore.instance.collection("Users").doc(user.uid).set({
-     'email':widget.email,
-    'name':widget.name,
-    'phone':widget.phone,
-    'address':widget.address,
-    'pincode':widget.pincode,
-    'userType':'c',
+          'email': widget.email,
+          'password':widget.password,
+          'name': widget.name,
+          'companyname': widget.cname,
+          'proof_image': widget.proofimage,
+          'phone': widget.phone,
+          'address': widget.address,
+          'pincode': widget.pincode,
+          'userType': 'p',
+          'status': 'a'
         });
-  pref.setString('type','customer');
-  Navigator.popAndPushNamed(context, 'home');
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: customsnackbar(
+              errortext: 'Application Submitted\n Try Login later',
+              errorcolor: Colors.yellow,
+            ),
+            elevation: 0,
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: Colors.transparent,
+          ),
+        );
+        Navigator.pop(context);
 
-      timer?.cancel();
+        timer?.cancel();
+      }
     }
-  }
   }
 
   @override
   void dispose() {
+    // TODO: implement dispose
     timer?.cancel();
     super.dispose();
   }

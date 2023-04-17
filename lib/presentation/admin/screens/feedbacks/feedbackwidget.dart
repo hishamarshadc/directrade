@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:sample_project/core/colors/Colors.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:sample_project/presentation/testdetails.dart';
 
 class FeedbackCard extends StatelessWidget {
   DocumentSnapshot passingdocument;
@@ -11,7 +10,6 @@ class FeedbackCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // var name = (passingdocument['name']);
-    final size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(

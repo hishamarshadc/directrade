@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:sample_project/core/colors/Colors.dart';
 
 final user = FirebaseAuth.instance.currentUser;
 
+// ignore: must_be_immutable
 class SellerEditCard extends StatelessWidget {
   DocumentSnapshot passingdocument;
   SellerEditCard({super.key, required this.passingdocument});
@@ -18,7 +18,6 @@ class SellerEditCard extends StatelessWidget {
     late var docid = passingdocument.id;
     final DocumentReference newdatadoc =
         newdatadb.collection("Users").doc(docid);
-    var olddata;
     var newdata = passingdocument;
     final size = MediaQuery.of(context).size;
     return StreamBuilder<DocumentSnapshot>(

@@ -18,7 +18,7 @@ class ScreenSplash extends StatefulWidget {
 class _ScreenSplashState extends State<ScreenSplash> {
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 5), () {
+    Timer(Duration(seconds: 3), () {
       navigateUser();
     }
 
@@ -56,7 +56,7 @@ class _ScreenSplashState extends State<ScreenSplash> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Image.asset('assets/images/slogan logo.png'),
-          Lottie.asset('assets/lottie/loadig_screen.json',width:60)
+          Lottie.asset('assets/lottie/loadig_screen.json',width:120)
         ],
       ),
     );

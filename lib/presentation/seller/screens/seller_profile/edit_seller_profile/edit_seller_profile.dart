@@ -129,11 +129,8 @@ class _EditSellerState extends State<EditSeller> {
                               final db = FirebaseFirestore.instance;
                               final docRef =
                                   db.collection("Users").doc(user!.uid);
-                              var data;
                               await docRef.get().then(
                                 (DocumentSnapshot doc) async {
-                                  data =
-                                      await doc.data() as Map<String, dynamic>;
                                 },
                                 onError: (e) =>
                                     print("Error getting document: $e"),

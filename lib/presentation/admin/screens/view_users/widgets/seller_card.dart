@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sample_project/core/colors/Colors.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:sample_project/presentation/testdetails.dart';
 
 class SellerCard extends StatelessWidget {
   final DocumentSnapshot passingdocument;

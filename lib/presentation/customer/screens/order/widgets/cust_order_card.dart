@@ -61,7 +61,7 @@ class CustOrderCard extends StatelessWidget {
                         .collection('Products')
                         .doc(orderdoc['product_id'])
                         .update({
-                      'rating': finalrating,
+                      'rating': num.parse(finalrating.toStringAsFixed(2)),
                       'rating_count': FieldValue.increment(1)
                     });
                     db

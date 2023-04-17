@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:sample_project/core/colors/Colors.dart';
 import 'package:sample_project/presentation/seller/screens/seller_orders/seller_cancelled_order.dart';
 import 'package:sample_project/presentation/seller/screens/seller_orders/seller_complete_orders.dart';

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:sample_project/core/fetchData.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+// ignore: must_be_immutable
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
 

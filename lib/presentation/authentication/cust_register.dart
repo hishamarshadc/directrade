@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sample_project/presentation/authentication/cust_verification.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class CustRegisterPage extends StatefulWidget {
   CustRegisterPage({super.key});
