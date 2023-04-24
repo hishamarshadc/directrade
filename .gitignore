@@ -32,6 +32,9 @@ migrate_working_dir/
 .pub/
 /build/
 
+#Firebase Files
+android/app/google-services.json
+
 # Symbolication related
 app.*.symbols
 
